@@ -1,7 +1,7 @@
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { Skeleton } from "../ui/skeleton";
@@ -18,14 +18,30 @@ function ProductImageUpload({
 }) {
   const inputRef = useRef(null);
 
+  const [imageUrl, setImageUrl] = useState("")
+
+
   console.log(isEditMode, "isEditMode");
 
-  function handleImageFileChange(event) {
+ async function handleImageFileChange(event) {
     console.log(event.target.files, "event.target.files");
-    const selectedFile = event.target.files?.[0];
-    console.log(selectedFile);
 
-    if (selectedFile) setImageFile(selectedFile);
+    const data = new FormData()
+    
+    const selectedFile = event.target.files?.[0];
+    data.append("file", selectedFile)
+    data.append("upload_preset", "xguzvxc0")
+    data.append("cloud_name", "dhcp35ly7")
+
+     await axios.post(`https://api.cloudinary.com/v1_1/dhcp35ly7/image/upload`, data).then((response)=>{
+        setUploadedImageUrl(response?.data?.url)
+        setImageUrl(response?.data?.url)
+        // setImageUrl(response?.ima)
+    }).catch((error)=>{
+        console.log("error",error)
+    })
+
+    // if (selectedFile) setImageFile(selectedFile);
   }
 
   function handleDragOver(event) {

@@ -9,41 +9,42 @@ function ShoppingProductTile({
   handleAddtoCart,
 }) {
   return (
-    <Card className="w-full max-w-sm mx-auto">
+    <Card className="w-full max-w-sm mx-auto flex flex-col justify-between">
       <div onClick={() => handleGetProductDetails(product?._id)}>
         <div className="relative">
           <img
             src={product?.image}
             alt={product?.title}
-            className="w-full h-[300px] object-cover rounded-t-lg"
+            className="w-full h-[230px] rounded-t-lg"
           />
           {product?.totalStock === 0 ? (
-            <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">
+            <Badge className="text-[10px] absolute top-2 left-2 bg-red-500 hover:bg-red-600">
               Out Of Stock
             </Badge>
           ) : product?.totalStock < 10 ? (
-            <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">
+            <Badge className="text-[10px] absolute top-2 left-2 bg-red-500 hover:bg-red-600">
               {`Only ${product?.totalStock} items left`}
             </Badge>
           ) : product?.salePrice > 0 ? (
-            <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">
+            <Badge className="text-[10px] absolute top-2 left-2 bg-red-500 hover:bg-red-600">
               Sale
             </Badge>
           ) : null}
         </div>
         <CardContent className="p-4">
-          <h2 className="text-xl font-bold mb-2">{product?.title}</h2>
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-[16px] text-muted-foreground">
-              {categoryOptionsMap[product?.category]}
+          <h2 className="text-[14px] font-bold mb-2 leading-tight">{product?.title}</h2>
+          <div className="flex justify-start items-center mb-2">
+            <span className="text-[12px] text-muted-foreground">
+              {/* {categoryOptionsMap[product?.category]} */}
+              {"Brand:"} {" "}
             </span>
-            <span className="text-[16px] text-muted-foreground">
-              {brandOptionsMap[product?.brand]}
+            <span className="text-[12px] text-muted-foreground">
+             {" "} {brandOptionsMap[product?.brand]}
             </span>
           </div>
-          <div className="flex justify-between items-center mb-2">
+          <div className=" flex justify-between items-center mb-2">
             <span
-              className={`${
+              className={` ${
                 product?.salePrice > 0 ? "line-through" : ""
               } text-lg font-semibold text-primary`}
             >
@@ -57,6 +58,8 @@ function ShoppingProductTile({
           </div>
         </CardContent>
       </div>
+
+      
       <CardFooter>
         {product?.totalStock === 0 ? (
           <Button className="w-full opacity-60 cursor-not-allowed">

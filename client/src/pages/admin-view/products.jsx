@@ -36,7 +36,7 @@ function AdminProducts() {
     useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [imageFile, setImageFile] = useState(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("sadvfsvfs");
   const [imageLoadingState, setImageLoadingState] = useState(false);
   const [currentEditedId, setCurrentEditedId] = useState(null);
 
@@ -46,7 +46,8 @@ function AdminProducts() {
 
   function onSubmit(event) {
     event.preventDefault();
-
+    console.log("event",event)
+    console.log("formData",formData)
     currentEditedId !== null
       ? dispatch(
           editProduct({
@@ -136,6 +137,8 @@ function AdminProducts() {
               {currentEditedId !== null ? "Edit Product" : "Add New Product"}
             </SheetTitle>
           </SheetHeader>
+
+
           <ProductImageUpload
             imageFile={imageFile}
             setImageFile={setImageFile}

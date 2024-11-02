@@ -7,6 +7,8 @@ import {
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
+import { TbBrandShopee } from "react-icons/tb";
+
 
 const adminSidebarMenuItems = [
   {
@@ -26,6 +28,12 @@ const adminSidebarMenuItems = [
     label: "Orders",
     path: "/admin/orders",
     icon: <BadgeCheck />,
+  },
+  {
+    id: "brands",
+    label: "Brands",
+    path: "/admin/brands",
+    icon: <TbBrandShopee />,
   },
 ];
 

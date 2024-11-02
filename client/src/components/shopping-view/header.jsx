@@ -108,7 +108,7 @@ function HeaderRightContent() {
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className="bg-black">
+          <Avatar className="bg-black cursor-pointer">
             <AvatarFallback className="bg-black text-white font-extrabold">
               {user?.userName[0].toUpperCase()}
             </AvatarFallback>
@@ -133,6 +133,7 @@ function HeaderRightContent() {
 }
 
 function ShoppingHeader() {
+  // eslint-disable-next-line no-unused-vars
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   return (
@@ -140,7 +141,7 @@ function ShoppingHeader() {
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
         <Link to="/shop/home" className="flex items-center gap-2">
           <HousePlug className="h-6 w-6" />
-          <span className="font-bold">Ecommerce</span>
+          <span className="font-bold">E commerce</span>
         </Link>
         <Sheet>
           <SheetTrigger asChild>
