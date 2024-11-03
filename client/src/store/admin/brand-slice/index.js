@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
     brandList: [],
+    allSubMenuList:[],
     categoryList:[],
     brands: null,
 };
@@ -19,6 +20,20 @@ export const getAllSubMenu = createAsyncThunk(
         return response.data;
     }
 );
+
+
+// add category
+export const getCategoryData = createAsyncThunk(
+    "/brand/sub-category/get",
+    async () => {
+        const response = await axios.get(
+            `${import.meta.env.VITE_API_URL}/api/admin/sub-category/get`
+        );
+
+        return response.data;
+    }
+);
+
 
 
 export const getAllBrands = createAsyncThunk(
@@ -93,9 +108,24 @@ const adminBrandSlice = createSlice({
             })
             .addCase(getAllSubMenu.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.categoryList = action.payload.data;
+                state.allSubMenuList = action.payload.data;
             })
             .addCase(getAllSubMenu.rejected, (state) => {
+                state.isLoading = false;
+                state.orderList = [];
+            })
+
+
+
+            
+            .addCase(getCategoryData.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getCategoryData.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.categoryList = action.payload.data;
+            })
+            .addCase(getCategoryData.rejected, (state) => {
                 state.isLoading = false;
                 state.orderList = [];
             })

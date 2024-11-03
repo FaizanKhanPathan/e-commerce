@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { useToast } from "@/components/ui/use-toast";
 import { addProductFormElements } from "@/config";
+import { getAllBrands, getAllSubMenu, getCategoryData } from "@/store/admin/brand-slice";
 import {
   addNewProduct,
   deleteProduct,
@@ -41,6 +42,9 @@ function AdminProducts() {
   const [currentEditedId, setCurrentEditedId] = useState(null);
 
   const { productList } = useSelector((state) => state.adminProducts);
+  const getBrands = useSelector((state) => state?.adminBrands?.brandList)
+  const categoryList = useSelector((state) => state?.adminBrands?.categoryList)
+
   const dispatch = useDispatch();
   const { toast } = useToast();
 
@@ -98,10 +102,39 @@ function AdminProducts() {
   }
 
   useEffect(() => {
+    dispatch(getCategoryData());
+}, []);
+
+useEffect(() => {
+    dispatch(getAllBrands());
+}, []);
+  useEffect(() => {
     dispatch(fetchAllProducts());
   }, [dispatch]);
 
-  console.log(formData, "productList");
+
+      // Update the form elements with fetched data
+      const updatedProductFormElements = addProductFormElements.map(element => {
+        if (element.name === 'category') {
+            return {
+                ...element,
+                options: categoryList.map(category => ({
+                    id: category?.sub_category_name?.toLowerCase(), // Adjust according to your data structure
+                    label: category.sub_category_name, // Adjust according to your data structure
+                })),
+            };
+        }
+        if (element.name === 'brand') {
+            return {
+                ...element,
+                options: getBrands.map(brand => ({
+                    id: brand?.brand_name?.toLowerCase(), // Adjust according to your data structure
+                    label: brand.brand_name, // Adjust according to your data structure
+                })),
+            };
+        }
+        return element;
+    });
 
   return (
     <Fragment>
@@ -154,7 +187,7 @@ function AdminProducts() {
               formData={formData}
               setFormData={setFormData}
               buttonText={currentEditedId !== null ? "Edit" : "Add"}
-              formControls={addProductFormElements}
+              formControls={updatedProductFormElements}
               isBtnDisabled={!isFormValid()}
             />
           </div>

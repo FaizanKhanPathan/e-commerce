@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 // import { handleCategoryId } from "../../redux/megaMenuSlice/megaMenuSlice";
 
 const SubcategoriesMenu = ({ setVisibleCard, setBreadcrumbPath, categoryList }) => {
@@ -10,6 +11,7 @@ const SubcategoriesMenu = ({ setVisibleCard, setBreadcrumbPath, categoryList }) 
     const [activeNestedSubcategoryLevel2, setActiveNestedSubcategoryLevel2] = useState(null);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const updateBreadcrumb = (commodityTitle, subcategoryTitle, nestedSubcategoryTitle, nestedSubcategoryLevel2Title) => {
         const path = [commodityTitle];
@@ -27,9 +29,15 @@ const SubcategoriesMenu = ({ setVisibleCard, setBreadcrumbPath, categoryList }) 
     };
 
     const handleCommodityClick = (commodity) => {
+        const currentFilter = {
+            ["category"]: [commodity?.sub_category_name?.toLowerCase()],
+          };
+      
+          sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+          navigate(`/shop/listing`);
         // dispatch(handleCategoryId(commodity.id));
-        setVisibleCard(null);
-        updateBreadcrumb(commodity.title);
+        // setVisibleCard(null);
+        // updateBreadcrumb(commodity.title);
     };
 
     return (
@@ -46,13 +54,13 @@ const SubcategoriesMenu = ({ setVisibleCard, setBreadcrumbPath, categoryList }) 
                                     <ul className="list-none p-0">
                                         <li
                                             // onMouseEnter={() => handleCommodityHover(commodity.id)}
-                                            // onClick={() => handleCommodityClick(commodity)}
+                                            
                                             className={`cursor-pointer flex flex-col justify-between p-2 ${false ? "bg-gray-200" : ""}`}
                                         >
                                             {
                                                 element?.sub_category?.map((res) => {
                                                    return(
-                                                   <div className="py-1 hover:text-destructive w-fit">
+                                                   <div className="py-1 hover:text-destructive w-fit" onClick={() => handleCommodityClick(res)}>
                                                         {res?.sub_category_name}
                                                     </div>
                                                    ) 

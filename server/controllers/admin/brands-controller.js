@@ -81,9 +81,14 @@ const addCategory = async (req, res) => {
 
 const getCategories = async (req, res) => {
     try {
-        const getAllCategories = await Category.find().populate("brand_id", "brand_name");
+
+        const { brand_id } = req.query
+
+        const query = brand_id ? { brand_id } : {};
+        const getAllCategories = await Category.find(query).populate("brand_id", "brand_name");
 
         const data = getAllCategories.map(item => ({
+            brand_id:item.brand_id._id.toString(),
             category_id: item._id.toString(), // Assuming you want to use the sub-category's ID as the category_id
             category_name: item.category_name
         }));
@@ -130,9 +135,15 @@ const addSubCategory = async (req, res) => {
 
 const getSubCategory = async (req, res) => {
     try {
-        const getAllSubCategories = await SubCategory.find().populate(["brand_id", "category_id"]);
+        // Extract category_id from the request parameters
+        const { category_id } = req.query;
 
-        console.log("getAllSubCategories",getAllSubCategories)
+        // Fetch subcategories, optionally filtering by category_id
+        const query = category_id ? { category_id } : {};
+        const getAllSubCategories = await SubCategory.find(query).populate(["brand_id", "category_id"]);
+
+        // console.log("getAllSubCategories", getAllSubCategories);
+        
         // Transform the data into the desired format
         const data = [];
 
@@ -140,36 +151,14 @@ const getSubCategory = async (req, res) => {
             const brand = item.brand_id.brand_name;
             const brandId = item.brand_id._id.toString();
             const categoryId = item.category_id._id.toString();
-            const categoryName = item.category_id.category_name;
             const subCategoryName = item.sub_category_name;
             const subCategoryId = item._id.toString();
 
-            // Find or create the brand object in the data array
-            let brandEntry = data.find(b => b.brand_id === brandId);
-            if (!brandEntry) {
-                brandEntry = {
-                    brand_name: brand,
-                    brand_id: brandId,
-                    category: [],
-                };
-                data.push(brandEntry);
-            }
-
-            // Find or create the category object in the brand's category array
-            let categoryEntry = brandEntry.category.find(c => c.category_id === categoryId);
-            if (!categoryEntry) {
-                categoryEntry = {
-                    category_name: categoryName,
-                    category_id: categoryId,
-                    sub_category: [],
-                };
-                brandEntry.category.push(categoryEntry);
-            }
-
-            // Add the sub-category to the category's sub-category array
-            categoryEntry.sub_category.push({
-                sub_category_name: subCategoryName,
+            // Create the category object for the response
+            data.push({
+                category_id: categoryId,
                 sub_category_id: subCategoryId,
+                sub_category_name: subCategoryName,
             });
         });
 
@@ -179,9 +168,13 @@ const getSubCategory = async (req, res) => {
         });
 
     } catch (err) {
-
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+        });
     }
-}
+};
 
 
 const getAllCategoryMenu = async (req, res) => {

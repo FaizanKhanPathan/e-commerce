@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
 import { sortOptions } from "@/config";
+import { getAllBrands } from "@/store/admin/brand-slice";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import {
   fetchAllFilteredProducts,
@@ -142,6 +143,13 @@ function ShoppingListing() {
   useEffect(() => {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
+
+
+
+
+  useEffect(() => {
+    dispatch(getAllBrands());
+}, []);
 
   console.log(productList, "productListproductListproductList");
 

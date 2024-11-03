@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const MegaMenuSearch = () => {
     const dispatch = useDispatch()
     const getBrands = useSelector((state) => state?.adminBrands?.brandList)
-    const categoryList = useSelector((state) => state?.adminBrands?.categoryList)
+    const categoryList = useSelector((state) => state?.adminBrands?.allSubMenuList)
 
     const [selectedCategoryValue, setSelectedCategoryValue] = useState({})
     

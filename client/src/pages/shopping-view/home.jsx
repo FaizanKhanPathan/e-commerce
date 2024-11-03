@@ -79,7 +79,7 @@ function ShoppingHome() {
   function handleNavigateToListingPage(getCurrentItem, section) {
     sessionStorage.removeItem("filters");
     const currentFilter = {
-      [section]: [getCurrentItem.id],
+      [section]: [getCurrentItem?.brand_name?.toLowerCase()],
     };
 
     sessionStorage.setItem("filters", JSON.stringify(currentFilter));

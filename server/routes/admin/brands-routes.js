@@ -9,6 +9,4 @@ router.post("/add", authMiddleware, addBrand);
 router.get("/get", getBrands);
 
 
-router.post("/add", authMiddleware, addCategory)
-
 module.exports = router;
