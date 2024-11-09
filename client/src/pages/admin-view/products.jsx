@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { useToast } from "@/components/ui/use-toast";
 import { addProductFormElements } from "@/config";
-import { getAllBrands, getAllSubMenu, getCategoryData } from "@/store/admin/brand-slice";
+import { getAllBrands, getAllSubMenu, getCategoryData, getSubCategoryData } from "@/store/admin/brand-slice";
 import {
   addNewProduct,
   deleteProduct,
@@ -43,7 +43,7 @@ function AdminProducts() {
 
   const { productList } = useSelector((state) => state.adminProducts);
   const getBrands = useSelector((state) => state?.adminBrands?.brandList)
-  const categoryList = useSelector((state) => state?.adminBrands?.categoryList)
+  const categoryList = useSelector((state) => state?.adminBrands?.subCategoryList)
 
   const dispatch = useDispatch();
   const { toast } = useToast();
@@ -103,6 +103,7 @@ function AdminProducts() {
 
   useEffect(() => {
     dispatch(getCategoryData());
+    dispatch(getSubCategoryData());
 }, []);
 
 useEffect(() => {

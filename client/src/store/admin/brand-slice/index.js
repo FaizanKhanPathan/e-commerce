@@ -5,6 +5,7 @@ const initialState = {
     brandList: [],
     allSubMenuList:[],
     categoryList:[],
+    subCategoryList:[],
     brands: null,
 };
 
@@ -21,9 +22,20 @@ export const getAllSubMenu = createAsyncThunk(
     }
 );
 
-
-// add category
+// get category
 export const getCategoryData = createAsyncThunk(
+    "/brand/category/get",
+    async () => {
+        const response = await axios.get(
+            `${import.meta.env.VITE_API_URL}/api/admin/category/get`
+        );
+
+        return response.data;
+    }
+);
+
+// get sub category
+export const getSubCategoryData = createAsyncThunk(
     "/brand/sub-category/get",
     async () => {
         const response = await axios.get(
@@ -35,7 +47,7 @@ export const getCategoryData = createAsyncThunk(
 );
 
 
-
+// get all brands
 export const getAllBrands = createAsyncThunk(
     "/brand/getAllBrands",
     async () => {
@@ -48,11 +60,51 @@ export const getAllBrands = createAsyncThunk(
 );
 
 
+// add brand
 export const addBrand = createAsyncThunk(
     "/brand/addBrand",
     async (formData) => {
         const result = await axios.post(
             `${import.meta.env.VITE_API_URL}/api/admin/brands/add`,
+            formData,
+            {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        return result.data;
+    }
+);
+
+// add category
+export const addCategory = createAsyncThunk(
+    "/brand/category",
+    async (formData) => {
+        const result = await axios.post(
+            `${import.meta.env.VITE_API_URL}/api/admin/category/add`,
+            formData,
+            {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        return result.data;
+    }
+);
+
+
+// add sub category
+export const addSubCategory = createAsyncThunk(
+    "/brand/sub-category",
+    async (formData) => {
+        const result = await axios.post(
+            `${import.meta.env.VITE_API_URL}/api/admin/sub-category/add`,
             formData,
             {
                 withCredentials: true,
@@ -115,8 +167,6 @@ const adminBrandSlice = createSlice({
                 state.orderList = [];
             })
 
-
-
             
             .addCase(getCategoryData.pending, (state) => {
                 state.isLoading = true;
@@ -126,6 +176,19 @@ const adminBrandSlice = createSlice({
                 state.categoryList = action.payload.data;
             })
             .addCase(getCategoryData.rejected, (state) => {
+                state.isLoading = false;
+                state.orderList = [];
+            })
+
+
+            .addCase(getSubCategoryData.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getSubCategoryData.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.subCategoryList = action.payload.data;
+            })
+            .addCase(getSubCategoryData.rejected, (state) => {
                 state.isLoading = false;
                 state.orderList = [];
             })

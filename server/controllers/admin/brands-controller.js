@@ -85,9 +85,9 @@ const getCategories = async (req, res) => {
         const { brand_id } = req.query
 
         const query = brand_id ? { brand_id } : {};
-        const getAllCategories = await Category.find(query).populate("brand_id", "brand_name");
+        const getAllCategories = await Category.find(query).populate("brand_id", "brand_name").sort({ createdAt: -1 });;
 
-        const data = getAllCategories.map(item => ({
+        const data = getAllCategories.filter((ele)=> ele?.brand_id).map(item => ({
             brand_id:item.brand_id._id.toString(),
             category_id: item._id.toString(), // Assuming you want to use the sub-category's ID as the category_id
             category_name: item.category_name
@@ -140,7 +140,7 @@ const getSubCategory = async (req, res) => {
 
         // Fetch subcategories, optionally filtering by category_id
         const query = category_id ? { category_id } : {};
-        const getAllSubCategories = await SubCategory.find(query).populate(["brand_id", "category_id"]);
+        const getAllSubCategories = await SubCategory.find(query).populate(["brand_id", "category_id"]).sort({ createdAt: -1 });;
 
         // console.log("getAllSubCategories", getAllSubCategories);
         
@@ -179,8 +179,9 @@ const getSubCategory = async (req, res) => {
 
 const getAllCategoryMenu = async (req, res) => {
     try {
-        const getAllSubCategories = await SubCategory.find().populate(["brand_id", "category_id"]);
+        const getAllSubCategories = await SubCategory.find().populate(["brand_id", "category_id"]).sort({ createdAt: -1 });
         // Transform the data into the desired format
+
         const data = [];
 
         getAllSubCategories.forEach(item => {

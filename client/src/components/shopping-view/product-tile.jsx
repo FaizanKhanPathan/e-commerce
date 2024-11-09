@@ -8,6 +8,7 @@ function ShoppingProductTile({
   handleGetProductDetails,
   handleAddtoCart,
 }) {
+  console.log("product>>>>>>>>",product)
   return (
     <Card className="w-full max-w-sm mx-auto flex flex-col justify-between">
       <div onClick={() => handleGetProductDetails(product?._id)}>
@@ -15,7 +16,7 @@ function ShoppingProductTile({
           <img
             src={product?.image}
             alt={product?.title}
-            className="w-full h-[230px] rounded-t-lg"
+            className="w-full h-[230px] rounded-t-lg object-contain mt-4"
           />
           {product?.totalStock === 0 ? (
             <Badge className="text-[10px] absolute top-2 left-2 bg-red-500 hover:bg-red-600">
@@ -36,7 +37,7 @@ function ShoppingProductTile({
           <div className="flex justify-start items-center mb-2">
             <span className="text-[12px] text-muted-foreground">
               {/* {categoryOptionsMap[product?.category]} */}
-              {"Brand:"} {" "}
+              {"Brand:"} {product?.brand}
             </span>
             <span className="text-[12px] text-muted-foreground">
              {" "} {brandOptionsMap[product?.brand]}

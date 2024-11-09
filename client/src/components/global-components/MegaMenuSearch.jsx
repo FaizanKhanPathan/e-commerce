@@ -12,10 +12,22 @@ const MegaMenuSearch = () => {
     const getBrands = useSelector((state) => state?.adminBrands?.brandList)
     const categoryList = useSelector((state) => state?.adminBrands?.allSubMenuList)
 
-    const [selectedCategoryValue, setSelectedCategoryValue] = useState({})
-    
+    // console.log("categoryList>>>>>",categoryList)
 
-    const [value, setValue] = useState(false)
+    const [selectedCategoryValue, setSelectedCategoryValue] = useState(null)
+    const [selectedCategoryValueData, setSelectedCategoryValueData] = useState([])
+    const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
+
+    const handleMouseOverBrand = (categoryId) => {
+        setSelectedCategoryValueData(categoryList?.find((ele) => ele?.brand_id == categoryId))
+
+        setSelectedCategoryValue(categoryId);
+        setIsSubMenuVisible(true);
+    };
+
+    const handleMouseLeaveSubMenu = () => {
+        setIsSubMenuVisible(false);
+    };
 
 
     useEffect(() => {
@@ -25,11 +37,6 @@ const MegaMenuSearch = () => {
     useEffect(() => {
         dispatch(getAllBrands());
     }, []);
-
-
-    const handleSelectedCategory = (brand_id) => {
-        setSelectedCategoryValue(categoryList?.find((ele)=> ele?.brand_id == brand_id))
-    }
 
     return (
         <div className='text-[12px] border-b'>
@@ -63,22 +70,28 @@ const MegaMenuSearch = () => {
                     </div>
                 </div>
             </div>
-            <div className='border border-gray-400 flex justify-start py-3 px-20'>
+            <div className='border border-gray-400 hidden lg:flex justify-start py-3 '>
                 {
-                    getBrands?.map((res,index) => {
+                    getBrands?.map((res, index) => {
                         return (
-                            <div key={index} className='cursor-pointer text-[14px] font-medium hover:text-destructive mx-3' onMouseOver={()=> handleSelectedCategory(res?._id)}>
+                            <div key={index} className='cursor-pointer text-[14px] font-medium hover:text-destructive mx-3' onMouseOver={() => handleMouseOverBrand(res?._id)}>
                                 {res?.brand_name}
                             </div>
                         )
                     })
                 }
             </div>
-            {
-                false && <>
-                    <SubcategoriesMenu categoryList={selectedCategoryValue} setVisibleCard={false} />
-                </>
-            }
+            {isSubMenuVisible && (
+                <div
+                    onMouseEnter={() => setIsSubMenuVisible(true)}
+                    onMouseLeave={handleMouseLeaveSubMenu}
+                >
+                    <SubcategoriesMenu
+                        categoryList={selectedCategoryValueData}
+                        setVisibleCard={false}
+                    />
+                </div>
+            )}
         </div>
     )
 }

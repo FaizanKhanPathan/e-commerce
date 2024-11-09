@@ -179,11 +179,11 @@ function ShoppingHome() {
           <h2 className="text-3xl font-bold text-center mb-8 uppercase">Shop by Brand</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {
-              getBrands?.map((ele,index)=>{
-                return(
+              getBrands?.map((ele, index) => {
+                return (
                   <Card
-                  key={index}
-                    onClick={() => handleNavigateToListingPage(ele, "brand")} 
+                    key={index}
+                    onClick={() => handleNavigateToListingPage(ele, "brand")}
                     className="cursor-pointer hover:shadow-lg transition-shadow"
                   >
                     <CardContent className="flex flex-col items-center justify-center p-6">
@@ -211,10 +211,46 @@ function ShoppingHome() {
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="py-8">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8 uppercase">
-            Feature Products
+          <h2 className="text-2xl font-bold text-center mb-8 uppercase">
+            New Products
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {productList && productList.length > 0
+              ? productList.slice(0,4)?.map((productItem) => (
+                <ShoppingProductTile
+                  handleGetProductDetails={handleGetProductDetails}
+                  product={productItem}
+                  handleAddtoCart={handleAddtoCart} />
+              ))
+              : null}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-8">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-center mb-8 uppercase">
+            Best Sellers
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {productList && productList.length > 0
+              ? productList.map((productItem) => (
+                <ShoppingProductTile
+                  handleGetProductDetails={handleGetProductDetails}
+                  product={productItem}
+                  handleAddtoCart={handleAddtoCart} />
+              ))
+              : null}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-8">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-center mb-8 uppercase">
+          Featured Products
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {productList && productList.length > 0

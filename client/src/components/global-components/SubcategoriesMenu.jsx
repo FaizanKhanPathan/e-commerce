@@ -40,12 +40,14 @@ const SubcategoriesMenu = ({ setVisibleCard, setBreadcrumbPath, categoryList }) 
         // updateBreadcrumb(commodity.title);
     };
 
+
+    const reversedData = categoryList?.category?.length > 0 ? categoryList?.category?.map((_, index, array) => array[array.length - 1 - index]) : []; 
     return (
         <>
-            <div className="flex border-t bg-white h-96 w-[95vw] overflow-x-scroll absolute z-50 right-6 scrollable-element">
+            <div className="hidden lg:flex border-t bg-white h-96 w-[95vw] overflow-x-scroll absolute z-50 right-6 scrollable-element">
                 <div className={`flex space-x-3 p-3 h-full`}>
                     {
-                        categoryList?.category?.map((element) => {
+                        reversedData?.map((element) => {
                             return (
                                 <div key={element.category_id} className="w-[15vw] h-full overflow-y-scroll scrollable-element">
                                     <h3 className="flex justify-center items-center font-normal text-[16px] sticky top-0 bg-white w-full border-b">
