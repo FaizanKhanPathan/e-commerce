@@ -71,6 +71,15 @@ app.use("/api/shop/order", shopOrderRouter);
 app.use("/api/shop/search", shopSearchRouter);
 app.use("/api/shop/review", shopReviewRouter);
 
+// const router = express.Router();
+// app.use("/api/try-api", router.get("/add", (req, res) => {
+//   res.status(200).json({
+//     success: true,
+//     data: "Hello World",
+//     message: "success",
+//   })
+// }))
+
 app.use("/api/common/feature", commonFeatureRouter);
 
 // app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));
