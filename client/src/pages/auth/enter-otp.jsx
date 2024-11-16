@@ -1,9 +1,9 @@
 import CommonForm from "@/components/common/form";
 import { useToast } from "@/components/ui/use-toast";
-import { forgetPasswordUser } from "@/store/auth-slice";
+import { forgetPasswordUser, verifyUserOtp } from "@/store/auth-slice";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import { Button } from "@/components/ui/button";
 
@@ -14,32 +14,55 @@ function EnterOtp() {
   const dispatch = useDispatch();
   const { toast } = useToast();
   const state = useSelector((state) => state.auth);
-  console.log("state", state);
+  const navigate = useNavigate();
 
   function handleChange(otpValue) {
     setOtp(otpValue);
   }
 
+  useEffect(() => {
+    if (!state?.recoveryEmail) {
+      navigate("/auth/forgot-password");
+    }
+  }, [state]);
+
   function onSubmit(event) {
     event.preventDefault();
-    dispatch(forgetPasswordUser({ otp })).then((data) => {
+    // dispatch(setRecoveryOtp({email:state?.recoveryEmail, otp: otp }));
+
+    dispatch(verifyUserOtp({ email: state?.recoveryEmail, otp: otp })).then(
+      (data) => {
+        if (data?.payload?.success) {
+          toast({
+            title: data?.payload?.message,
+          });
+          setOtp("");
+          navigate("/auth/reset-password");
+        } else {
+          toast({
+            title: data?.error?.message,
+            variant: "destructive",
+          });
+        }
+      }
+    );
+  }
+
+  function handleResendOtp() {
+    setTimer(60);
+    setIsResendDisabled(true);
+    dispatch(forgetPasswordUser({email: state?.recoveryEmail,})).then((data) => {
       if (data?.payload?.success) {
         toast({
           title: data?.payload?.message,
         });
       } else {
         toast({
-          title: data?.payload?.message,
+          title: data?.error?.message,
           variant: "destructive",
         });
       }
-    });
-  }
-
-  function handleResendOtp() {
-    setTimer(60); // Reset timer
-    setIsResendDisabled(true);
-    // Add logic to resend OTP here, e.g., dispatch(forgetPasswordUserResendOtp());
+    })
   }
 
   useEffect(() => {
@@ -73,7 +96,7 @@ function EnterOtp() {
               style={{
                 width: "3rem",
                 height: "3rem",
-                textAlign:"center",
+                textAlign: "center",
                 margin: "0.5rem",
                 fontSize: "2rem",
                 borderRadius: 4,
@@ -82,7 +105,11 @@ function EnterOtp() {
             />
           )}
         />
-        <Button type="submit" className="mt-4 w-full" disabled={!isResendDisabled}>
+        <Button
+          type="submit"
+          className="mt-4 w-full"
+          disabled={!isResendDisabled}
+        >
           {timer > 0 ? `Verify (${timer}s)` : "Submit"}
         </Button>
       </form>

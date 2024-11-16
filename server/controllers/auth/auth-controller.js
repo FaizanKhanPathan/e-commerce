@@ -6,12 +6,24 @@ const crypto = require("crypto");
 
 
 // Create a transporter for sending emails
-const transporter = nodemailer.createTransport({
-  service: process.env.MAIL_HOST, // Use your email provider (e.g., Gmail)
-  auth: {
-    user: process.env.SMTP_USERNAME, // Your email address
-    pass: process.env.SMTP_PASSWORD, // Your email password or app-specific password
-  },
+// const transporter = nodemailer.createTransport({
+//   service: process.env.MAIL_HOST, 
+//   port:process.env.SMTP_PORT,
+//   auth: {
+//     user: process.env.SMTP_USERNAME, 
+//     pass: process.env.SMTP_PASSWORD, 
+//   },
+// });
+
+// Create a transporter for sending emails fake
+
+ const transporter = nodemailer.createTransport({
+  host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'dario87@ethereal.email',
+        pass: 'G3vjkjkrWpyFJrSx7j'
+    }
 });
 
 // Forgot Password - Generate OTP and send to the email
@@ -27,26 +39,21 @@ const forgotPassword = async (req, res) => {
       });
     }
 
-    // Generate OTP
-    const otp = crypto.randomInt(100000, 999999).toString(); // 6-digit OTP
+    const otp = crypto.randomInt(100000, 999999).toString(); 
+    const otpExpiry = Date.now() + 2 * 60 * 1000; 
 
-    // Set OTP expiry (e.g., 10 minutes)
-    const otpExpiry = Date.now() + 10 * 60 * 1000; // 10 minutes from now
-
-    // Save OTP and expiry time in user's record or use a cache like Redis
     user.passwordResetOtp = otp;
     user.passwordResetOtpExpiry = otpExpiry;
     await user.save();
-
-    // Send OTP via email
     const mailOptions = {
-      from: process.env.SMTP_SENDER,
+      // from: process.env.SMTP_SENDER,
+      from: '"Maddison Foo Koch 👻" <maddison53@ethereal.email>', // sender address
       to: email,
       subject: "Password Reset OTP",
       text: `Your OTP for password reset is: ${otp}. It will expire in 10 minutes.`,
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         return res.status(500).json({
           success: false,
@@ -67,9 +74,9 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-// Reset Password - Verify OTP and change password
-const resetPassword = async (req, res) => {
-  const { email, otp, newPassword } = req.body;
+// Verify OTP and update user's verified status
+const verifyOtp = async (req, res) => {
+  const { email, otp } = req.body;
 
   try {
     const user = await User.findOne({ email });
@@ -80,7 +87,6 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    // Check if OTP is correct and has not expired
     if (user.passwordResetOtp !== otp) {
       return res.status(400).json({
         success: false,
@@ -94,14 +100,96 @@ const resetPassword = async (req, res) => {
         message: "OTP has expired",
       });
     }
+    user.verified = true;
+    user.passwordResetOtp = undefined;
+    user.passwordResetOtpExpiry = undefined;
+    await user.save();
 
-    // Hash new password
+    return res.status(200).json({
+      success: true,
+      message: "OTP verified successfully. You can now reset your password.",
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      message: "Some error occurred",
+    });
+  }
+};
+
+
+// Reset Password - Verify OTP and change password
+// const resetPassword = async (req, res) => {
+//   const { email, otp, newPassword } = req.body;
+
+//   try {
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "User not found with this email address",
+//       });
+//     }
+//     if (user.passwordResetOtp !== otp) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Invalid OTP",
+//       });
+//     }
+
+//     if (Date.now() > user.passwordResetOtpExpiry) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "OTP has expired",
+//       });
+//     }
+
+//     const hashPassword = await bcrypt.hash(newPassword, 12);
+
+//     user.password = hashPassword;
+//     user.passwordResetOtp = undefined; 
+//     user.passwordResetOtpExpiry = undefined;
+//     await user.save();
+
+//     return res.status(200).json({
+//       success: true,
+//       message: "Password has been reset successfully",
+//     });
+//   } catch (e) {
+//     console.log(e);
+//     res.status(500).json({
+//       success: false,
+//       message: "Some error occurred",
+//     });
+//   }
+// };
+
+
+const resetPassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found with this email address",
+      });
+    }
+
+    if (!user.verified) {
+      return res.status(400).json({
+        success: false,
+        message: "OTP verification required before resetting the password",
+      });
+    }
+
     const hashPassword = await bcrypt.hash(newPassword, 12);
 
-    // Update the password in the database
+    // Update password and reset verified status
     user.password = hashPassword;
-    user.passwordResetOtp = undefined; // Clear OTP
-    user.passwordResetOtpExpiry = undefined; // Clear OTP expiry
+    user.verified = false; // Reset verification status after password reset
     await user.save();
 
     return res.status(200).json({
@@ -116,7 +204,6 @@ const resetPassword = async (req, res) => {
     });
   }
 };
-
 
 
 //register
@@ -234,4 +321,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, loginUser, logoutUser, authMiddleware,forgotPassword, resetPassword };
+module.exports = { registerUser, loginUser, logoutUser, authMiddleware,forgotPassword, verifyOtp,resetPassword };

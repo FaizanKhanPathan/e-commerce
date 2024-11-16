@@ -46,7 +46,7 @@ export const resetPasswordFormControls = [
     label: "New Password",
     placeholder: "Enter your new password",
     componentType: "input",
-    type: "email",
+    type: "password",
   },
   {
     name: "password",

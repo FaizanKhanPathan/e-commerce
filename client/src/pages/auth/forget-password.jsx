@@ -18,20 +18,26 @@ const navigate = useNavigate()
   
   function onSubmit(event) {
     event.preventDefault();
-    dispatch(setRecoveryMail(formData))
     dispatch(forgetPasswordUser(formData)).then((data) => {
       if (data?.payload?.success) {
+        dispatch(setRecoveryMail(formData))
         toast({
           title: data?.payload?.message,
         });
+        navigate('/auth/otp')
       } else {
         toast({
-          title: data?.payload?.message,
+          title: data?.error?.message,
           variant: "destructive",
         });
       }
+    }).catch((error)=> {
+      console.log("error",error)
+      toast({
+        title: data?.payload?.message,
+        variant: "destructive",
+      });
     });
-    navigate('/auth/otp')
 
   }
 

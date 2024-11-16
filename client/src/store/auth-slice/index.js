@@ -40,6 +40,22 @@ export const forgetPasswordUser = createAsyncThunk(
   }
 );
 
+export const verifyUserOtp = createAsyncThunk(
+  "/auth/verify-otp",
+
+  async (formData) => {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/auth/verify-otp`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
 export const resetPasswordUser = createAsyncThunk(
   "/auth/reset-password",
 
@@ -166,6 +182,10 @@ const authSlice = createSlice({
         state.user = null;
         state.isAuthenticated = false;
       }).addCase(forgetPasswordUser.fulfilled, (state, action) => {
+        // state.isLoading = false;
+        // state.user = null;
+        // state.isAuthenticated = false;
+      }).addCase(verifyUserOtp.fulfilled, (state, action) => {
         // state.isLoading = false;
         // state.user = null;
         // state.isAuthenticated = false;

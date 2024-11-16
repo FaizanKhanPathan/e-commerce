@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  verified: {
+    type: Boolean,
+    default: false,
+  },
   passwordResetOtp: { type: String },
   passwordResetOtpExpiry: { type: Date,
     default: () => Date.now() + 10 * 60 * 1000,
