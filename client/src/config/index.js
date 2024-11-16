@@ -40,6 +40,33 @@ export const loginFormControls = [
   },
 ];
 
+export const resetPasswordFormControls = [
+  {
+    name: "newPassword",
+    label: "New Password",
+    placeholder: "Enter your new password",
+    componentType: "input",
+    type: "email",
+  },
+  {
+    name: "password",
+    label: "Confirm Password",
+    placeholder: "Confirm your password",
+    componentType: "input",
+    type: "password",
+  },
+];
+
+export const forgetPasswordFormControls = [
+  {
+    name: "email",
+    label: "Email",
+    placeholder: "Enter your email",
+    componentType: "input",
+    type: "email",
+  },
+];
+
 export const addProductFormElements = [
   {
     label: "Title",

@@ -1,0 +1,17 @@
+{
+    "name": "e-commerce",
+    "version": "1.0.0",
+    "description": "e-commerce app",
+    "scripts": {
+        "start:backend": "cd server && nodemon",
+        "start:frontend": "cd client && npm run dev",
+        "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+        "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+        "build": "cd server && npm run build && cd ../client && npm run build",
+        "test": "cd server && npm test && cd ../client && npm test"
+    },
+    "devDependencies": {
+        "concurrently": "^6.2.0",
+        "nodemon": "^3.1.7"
+    }
+}
