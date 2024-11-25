@@ -62,7 +62,6 @@ function ShoppingHome() {
 
   const getBrands = useSelector((state) => state?.adminBrands?.brandList)
 
-  const [currentSlide, setCurrentSlide] = useState(0);
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
@@ -115,14 +114,6 @@ function ShoppingHome() {
   }, [productDetails]);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList.length);
-    }, 4000);
-
-    return () => clearInterval(timer);
-  }, [featureImageList]);
-
-  useEffect(() => {
     dispatch(
       fetchAllFilteredProducts({
         filterParams: {},
@@ -135,6 +126,7 @@ function ShoppingHome() {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
+  console.log("check")
   return (
     <div className="flex flex-col min-h-screen">
 
@@ -158,9 +150,9 @@ function ShoppingHome() {
             Price Chart By Categories
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {categoriesWithIcon.map((categoryItem) => (
+            {categoriesWithIcon.map((categoryItem, index) => (
               <Card
-                key={0}
+                key={index}
                 // onClick={() => handleNavigateToListingPage(categoryItem, "category")}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
@@ -188,25 +180,12 @@ function ShoppingHome() {
                   >
                     <CardContent className="flex flex-col items-center justify-center p-6">
                       <img src={ele.image_url} alt="" className=" h-12 mb-4" />
-                      {/* <brandItem.icon className="w-12 h-12 mb-4 text-primary" /> */}
                       <span className="font-bold text-primary">{ele.brand_name}</span>
                     </CardContent>
                   </Card>
                 )
               })
             }
-            {/* {brandsWithIcon.map((brandItem, index) => (
-              <Card
-              key={index}
-                onClick={() => handleNavigateToListingPage(brandItem, "brand")}
-                className="cursor-pointer hover:shadow-lg transition-shadow"
-              >
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <brandItem.icon className="w-12 h-12 mb-4 text-primary" />
-                  <span className="font-bold">{brandItem.label}</span>
-                </CardContent>
-              </Card>
-            ))} */}
           </div>
         </div>
       </section>
@@ -265,10 +244,10 @@ function ShoppingHome() {
         </div>
       </section>
 
-      <ProductDetailsDialog
+      {/* <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
-        productDetails={productDetails} />
+        productDetails={productDetails} /> */}
 
 
     </div >

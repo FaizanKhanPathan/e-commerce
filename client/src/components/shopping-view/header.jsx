@@ -24,6 +24,12 @@ import { useEffect, useState } from "react";
 import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Label } from "../ui/label";
 
+import gmtLogo from "../../assets/gmt-logo-image.png"
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
+
+
+
 function MenuItems() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,6 +42,8 @@ function MenuItems() {
   const [selectedCategoryId, setSelectedCategoryId] = useState("")
 
   const categoryList = useSelector((state) => state?.adminBrands?.allSubMenuList)
+  const reversedCategoryList = [...categoryList].reverse();
+
 
   function handleNavigate(getCurrentMenuItem) {
     sessionStorage.removeItem("filters");
@@ -60,7 +68,7 @@ function MenuItems() {
   // console.log("categoryList>>>>>>>>>>>>", categoryList)
 
   return (
-    <nav className="flex flex-col mt-5 overflow-auto lg:overflow-visible max-h-screen lg:max-h-full">
+    <nav className="flex flex-col overflow-auto lg:overflow-visible max-h-screen lg:max-h-full">
       {/* {shoppingViewHeaderMenuItems.map((menuItem) => (
         <Label
           onClick={() => handleNavigate(menuItem)}
@@ -70,19 +78,29 @@ function MenuItems() {
           {menuItem.label}
         </Label>
       ))} */}
+      <div>
+
+        <img src={gmtLogo} className="w-20" alt="" />
+      </div>
 
 
       <div className="flex flex-col mt-5">
         {
-          categoryList?.map((ele) => {
+          reversedCategoryList?.map((ele, index) => {
             return (
-              <div>
-                <p onClick={() => selectedBrandId == "" ? setSelectedBrandId(ele?.brand_id) : setSelectedBrandId("")} className="py-2 border-b">
+              <div className="" key={index}>
+                <p onClick={() => selectedBrandId == "" ? setSelectedBrandId(ele?.brand_id) : setSelectedBrandId("")} className={`flex items-center justify-between py-2 border-b ${index == 0 && "border-t"}`}>
                   <span>
                     {ele?.brand_name}
                   </span>
                   <span>
-
+                    {
+                      selectedBrandId == ele?.brand_id ? <>
+                        <IoIosArrowUp />
+                      </> : <>
+                        <IoIosArrowDown />
+                      </>
+                    }
                   </span>
                 </p>
                 {
@@ -91,14 +109,31 @@ function MenuItems() {
                       ele?.category?.map((res) => {
                         return <>
                           <div className="ml-3">
-                            <p onClick={() => selectedCategoryId == "" ? setSelectedCategoryId(res?.category_id) : setSelectedCategoryId("")} className="py-2 border-b">{res?.category_name}</p>
+                            <p onClick={() => selectedCategoryId == "" ? setSelectedCategoryId(res?.category_id) : setSelectedCategoryId("")} className="flex justify-between items-center py-2 border-b">
+                              <span>
+                                {res?.category_name}
+                              </span>
+                              <span>
+                                {
+                                  selectedCategoryId == res?.category_id ? <>
+                                    <IoIosArrowUp />
+                                  </> : <>
+                                    <IoIosArrowDown />
+                                  </>
+                                }
+                              </span>
+                            </p>
                             {
                               selectedCategoryId == res?.category_id && <>
                                 {
                                   res?.sub_category?.map((element) => {
                                     return (
                                       <div className="ml-3">
-                                        <p className="py-2 border-b"> {element?.sub_category_name}</p>
+                                        <p className="py-2 border-b">
+                                          <span>
+                                            {element?.sub_category_name}
+                                          </span>
+                                        </p>
                                       </div>
                                     )
                                   })
@@ -122,7 +157,7 @@ function MenuItems() {
 }
 
 function HeaderRightContent() {
-  const { user } = useSelector((state) => state.auth);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
   const [openCartSheet, setOpenCartSheet] = useState(false);
   const navigate = useNavigate();
@@ -136,10 +171,12 @@ function HeaderRightContent() {
     dispatch(fetchCartItems(user?.id));
   }, [dispatch]);
 
-  console.log(cartItems, "sangam");
+  // console.log(cartItems, "sangam");
 
   return (
     <div className="flex justify-between py-5 lg:items-center lg:flex-row flex-row gap-4">
+      {
+        isAuthenticated ? <>
       <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
         <Button
           onClick={() => setOpenCartSheet(true)}
@@ -185,6 +222,15 @@ function HeaderRightContent() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+        </> : <>
+          {/* <button className="bg-primary text-white rounded-lg px-5 py-2">
+            Sign in
+          </button> */}
+          <Link to={"/auth/login"}>
+          <Button>Sign in</Button>
+          </Link>
+        </>
+      }
     </div>
   );
 }
@@ -197,8 +243,9 @@ function ShoppingHeader() {
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
         <Link to="/shop/home" className="flex items-center gap-2">
-          <HousePlug className="h-6 w-6" />
-          <span className="font-bold">E commerce</span>
+          {/* <HousePlug className="h-6 w-6" />
+          <span className="font-bold">E commerce</span> */}
+          <img src={gmtLogo} className="w-20" alt="" />
         </Link>
         <Sheet>
           <SheetTrigger asChild>

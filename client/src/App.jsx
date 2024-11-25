@@ -32,11 +32,11 @@ function App() {
 
   useEffect(() => {
     dispatch(checkAuth());
-  }, [dispatch]);
+  }, []);
 
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
-  console.log(">>>>>>>>>>>>>>",isLoading, user);
+  // console.log(">>>>>>>>>>>>>>",isLoading, user);
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
@@ -78,9 +78,9 @@ function App() {
         <Route
           path="/shop"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            // </CheckAuth>
               <ShoppingLayout />
-            </CheckAuth>
           }
         >
           <Route path="home" element={<ShoppingHome />} />

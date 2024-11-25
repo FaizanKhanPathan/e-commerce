@@ -1,6 +1,7 @@
 import React from "react";
 import { FaFacebook, FaInstagramSquare, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import gmtLogo from "../../assets/gmt-white-logo.png"
 
 
 const Footer = () => {
@@ -9,12 +10,12 @@ const Footer = () => {
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {/* Logo Section */}
                 <div className="flex justify-center lg:justify-start mb-6 lg:mb-0">
-                    {/* <img
-            src="/neo-final.png"
+                    <img
+            src={gmtLogo}
             alt="logo"
-            className="w-24 h-auto"
-          /> */}
-                    E Commerce
+            className="h-auto"
+          />
+                    {/* E Commerce */}
                 </div>
 
                 {/* Shopping Guide Links */}
