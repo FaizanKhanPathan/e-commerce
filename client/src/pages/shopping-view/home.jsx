@@ -21,6 +21,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchAllBestSellerAndFeatureProducts,
   fetchAllFilteredProducts,
   fetchProductDetails,
 } from "@/store/shop/products-slice";
@@ -61,6 +62,8 @@ function ShoppingHome() {
   const { toast } = useToast();
 
   const getBrands = useSelector((state) => state?.adminBrands?.brandList)
+  const isTypeChange = useSelector((state) => state?.shopProducts?.isTypeChange)
+  const allBestSellerAndFeatureProducts = useSelector((state) => state?.shopProducts?.allBestSellerAndFeatureProducts)
 
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
@@ -118,15 +121,20 @@ function ShoppingHome() {
       fetchAllFilteredProducts({
         filterParams: {},
         sortParams: "price-lowtohigh",
+        type: isTypeChange,
       })
     );
-  }, [dispatch]);
+  }, [dispatch, isTypeChange]);
+
+  useEffect(() => {
+    dispatch(fetchAllBestSellerAndFeatureProducts())
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
-  console.log("check")
+  console.log("allBestSellerAndFeatureProducts",allBestSellerAndFeatureProducts)
   return (
     <div className="flex flex-col min-h-screen">
 
@@ -197,7 +205,7 @@ function ShoppingHome() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {productList && productList.length > 0
-              ? productList.slice(0,4)?.map((productItem) => (
+              ? productList.slice(0, 4)?.map((productItem) => (
                 <ShoppingProductTile
                   handleGetProductDetails={handleGetProductDetails}
                   product={productItem}
@@ -214,8 +222,8 @@ function ShoppingHome() {
             Best Sellers
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {productList && productList.length > 0
-              ? productList.map((productItem) => (
+            {allBestSellerAndFeatureProducts && allBestSellerAndFeatureProducts.length > 0
+              ? allBestSellerAndFeatureProducts?.filter((ele)=>ele?.bestSellers == 'true')?.map((productItem) => (
                 <ShoppingProductTile
                   handleGetProductDetails={handleGetProductDetails}
                   product={productItem}
@@ -229,11 +237,11 @@ function ShoppingHome() {
       <section className="py-8">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-center mb-8 uppercase">
-          Featured Products
+            Featured Products
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {productList && productList.length > 0
-              ? productList.map((productItem) => (
+            {allBestSellerAndFeatureProducts && allBestSellerAndFeatureProducts.length > 0
+              ? allBestSellerAndFeatureProducts?.filter((ele)=> ele?.features == 'true')?.map((productItem) => (
                 <ShoppingProductTile
                   handleGetProductDetails={handleGetProductDetails}
                   product={productItem}

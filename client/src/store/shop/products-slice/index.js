@@ -4,17 +4,19 @@ import axios from "axios";
 const initialState = {
   isLoading: false,
   productList: [],
+  allBestSellerAndFeatureProducts: [],
   productDetails: null,
+  isTypeChange: "2"
 };
 
 export const fetchAllFilteredProducts = createAsyncThunk(
   "/products/fetchAllProducts",
-  async ({ filterParams, sortParams }) => {
-    console.log(fetchAllFilteredProducts, "fetchAllFilteredProducts");
+  async ({ filterParams, sortParams, type }) => {
 
     const query = new URLSearchParams({
       ...filterParams,
       sortBy: sortParams,
+      type
     });
 
     const result = await axios.get(
@@ -26,6 +28,19 @@ export const fetchAllFilteredProducts = createAsyncThunk(
     return result?.data;
   }
 );
+
+export const fetchAllBestSellerAndFeatureProducts = createAsyncThunk(
+  "/products/fetchAllBestSellerAndFeatureProducts",
+  async () => {
+    const result = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/shop/products/seller-feature`
+    );
+
+    console.log("result>>>>>>>>>>>>>",result);
+
+    return result?.data;
+  }
+)
 
 export const fetchProductDetails = createAsyncThunk(
   "/products/fetchProductDetails",
@@ -45,6 +60,9 @@ const shoppingProductSlice = createSlice({
     setProductDetails: (state) => {
       state.productDetails = null;
     },
+    setIsTypeChange: (state, action) => {
+      state.isTypeChange = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -69,10 +87,21 @@ const shoppingProductSlice = createSlice({
       .addCase(fetchProductDetails.rejected, (state, action) => {
         state.isLoading = false;
         state.productDetails = null;
+      })
+      .addCase(fetchAllBestSellerAndFeatureProducts.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchAllBestSellerAndFeatureProducts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.allBestSellerAndFeatureProducts = action.payload.data;
+      })
+      .addCase(fetchAllBestSellerAndFeatureProducts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.allBestSellerAndFeatureProducts = null;
       });
   },
 });
 
-export const { setProductDetails } = shoppingProductSlice.actions;
+export const { setProductDetails, setIsTypeChange } = shoppingProductSlice.actions;
 
 export default shoppingProductSlice.reducer;

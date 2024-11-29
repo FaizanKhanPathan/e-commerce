@@ -11,6 +11,21 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  taxId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  phone: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
+  companyName: {
+    type: String,
+    required: true,
+    unique: false,
+  },
   password: {
     type: String,
     required: true,

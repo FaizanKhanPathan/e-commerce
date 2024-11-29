@@ -15,9 +15,37 @@ export const registerFormControls = [
     type: "email",
   },
   {
+    name: "phone",
+    label: "Phone",
+    placeholder: "Enter your phone",
+    componentType: "input",
+    type: "number",
+  },
+  {
+    name: "companyName",
+    label: "Company Name",
+    placeholder: "Enter your company Name",
+    componentType: "input",
+    type: "text",
+  },
+  {
+    name: "taxId",
+    label: "Tax ID",
+    placeholder: "Enter your tax ID",
+    componentType: "input",
+    type: "text",
+  },
+  {
     name: "password",
     label: "Password",
     placeholder: "Enter your password",
+    componentType: "input",
+    type: "password",
+  },
+  {
+    name: "confirmPassword",
+    label: "Confirm password",
+    placeholder: "Enter your confirm password",
     componentType: "input",
     type: "password",
   },
@@ -53,6 +81,15 @@ export const addProductFormElements = [
     name: "description",
     componentType: "textarea",
     placeholder: "Enter product description",
+  },
+  {
+    label: "Product Type",
+    name: "type",
+    componentType: "select",
+    options: [
+      { id: "1", label: "Accessories" },
+      { id: "2", label: "Parts" }
+    ],
   },
   {
     label: "Category",
@@ -99,6 +136,24 @@ export const addProductFormElements = [
     componentType: "input",
     type: "number",
     placeholder: "Enter total stock",
+  },
+  {
+    label: "Features Product",
+    name: "features",
+    componentType: "select",
+    options: [
+      { id: "true", label: "true" },
+      { id: "false", label: "false" },
+    ],
+  },
+  {
+    label: "Best Sellers Product",
+    name: "bestSellers",
+    componentType: "select",
+    options: [
+      { id: "true", label: "true" },
+      { id: "false", label: "false" },
+    ],
   },
 ];
 
