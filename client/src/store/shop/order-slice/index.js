@@ -37,6 +37,18 @@ export const capturePayment = createAsyncThunk(
   }
 );
 
+export const cancelPayment = createAsyncThunk(
+  "order/cancelPayment",
+  async ({ token, orderId }, thunkAPI) => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/shop/order/cancel`, { token, orderId });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const getAllOrdersByUserId = createAsyncThunk(
   "/order/getAllOrdersByUserId",
   async (userId) => {

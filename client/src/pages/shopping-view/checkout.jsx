@@ -80,7 +80,7 @@ function ShoppingCheckout() {
       paymentId: "",
       payerId: "",
     };
-
+    setIsPaymemntStart(true);
     dispatch(createNewOrder(orderData)).then((data) => {
       console.log("orderData data",data);
       if (data?.payload?.success) {
