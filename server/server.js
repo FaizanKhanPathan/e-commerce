@@ -7,6 +7,7 @@ const cors = require("cors");
 const authRouter = require("./routes/auth/auth-routes");
 const adminProductsRouter = require("./routes/admin/products-routes");
 const adminBrandsRouter = require("./routes/admin/brands-routes");
+const adminCommonRouter = require("./routes/admin/admin-common-routes");
 const adminOrderRouter = require("./routes/admin/order-routes");
 
 const adminCategoryRouter = require("./routes/admin/category-routes");
@@ -55,6 +56,8 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 
 // brand category sub category route
+app.use("/api/admin", adminCommonRouter);
+
 app.use("/api/admin/brands", adminBrandsRouter);
 app.use("/api/admin/category", adminCategoryRouter)
 app.use("/api/admin/sub-category", adminSubCategoryRouter)
