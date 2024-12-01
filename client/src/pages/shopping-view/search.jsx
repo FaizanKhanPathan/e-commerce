@@ -10,7 +10,7 @@ import {
 } from "@/store/shop/search-slice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 function SearchProducts() {
   const [keyword, setKeyword] = useState("");
@@ -21,6 +21,16 @@ function SearchProducts() {
   const { productDetails } = useSelector((state) => state.shopProducts);
 
   const { user } = useSelector((state) => state.auth);
+
+  const location = useLocation();
+
+  // Parse the query string
+  const params = new URLSearchParams(location.search);
+  const paramKeyword = params.get("keyword");
+
+  useEffect(()=>{
+    setKeyword(paramKeyword)
+  },[])
 
   const { cartItems } = useSelector((state) => state.shopCart);
   const { toast } = useToast();
