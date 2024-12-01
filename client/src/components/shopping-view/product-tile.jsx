@@ -3,19 +3,21 @@ import { Button } from "../ui/button";
 import { brandOptionsMap, categoryOptionsMap } from "@/config";
 import { Badge } from "../ui/badge";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function ShoppingProductTile({
   product,
   handleGetProductDetails,
   handleAddtoCart,
 }) {
+  const navigate = useNavigate()
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
   );
+
   // console.log("user>>>>>>>>",user)
   return (
-    <Card className="w-full max-w-sm mx-auto flex flex-col justify-between">
+    <Card className="w-full max-w-sm mx-auto flex flex-col justify-between cursor-pointer" onClick={() => navigate(`/shop/product-details/${product?._id}`)}>
       <div onClick={() => handleGetProductDetails(product?._id)}>
         <div className="relative">
           <img
@@ -81,14 +83,14 @@ function ShoppingProductTile({
                   {"Add to cart"}
                 </Button>
               </> : <>
-                  <Button
-                    onClick={() => handleAddtoCart(product?._id, product?.totalStock)}
-                    className="w-full"
-                    >
-                    <Link to={"/auth/login"}>
+                <Button
+                  onClick={() => handleAddtoCart(product?._id, product?.totalStock)}
+                  className="w-full"
+                >
+                  <Link to={"/auth/login"}>
                     {"Sign in"}
-                </Link>
-                  </Button>
+                  </Link>
+                </Button>
               </>
             }
 

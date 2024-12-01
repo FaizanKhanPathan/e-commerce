@@ -5,6 +5,8 @@ import { addToCart, fetchCartItems } from '@/store/shop/cart-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from '../ui/use-toast';
 import { useNavigate } from 'react-router-dom';
+import { CgLogIn } from "react-icons/cg";
+
 
 
 const SearchResults = ({ searchResults, keyword, setKeyword }) => {
@@ -16,20 +18,24 @@ const SearchResults = ({ searchResults, keyword, setKeyword }) => {
 
 
     function handleAddtoCart(getCurrentProductId) {
-        dispatch(
-            addToCart({
-                userId: user?.id,
-                productId: getCurrentProductId,
-                quantity: 1,
-            })
-        ).then((data) => {
-            if (data?.payload?.success) {
-                dispatch(fetchCartItems(user?.id));
-                toast({
-                    title: "Product is added to cart",
-                });
-            }
-        });
+        if (user){
+            dispatch(
+                addToCart({
+                    userId: user?.id,
+                    productId: getCurrentProductId,
+                    quantity: 1,
+                })
+            ).then((data) => {
+                if (data?.payload?.success) {
+                    dispatch(fetchCartItems(user?.id));
+                    toast({
+                        title: "Product is added to cart",
+                    });
+                }
+            });
+        } else {
+            navigate("/auth/login")
+        }
     }
 
 
@@ -39,7 +45,7 @@ const SearchResults = ({ searchResults, keyword, setKeyword }) => {
                 keyword && <>
                     <div className={`absolute z-30 ${searchResults?.length > 4 && "h-96"}`}>
                         <div className="relative h-full">
-                            <div className="overflow-y-auto h-full">
+                            <div className="overflow-y-auto h-full pb-8">
                                 {searchResults?.map((response, index) => (
                                     <div
                                         key={index}
@@ -63,15 +69,21 @@ const SearchResults = ({ searchResults, keyword, setKeyword }) => {
                                                 $ {response?.salePrice}
                                             </p>
                                             <Button onClick={() => handleAddtoCart(response?._id)}>
-                                                <FaShoppingCart />
+                                                {
+                                                    user ? <>
+                                                        <FaShoppingCart />
+                                                    </> : <>
+                                                        <CgLogIn className='text-xl' />
+                                                    </>
+                                                }
                                             </Button>
                                         </div>
                                     </div>
                                 ))}
                             </div>
                             {
-                                 <>
-                                    <div className="font-semibold absolute bottom-0 left-0 w-full bg-white border p-2 cursor-pointer text-center" onClick={() => {setKeyword(""); navigate(`search?keyword=${keyword}`)}}>
+                               searchResults?.length > 0 && <>
+                                    <div className="font-semibold absolute bottom-0 left-0 w-full bg-white border p-2 cursor-pointer text-center" onClick={() => { setKeyword(""); navigate(`search?keyword=${keyword}`) }}>
                                         View all {searchResults?.length} results
                                     </div>
                                 </>
