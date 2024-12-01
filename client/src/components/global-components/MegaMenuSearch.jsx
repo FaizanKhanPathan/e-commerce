@@ -112,7 +112,7 @@ const MegaMenuSearch = () => {
                     </div>
                 </div>
             </div>
-            <div className='border border-gray-400 hidden lg:flex justify-start py-3 '>
+            <div className='border border-gray-400 hidden lg:flex justify-center gap-5 py-3 '>
                 {
                     getBrands?.map((res, index) => {
                         return (
