@@ -26,6 +26,9 @@ import AdminBrands from "./pages/admin-view/brands";
 import ForgetPassword from "./pages/auth/forget-password";
 import EnterOtp from "./pages/auth/enter-otp";
 import ResetPassword from "./pages/auth/reset-password";
+import PaymentCancelPage from "./pages/shopping-view/paypal-cancel";
+import Users from "./pages/admin-view/Users";
+import Payments from "./pages/admin-view/Payments";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -35,9 +38,11 @@ function App() {
 
   useEffect(() => {
     dispatch(checkAuth());
-  }, [dispatch]);
+  }, []);
 
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
+
+  // console.log(">>>>>>>>>>>>>>",isLoading, user);
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
@@ -78,13 +83,15 @@ function App() {
           <Route path="orders" element={<AdminOrders />} />
           <Route path="features" element={<AdminFeatures />} />
           <Route path="brands" element={<AdminBrands />} />
+          <Route path="users" element={<Users />} />
+          <Route path="payments" element={<Payments />} />
         </Route>
         <Route
           path="/shop"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            // </CheckAuth>
               <ShoppingLayout />
-            </CheckAuth>
           }
         >
           <Route path="home" element={<ShoppingHome />} />
@@ -93,6 +100,7 @@ function App() {
           <Route path="account" element={<ShoppingAccount />} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
+          <Route path="paypal-cancel" element={<PaymentCancelPage />} />
           <Route path="search" element={<SearchProducts />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />

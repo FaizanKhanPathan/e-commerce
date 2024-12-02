@@ -12,6 +12,21 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     match: [/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/, 'Please enter a valid email address'],
   },
+  taxId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  phone: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
+  companyName: {
+    type: String,
+    required: true,
+    unique: false,
+  },
   password: {
     type: String,
     required: true,

@@ -21,6 +21,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchAllBestSellerAndFeatureProducts,
   fetchAllFilteredProducts,
   fetchProductDetails,
 } from "@/store/shop/products-slice";
@@ -61,8 +62,9 @@ function ShoppingHome() {
   const { toast } = useToast();
 
   const getBrands = useSelector((state) => state?.adminBrands?.brandList)
+  const isTypeChange = useSelector((state) => state?.shopProducts?.isTypeChange)
+  const allBestSellerAndFeatureProducts = useSelector((state) => state?.shopProducts?.allBestSellerAndFeatureProducts)
 
-  const [currentSlide, setCurrentSlide] = useState(0);
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
@@ -115,26 +117,24 @@ function ShoppingHome() {
   }, [productDetails]);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList.length);
-    }, 4000);
-
-    return () => clearInterval(timer);
-  }, [featureImageList]);
-
-  useEffect(() => {
     dispatch(
       fetchAllFilteredProducts({
         filterParams: {},
         sortParams: "price-lowtohigh",
+        type: isTypeChange,
       })
     );
-  }, [dispatch]);
+  }, [dispatch, isTypeChange]);
+
+  useEffect(() => {
+    dispatch(fetchAllBestSellerAndFeatureProducts())
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
+  console.log("allBestSellerAndFeatureProducts",allBestSellerAndFeatureProducts)
   return (
     <div className="flex flex-col min-h-screen">
 
@@ -158,9 +158,9 @@ function ShoppingHome() {
             Price Chart By Categories
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {categoriesWithIcon.map((categoryItem) => (
+            {categoriesWithIcon.map((categoryItem, index) => (
               <Card
-                key={0}
+                key={index}
                 // onClick={() => handleNavigateToListingPage(categoryItem, "category")}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
@@ -188,25 +188,12 @@ function ShoppingHome() {
                   >
                     <CardContent className="flex flex-col items-center justify-center p-6">
                       <img src={ele.image_url} alt="" className=" h-12 mb-4" />
-                      {/* <brandItem.icon className="w-12 h-12 mb-4 text-primary" /> */}
                       <span className="font-bold text-primary">{ele.brand_name}</span>
                     </CardContent>
                   </Card>
                 )
               })
             }
-            {/* {brandsWithIcon.map((brandItem, index) => (
-              <Card
-              key={index}
-                onClick={() => handleNavigateToListingPage(brandItem, "brand")}
-                className="cursor-pointer hover:shadow-lg transition-shadow"
-              >
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <brandItem.icon className="w-12 h-12 mb-4 text-primary" />
-                  <span className="font-bold">{brandItem.label}</span>
-                </CardContent>
-              </Card>
-            ))} */}
           </div>
         </div>
       </section>
@@ -218,7 +205,7 @@ function ShoppingHome() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {productList && productList.length > 0
-              ? productList.slice(0,4)?.map((productItem) => (
+              ? productList.slice(0, 4)?.map((productItem) => (
                 <ShoppingProductTile
                   handleGetProductDetails={handleGetProductDetails}
                   product={productItem}
@@ -235,8 +222,8 @@ function ShoppingHome() {
             Best Sellers
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {productList && productList.length > 0
-              ? productList.map((productItem) => (
+            {allBestSellerAndFeatureProducts && allBestSellerAndFeatureProducts.length > 0
+              ? allBestSellerAndFeatureProducts?.filter((ele)=>ele?.bestSellers == 'true')?.map((productItem) => (
                 <ShoppingProductTile
                   handleGetProductDetails={handleGetProductDetails}
                   product={productItem}
@@ -250,11 +237,11 @@ function ShoppingHome() {
       <section className="py-8">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-center mb-8 uppercase">
-          Featured Products
+            Featured Products
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {productList && productList.length > 0
-              ? productList.map((productItem) => (
+            {allBestSellerAndFeatureProducts && allBestSellerAndFeatureProducts.length > 0
+              ? allBestSellerAndFeatureProducts?.filter((ele)=> ele?.features == 'true')?.map((productItem) => (
                 <ShoppingProductTile
                   handleGetProductDetails={handleGetProductDetails}
                   product={productItem}
@@ -265,10 +252,10 @@ function ShoppingHome() {
         </div>
       </section>
 
-      <ProductDetailsDialog
+      {/* <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
-        productDetails={productDetails} />
+        productDetails={productDetails} /> */}
 
 
     </div >

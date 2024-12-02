@@ -45,6 +45,7 @@ function ShoppingListing() {
   );
   const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
+  const isTypeChange = useSelector((state) => state?.shopProducts?.isTypeChange)
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -136,9 +137,9 @@ function ShoppingListing() {
   useEffect(() => {
     if (filters !== null && sort !== null)
       dispatch(
-        fetchAllFilteredProducts({ filterParams: filters, sortParams: sort })
+        fetchAllFilteredProducts({ filterParams: filters, sortParams: sort, type:isTypeChange, })
       );
-  }, [dispatch, sort, filters]);
+  }, [dispatch, sort, filters, isTypeChange]);
 
   useEffect(() => {
     if (productDetails !== null) setOpenDetailsDialog(true);

@@ -1,37 +1,36 @@
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { capturePayment } from "@/store/shop/order-slice";
+import { cancelPayment } from "@/store/shop/order-slice"; // Action to handle cancellation
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-function PaypalReturnPage() {
+function PaypalCancelPage() {
   const dispatch = useDispatch();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const paymentId = params.get("paymentId");
-  const payerId = params.get("PayerID");
+  const token = params.get("token");
 
   useEffect(() => {
-    if (paymentId && payerId) {
+    if (token) {
       const orderId = JSON.parse(sessionStorage.getItem("currentOrderId"));
 
-      dispatch(capturePayment({ paymentId, payerId, orderId })).then((data) => {
-        console.log("data>>>>>>>>",data)
+      dispatch(cancelPayment({ token, orderId })).then((data) => {
         if (data?.payload?.success) {
           sessionStorage.removeItem("currentOrderId");
-          window.location.href = "/shop/payment-success";
+          // Redirect to cancellation confirmation or retry page
+          // window.location.href = "/shop/payment-canceled";
         }
       });
     }
-  }, [paymentId, payerId, dispatch]);
+  }, [token, dispatch]);
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Processing Payment...Please wait!</CardTitle>
+        <CardTitle>Payment Canceled. Redirecting...</CardTitle>
       </CardHeader>
     </Card>
   );
 }
 
-export default PaypalReturnPage;
+export default PaypalCancelPage;

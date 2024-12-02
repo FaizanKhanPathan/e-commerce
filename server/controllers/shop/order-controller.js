@@ -96,6 +96,7 @@ const createOrder = async (req, res) => {
 };
 
 const capturePayment = async (req, res) => {
+
   try {
     const { paymentId, payerId, orderId } = req.body;
 
@@ -147,11 +148,22 @@ const capturePayment = async (req, res) => {
   }
 };
 
+const cancelPayment = async (req, res) => {
+  const { token, orderId } = req.body;
+  try {
+    // Update order status in the database
+    await Order.findByIdAndUpdate(orderId, { orderStatus: "canceled" });
+    res.json({ success: true, message: "Order has been canceled." });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Failed to cancel the order." });
+  }
+}
+
 const getAllOrdersByUser = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const orders = await Order.find({ userId });
+    const orders = await Order.find({ userId }).sort({ orderDate: -1 });
 
     if (!orders.length) {
       return res.status(404).json({
@@ -204,4 +216,5 @@ module.exports = {
   capturePayment,
   getAllOrdersByUser,
   getOrderDetails,
+  cancelPayment
 };

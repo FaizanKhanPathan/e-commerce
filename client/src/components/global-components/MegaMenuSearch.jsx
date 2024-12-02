@@ -5,14 +5,19 @@ import { LuArrowLeftRight } from "react-icons/lu";
 import SubcategoriesMenu from './SubcategoriesMenu';
 import { getAllBrands, getAllSubMenu } from '@/store/admin/brand-slice';
 import { useDispatch, useSelector } from 'react-redux';
+import { setIsTypeChange } from '@/store/shop/products-slice';
 
 
 const MegaMenuSearch = () => {
     const dispatch = useDispatch()
     const getBrands = useSelector((state) => state?.adminBrands?.brandList)
     const categoryList = useSelector((state) => state?.adminBrands?.allSubMenuList)
+    const isTypeChange = useSelector((state) => state?.shopProducts?.isTypeChange)
 
+    // console.log("isTypeChange",isTypeChange)
     // console.log("categoryList>>>>>",categoryList)
+
+    const [categorySwitch, setCategorySwitch] = useState("1")
 
     const [selectedCategoryValue, setSelectedCategoryValue] = useState(null)
     const [selectedCategoryValueData, setSelectedCategoryValueData] = useState([])
@@ -38,6 +43,16 @@ const MegaMenuSearch = () => {
         dispatch(getAllBrands());
     }, []);
 
+    const handleSwitchCategory = () => {
+        // console.log("handleSwitchCategory", categorySwitch)
+        if(isTypeChange == "1"){
+            // setCategorySwitch("2")
+            dispatch(setIsTypeChange("2"))
+        } else {
+            // setCategorySwitch("1")
+            dispatch(setIsTypeChange("1"))
+        }
+    }
     return (
         <div className='text-[12px] border-b'>
             <div className='flex justify-center lg:justify-end items-center h-20 pr-0 md:pr-36'>
@@ -59,13 +74,28 @@ const MegaMenuSearch = () => {
                                 </span>
                             </span>
                         </div>
-                        <div className='text-[#43AF42] hover:text-destructive cursor-pointer text-[14px] font-semibold flex justify-start items-center gap-2'>
-                            <span>
-                                <LuArrowLeftRight className='font-bold text-2xl' />
-                            </span>
-                            <span>
-                                Go to Accessories
-                            </span>
+                        <div className='text-[#43AF42] hover:text-destructive cursor-pointer text-[14px] font-semibold flex justify-start items-center gap-2' onClick={() => handleSwitchCategory()}>
+                            {
+                                isTypeChange !== "1" ? <>
+                                    <>
+                                        <span>
+                                            <LuArrowLeftRight className='font-bold text-2xl' />
+                                        </span>
+                                        <span>
+                                            Go to Accessories
+                                        </span>
+                                    </>
+                                </> : <>
+                                    <>
+                                        <span>
+                                            <LuArrowLeftRight className='font-bold text-2xl' />
+                                        </span>
+                                        <span>
+                                            Go to Parts
+                                        </span>
+                                    </>
+                                </>
+                            }
                         </div>
                     </div>
                 </div>

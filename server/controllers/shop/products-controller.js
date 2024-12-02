@@ -2,10 +2,11 @@ const Product = require("../../models/Product");
 
 const getFilteredProducts = async (req, res) => {
   try {
-    const { category = [], brand = [], sortBy = "price-lowtohigh" } = req.query;
+    const { category = [], brand = [], sortBy = "price-lowtohigh", type = "1" } = req.query;
 
     let filters = {};
 
+    filters.type = type
     if (category.length) {
       filters.category = { $in: category.split(",") };
     }
@@ -79,4 +80,31 @@ const getProductDetails = async (req, res) => {
   }
 };
 
-module.exports = { getFilteredProducts, getProductDetails };
+const getSellerAndFeatureProduct = async (req, res) => {
+  try {
+    // Create an empty filter object
+    const features = 'true'
+    const bestSellers = 'true'
+    const featureProducts = await Product.find({ features });
+    const sellersProducts = await Product.find({ bestSellers });
+    const combinedProducts = [...featureProducts, ...sellersProducts]
+
+    // Remove duplicates based on _id using reduce and Map
+    const uniqueProducts = Array.from(
+      combinedProducts.reduce((map, product) => map.set(product._id.toString(), product), new Map()).values()
+    );
+
+    res.status(200).json({
+      success: true,
+      data: uniqueProducts,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Some error occured",
+    });
+  }
+}
+
+module.exports = { getFilteredProducts, getProductDetails, getSellerAndFeatureProduct };
