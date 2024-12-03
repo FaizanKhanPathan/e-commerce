@@ -50,7 +50,7 @@ const adminSidebarMenuItems = [
     label: "Products",
     path: "/admin/products",
     icon: <ShoppingBasket />,
-  }
+  },
 ];
 
 function MenuItems({ setOpen }) {

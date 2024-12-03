@@ -14,7 +14,7 @@ function ProductFilter({ filters, handleFilter }) {
   // console.log("filters>>>>>", filters)
 
   const filterOptionsValue = {
-    brand: getBrands?.map((ele) => {
+    brand: getBrands?.filter((res)=>res?.image_url)?.map((ele) => {
       return {
         id: ele?.brand_name?.toLowerCase(),
         label: ele?.brand_name

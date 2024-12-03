@@ -12,7 +12,7 @@ function ProductImageUpload({
   imageLoadingState,
   uploadedImageUrl,
   setUploadedImageUrl,
-  setImageLoadingState,
+  setImageLoadingState = null,
   isEditMode,
   isCustomStyling = false,
 }) {
@@ -20,6 +20,7 @@ function ProductImageUpload({
 
   const [imageUrl, setImageUrl] = useState("")
 
+  console.log("uploadedImageUrl", uploadedImageUrl)
 
 
 
@@ -86,7 +87,9 @@ function ProductImageUpload({
     if (imageFile !== null) uploadImageToCloudinary();
   }, [imageFile]);
 
-  console.log("imageUrl", imageUrl)
+  useEffect(() => {
+    setImageUrl(uploadedImageUrl)
+  }, [uploadedImageUrl])
 
   return (
     <div

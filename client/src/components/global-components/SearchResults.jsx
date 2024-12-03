@@ -18,7 +18,7 @@ const SearchResults = ({ searchResults, keyword, setKeyword }) => {
 
 
     function handleAddtoCart(getCurrentProductId) {
-        if (user){
+        if (user) {
             dispatch(
                 addToCart({
                     userId: user?.id,
@@ -38,12 +38,13 @@ const SearchResults = ({ searchResults, keyword, setKeyword }) => {
         }
     }
 
+    console.log("searchResults", searchResults)
 
     return (
         <div>
             {
                 keyword && <>
-                    <div className={`absolute z-30 ${searchResults?.length > 4 && "h-96"}`}>
+                    <div className={`absolute z-[99] ${searchResults?.length > 4 && "h-96"}`}>
                         <div className="relative h-full">
                             <div className="overflow-y-auto h-full pb-8">
                                 {searchResults?.map((response, index) => (
@@ -61,7 +62,8 @@ const SearchResults = ({ searchResults, keyword, setKeyword }) => {
                                             </div>
                                             <div>
                                                 <h1 className="font-semibold">{response?.title}</h1>
-                                                <p>{response?.description}</p>
+                                                <p className='mt-1 font-semibold'>Brand: {response?.brand}</p>
+                                                <p className='mt-1 font-semibold'>Category: {response?.category}</p>
                                             </div>
                                         </div>
                                         <div className="flex flex-col justify-between">
@@ -82,7 +84,7 @@ const SearchResults = ({ searchResults, keyword, setKeyword }) => {
                                 ))}
                             </div>
                             {
-                               searchResults?.length > 0 && <>
+                                searchResults?.length > 0 && <>
                                     <div className="font-semibold absolute bottom-0 left-0 w-full bg-white border p-2 cursor-pointer text-center" onClick={() => { setKeyword(""); navigate(`search?keyword=${keyword}`) }}>
                                         View all {searchResults?.length} results
                                     </div>

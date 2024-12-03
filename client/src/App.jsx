@@ -27,6 +27,7 @@ import PaymentCancelPage from "./pages/shopping-view/paypal-cancel";
 import Users from "./pages/admin-view/Users";
 import Payments from "./pages/admin-view/Payments";
 import ProductDetails from "./pages/shopping-view/ProductDetails";
+import ComingSoon from "./pages/not-found/ComingSoon";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -98,6 +99,7 @@ function App() {
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="paypal-cancel" element={<PaymentCancelPage />} />
           <Route path="search" element={<SearchProducts />} />
+          <Route path="coming-soon" element={<ComingSoon />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />

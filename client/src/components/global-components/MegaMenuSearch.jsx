@@ -66,53 +66,64 @@ const MegaMenuSearch = () => {
 
     return (
         <div className='text-[12px] border-b'>
-            <div className='flex justify-center lg:justify-end items-center h-20 pr-0 md:pr-36'>
-                <div className='flex justify-center items-center gap-4'>
-                    <div className='w-max h-max relative'>
-                        <input type="text" onChange={(e) => setKeyword(e.target.value)} value={keyword} placeholder='Search entire store...' className='w-[250px] sm:w-[450px] py-3 rounded-md outline-none px-4 text-[14px] border shadow-lg' />
-                        <SearchResults searchResults={searchResults} keyword={keyword} setKeyword={setKeyword} />
-                    </div>
-                    <div className='hidden lg:flex justify-center items-center gap-8'>
-                        <div className='flex justify-start items-center gap-3 text-primary hover:text-destructive cursor-pointer'>
-                            <span>
-                                <FaPhoneVolume className='text-[35px] ' />
-                            </span>
-                            <span className='flex flex-col items-start'>
-                                <span className='font-semibold text-[14px] '>
-                                    Have questions
-                                </span>
-                                <span className='font-semibold text-[12px] '>
-                                    {"(000)-000-0000"}
-                                </span>
-                            </span>
-                        </div>
-                        <div className='text-[#43AF42] hover:text-destructive cursor-pointer text-[14px] font-semibold flex justify-start items-center gap-2' onClick={() => handleSwitchCategory()}>
-                            {
-                                isTypeChange !== "1" ? <>
-                                    <>
-                                        <span>
-                                            <LuArrowLeftRight className='font-bold text-2xl' />
-                                        </span>
-                                        <span>
-                                            Go to Accessories
-                                        </span>
-                                    </>
-                                </> : <>
-                                    <>
-                                        <span>
-                                            <LuArrowLeftRight className='font-bold text-2xl' />
-                                        </span>
-                                        <span>
-                                            Go to Parts
-                                        </span>
-                                    </>
-                                </>
-                            }
+
+            <div className='flex justify-center gap-5'>
+                <div>
+                    
+                </div>
+                <div className='flex justify-center lg:justify-center items-center h-20'>
+                    <div className='flex justify-center items-center gap-4'>
+                        <div className='w-max h-max relative'>
+                            <input type="text" onChange={(e) => setKeyword(e.target.value)} value={keyword} placeholder='Search entire store...' className='w-[250px] sm:w-[450px] py-3 rounded-md outline-none px-4 text-[14px] border shadow-lg' />
+                            <SearchResults searchResults={searchResults} keyword={keyword} setKeyword={setKeyword} />
                         </div>
                     </div>
                 </div>
+                <div className='hidden lg:flex justify-center items-center gap-8'>
+                    <div className='flex justify-start items-center gap-3 text-primary hover:text-destructive cursor-pointer'>
+                        <span>
+                            <FaPhoneVolume className='text-[35px] ' />
+                        </span>
+                        <span className='flex flex-col items-start'>
+                            <span className='font-semibold text-[14px] '>
+                                Have questions
+                            </span>
+                            <span className='font-semibold text-[12px] '>
+                                {"(000)-000-0000"}
+                            </span>
+                        </span>
+                    </div>
+                    <div className='text-[#43AF42] hover:text-destructive cursor-pointer text-[14px] font-semibold flex justify-start items-center gap-2' onClick={() => handleSwitchCategory()}>
+                        {
+                            isTypeChange !== "1" ? <>
+                                <>
+                                    <span>
+                                        <LuArrowLeftRight className='font-bold text-2xl' />
+                                    </span>
+                                    <span>
+                                        Go to Accessories
+                                    </span>
+                                </>
+                            </> : <>
+                                <>
+                                    <span>
+                                        <LuArrowLeftRight className='font-bold text-2xl' />
+                                    </span>
+                                    <span>
+                                        Go to Parts
+                                    </span>
+                                </>
+                            </>
+                        }
+                    </div>
+                </div>
             </div>
-            <div className='border border-gray-400 hidden lg:flex justify-center gap-5 py-3 '>
+
+
+
+
+
+            <div className='border border-gray-400 hidden lg:flex justify-center gap-5 py-3'>
                 {
                     getBrands?.map((res, index) => {
                         return (

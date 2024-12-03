@@ -101,7 +101,7 @@ export {
   SheetTrigger,
   SheetClose,
   SheetContent,
-  SheetHeader,
+  SheetHeader, 
   SheetFooter,
   SheetTitle,
   SheetDescription,

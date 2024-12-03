@@ -2,6 +2,7 @@ import React from "react";
 import { FaFacebook, FaInstagramSquare, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import gmtLogo from "../../assets/gmt-white-logo.png"
+import { Link } from "react-router-dom";
 
 
 const Footer = () => {
@@ -11,10 +12,10 @@ const Footer = () => {
                 {/* Logo Section */}
                 <div className="flex justify-center lg:justify-start mb-6 lg:mb-0">
                     <img
-            src={gmtLogo}
-            alt="logo"
-            className="h-auto"
-          />
+                        src={gmtLogo}
+                        alt="logo"
+                        className="h-auto"
+                    />
                     {/* E Commerce */}
                 </div>
 
@@ -55,29 +56,29 @@ const Footer = () => {
                     <h5 className="font-semibold mb-4">My Account</h5>
                     <ul>
                         <li>
-                            <a href="/coming-soon" className="hover:underline text-sm text-gray-400">
+                            <Link to={"/shop/coming-soon"} className="hover:underline text-sm text-gray-400">
                                 Support
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/store" className="hover:underline text-sm text-gray-400">
+                            <Link to={"/shop/account"} className="hover:underline text-sm text-gray-400">
                                 Account Details
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/store" className="hover:underline text-sm text-gray-400">
+                            <Link to={"/shop/account"} className="hover:underline text-sm text-gray-400">
                                 Addresses
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/account/dashboard" className="hover:underline text-sm text-gray-400">
+                            <Link to={"/shop/account"} className="hover:underline text-sm text-gray-400">
                                 Order History
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/coming-soon" className="hover:underline text-sm text-gray-400">
+                            <Link to={"/shop/coming-soon"} className="hover:underline text-sm text-gray-400">
                                 Order Tracking
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
