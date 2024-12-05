@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { FaPhoneVolume } from "react-icons/fa";
 import { LuArrowLeftRight } from "react-icons/lu";
@@ -12,6 +12,10 @@ import SearchResults from './SearchResults';
 
 const MegaMenuSearch = () => {
     const dispatch = useDispatch()
+
+    const submenuRef = useRef(null); // Ref to track the submenu container
+
+
     const getBrands = useSelector((state) => state?.adminBrands?.brandList)
     const categoryList = useSelector((state) => state?.adminBrands?.allSubMenuList)
     const isTypeChange = useSelector((state) => state?.shopProducts?.isTypeChange)
@@ -21,9 +25,7 @@ const MegaMenuSearch = () => {
     // console.log("categoryList>>>>>",categoryList)
 
     const [keyword, setKeyword] = useState("")
-
     const [categorySwitch, setCategorySwitch] = useState("1")
-
     const [selectedCategoryValue, setSelectedCategoryValue] = useState(null)
     const [selectedCategoryValueData, setSelectedCategoryValueData] = useState([])
     const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
@@ -64,12 +66,32 @@ const MegaMenuSearch = () => {
     }
 
 
+
+    // Function to handle clicking outside the submenu
+    const handleClickOutside = (event) => {
+        if (submenuRef.current && !submenuRef.current.contains(event.target)) {
+            setIsSubMenuVisible(false); // Close the submenu if the click is outside
+        }
+    };
+
+    // Add event listener for clicks outside when the submenu is visible
+    useEffect(() => {
+        if (isSubMenuVisible) {
+            document.addEventListener('click', handleClickOutside);
+        }
+
+        // Cleanup event listener when submenu is not visible
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [isSubMenuVisible]);
+
     return (
         <div className='text-[12px] border-b'>
 
-            <div className='flex justify-center gap-5'>
+            <div className='flex justify-start lg:justify-center gap-5'>
                 <div>
-                    
+
                 </div>
                 <div className='flex justify-center lg:justify-center items-center h-20'>
                     <div className='flex justify-center items-center gap-4'>
@@ -79,8 +101,8 @@ const MegaMenuSearch = () => {
                         </div>
                     </div>
                 </div>
-                <div className='hidden lg:flex justify-center items-center gap-8'>
-                    <div className='flex justify-start items-center gap-3 text-primary hover:text-destructive cursor-pointer'>
+                <div className='flex justify-center items-center gap-8'>
+                    <div className='hidden lg:flex justify-start items-center gap-3 text-primary hover:text-destructive cursor-pointer'>
                         <span>
                             <FaPhoneVolume className='text-[35px] ' />
                         </span>
@@ -136,6 +158,7 @@ const MegaMenuSearch = () => {
             </div>
             {isSubMenuVisible && (
                 <div
+                    ref={submenuRef} // Attach ref to submenu
                     onMouseEnter={() => setIsSubMenuVisible(true)}
                     onMouseLeave={handleMouseLeaveSubMenu}
                 >

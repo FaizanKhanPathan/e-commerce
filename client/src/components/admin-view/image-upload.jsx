@@ -20,23 +20,23 @@ function ProductImageUpload({
 
   const [imageUrl, setImageUrl] = useState("")
 
-  console.log("uploadedImageUrl", uploadedImageUrl)
+  // console.log("uploadedImageUrl", uploadedImageUrl)
 
 
 
   console.log(isEditMode, "isEditMode");
 
   async function handleImageFileChange(event) {
-    console.log(event.target.files, "event.target.files");
+    // console.log(event.target.files, "event.target.files");
 
     const data = new FormData()
 
     const selectedFile = event.target.files?.[0];
     data.append("file", selectedFile)
     data.append("upload_preset", "xguzvxc0")
-    data.append("cloud_name", "dhcp35ly7")
+    data.append("cloud_name", import.meta.env.CLOUDINARY_CLOUD_NAME)
 
-    await axios.post(`https://api.cloudinary.com/v1_1/dhcp35ly7/image/upload`, data).then((response) => {
+    await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.CLOUDINARY_CLOUD_NAME}/image/upload`, data).then((response) => {
       setUploadedImageUrl(response?.data?.url)
       setImageUrl(response?.data?.url)
       // setImageUrl(response?.ima)

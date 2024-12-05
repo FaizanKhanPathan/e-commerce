@@ -146,7 +146,7 @@ const ProductDetails = ({ }) => {
                 <div className='flex justify-between flex-col h-full w-[70%]'>
                     <div>
                         <h1 className="text-3xl font-extrabold">{productDetails?.title}</h1>
-                        <p className="text-muted-foreground text-lg mb-5 mt-2 tracking-tight">
+                        <p className="text-muted-foreground text-md mb-5 mt-2 tracking-tight leading-6">
                             {productDetails?.description}
                         </p>
                     </div>

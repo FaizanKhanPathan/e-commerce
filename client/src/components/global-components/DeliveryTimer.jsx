@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-
-// Helper function to format time in HH:MM:SS
+// Helper function to format time in hh:mm:ss with labels
 const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
-    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    return `${String(hours).padStart(2, '0')}hh ${String(minutes).padStart(2, '0')}mm ${String(remainingSeconds).padStart(2, '0')}ss`;
 };
 
 const DeliveryTimer = () => {
@@ -49,13 +48,22 @@ const DeliveryTimer = () => {
 
 
     return (
-        <div className='outer-container'>
-            <div className='inner-container'>
-                <h1>FedEx</h1>
-                    <p>{formatTime(timeRemaining)}</p>
+        // <div className='outer-container'>
+        //     <div className='inner-container w-96 w-24 transition duration-300 delay-150'>
+        //         <h1 className="text-end">FedEx</h1>
+        //         <h1 className="text-end">Cutoff</h1>
+        //         {/* <p>{formatTime(timeRemaining)}</p> */}
+        //     </div>
+        // </div>
+        <div className='group'>
+            <div className='inner-container w-24 group-hover:w-96 transition-all duration-1000 ease-in-out'>
+                <div className="">
+                    <h1 className="text-end">FedEx</h1>
+                    <h1 className="text-end">Cutoff</h1>
+                </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default DeliveryTimer
+export default DeliveryTimer;

@@ -53,14 +53,14 @@ const SearchResults = ({ searchResults, keyword, setKeyword }) => {
                                         className="hover:bg-slate-200 flex bg-white py-5 px-3 gap-2 border-b justify-between"
                                     >
                                         <div className="flex justify-start gap-2 cursor-pointer">
-                                            <div>
+                                            <div onClick={()=>navigate(`/shop/product-details/${response?._id}`)}>
                                                 <img
                                                     src={response?.image}
                                                     className="border object-contain w-14 h-14"
                                                     alt=""
                                                 />
                                             </div>
-                                            <div>
+                                            <div onClick={()=>navigate(`/shop/product-details/${response?._id}`)}>
                                                 <h1 className="font-semibold">{response?.title}</h1>
                                                 <p className='mt-1 font-semibold'>Brand: {response?.brand}</p>
                                                 <p className='mt-1 font-semibold'>Category: {response?.category}</p>
