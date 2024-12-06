@@ -30,7 +30,7 @@ function SearchProducts() {
 
   useEffect(()=>{
     setKeyword(paramKeyword)
-  },[])
+  },[paramKeyword])
 
   const { cartItems } = useSelector((state) => state.shopCart);
   const { toast } = useToast();

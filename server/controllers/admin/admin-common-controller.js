@@ -19,11 +19,12 @@ const getUsers = async (req, res) => {
 const getPayments = async (req, res) => {
     try {
         // Fetch all orders
-        const orders = await Order.find({}).populate("userId", "userName email phone");
+        const orders = await Order.find({}).populate("userId", "userName email phone").sort({ _id: -1 });
 
         // Map orders to the desired format
         const formattedOrders = orders.map((order) => ({
             paymentId: order.paymentId || "N/A",
+            orderDate: order.orderDate,
             amount: order.totalAmount.toFixed(2),
             paymentStatus: order.paymentStatus,
             orderDetails: order.cartItems,
