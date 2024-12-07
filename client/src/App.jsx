@@ -29,6 +29,8 @@ import ResetPassword from "./pages/auth/reset-password";
 import PaymentCancelPage from "./pages/shopping-view/paypal-cancel";
 import Users from "./pages/admin-view/Users";
 import Payments from "./pages/admin-view/Payments";
+import ProductDetails from "./pages/shopping-view/ProductDetails";
+import ComingSoon from "./pages/not-found/ComingSoon";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -91,10 +93,11 @@ function App() {
           element={
             // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
             // </CheckAuth>
-              <ShoppingLayout />
+            <ShoppingLayout />
           }
         >
           <Route path="home" element={<ShoppingHome />} />
+          <Route path="product-details/:id" element={<ProductDetails />} />
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
@@ -102,6 +105,7 @@ function App() {
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="paypal-cancel" element={<PaymentCancelPage />} />
           <Route path="search" element={<SearchProducts />} />
+          <Route path="coming-soon" element={<ComingSoon />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />

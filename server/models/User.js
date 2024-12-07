@@ -43,7 +43,10 @@ const UserSchema = new mongoose.Schema({
   passwordResetOtpExpiry: { type: Date,
     default: () => Date.now() + 10 * 60 * 1000,
    },
-});
+},
+{ timestamps: true }
+
+);
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;

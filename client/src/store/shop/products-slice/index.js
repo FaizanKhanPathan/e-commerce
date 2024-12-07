@@ -23,8 +23,6 @@ export const fetchAllFilteredProducts = createAsyncThunk(
       `${import.meta.env.VITE_API_URL}/api/shop/products/get?${query}`
     );
 
-    console.log(result);
-
     return result?.data;
   }
 );
@@ -35,8 +33,6 @@ export const fetchAllBestSellerAndFeatureProducts = createAsyncThunk(
     const result = await axios.get(
       `${import.meta.env.VITE_API_URL}/api/shop/products/seller-feature`
     );
-
-    console.log("result>>>>>>>>>>>>>",result);
 
     return result?.data;
   }
@@ -57,9 +53,9 @@ const shoppingProductSlice = createSlice({
   name: "shoppingProducts",
   initialState,
   reducers: {
-    setProductDetails: (state) => {
-      state.productDetails = null;
-    },
+    // setProductDetails: (state) => {
+    //   state.productDetails = null;
+    // },
     setIsTypeChange: (state, action) => {
       state.isTypeChange = action.payload
     }

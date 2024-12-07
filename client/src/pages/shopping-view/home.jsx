@@ -134,7 +134,6 @@ function ShoppingHome() {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
-  console.log("allBestSellerAndFeatureProducts",allBestSellerAndFeatureProducts)
   return (
     <div className="flex flex-col min-h-screen">
 
@@ -152,7 +151,7 @@ function ShoppingHome() {
       </div>
 
 
-      <section className="py-12 ">
+      {/* <section className="py-12 ">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8 uppercase">
             Price Chart By Categories
@@ -171,7 +170,7 @@ function ShoppingHome() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
 
       <section className="py-12 ">
@@ -179,8 +178,8 @@ function ShoppingHome() {
           <h2 className="text-3xl font-bold text-center mb-8 uppercase">Shop by Brand</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {
-              getBrands?.map((ele, index) => {
-                return (
+              getBrands?.filter((res)=>res?.image_url)?.map((ele, index) => {
+                return  (
                   <Card
                     key={index}
                     onClick={() => handleNavigateToListingPage(ele, "brand")}

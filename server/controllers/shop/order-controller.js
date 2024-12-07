@@ -152,8 +152,8 @@ const cancelPayment = async (req, res) => {
   const { token, orderId } = req.body;
   try {
     // Update order status in the database
-    await Order.findByIdAndUpdate(orderId, { orderStatus: "canceled" });
-    res.json({ success: true, message: "Order has been canceled." });
+    const orderDetails = await Order.findByIdAndUpdate(orderId, { orderStatus: "canceled" });
+    res.json({ success: true, message: "Order has been canceled.", data: orderDetails });
   } catch (error) {
     res.status(500).json({ success: false, message: "Failed to cancel the order." });
   }
