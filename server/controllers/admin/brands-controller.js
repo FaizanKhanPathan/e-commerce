@@ -32,6 +32,38 @@ const addBrand = async (req, res) => {
         });
     }
 }
+
+const updateBrand = async (req, res) => {
+    try {
+        // Destructuring the fields from the request body
+        const { brand_id, image_url, brand_name } = req.body;
+
+        // Check if all required fields are provided
+        if (!brand_id || !brand_name || !image_url) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+
+        // Find the brand by ID and update it
+        const updatedBrand = await Brand.findByIdAndUpdate(
+            brand_id, // Search by brand_id (assumed to be the MongoDB _id)
+            { brand_name, image_url }, // Fields to update
+            { new: true } // Return the updated document (defaults to false, which returns the original document)
+        );
+
+        // Check if the brand was found and updated
+        if (!updatedBrand) {
+            return res.status(404).json({ message: "Brand not found" });
+        }
+
+        // Return the updated brand information
+        return res.status(200).json(updatedBrand);
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
 const getBrands = async (req, res) => {
     try {
         const getAllBrands = await Brand.find({})
@@ -87,8 +119,8 @@ const getCategories = async (req, res) => {
         const query = brand_id ? { brand_id } : {};
         const getAllCategories = await Category.find(query).populate("brand_id", "brand_name").sort({ createdAt: -1 });;
 
-        const data = getAllCategories.filter((ele)=> ele?.brand_id).map(item => ({
-            brand_id:item.brand_id._id.toString(),
+        const data = getAllCategories.filter((ele) => ele?.brand_id).map(item => ({
+            brand_id: item.brand_id._id.toString(),
             category_id: item._id.toString(), // Assuming you want to use the sub-category's ID as the category_id
             category_name: item.category_name
         }));
@@ -143,7 +175,7 @@ const getSubCategory = async (req, res) => {
         const getAllSubCategories = await SubCategory.find(query).populate(["brand_id", "category_id"]).sort({ createdAt: -1 });;
 
         // console.log("getAllSubCategories", getAllSubCategories);
-        
+
         // Transform the data into the desired format
         const data = [];
 
@@ -236,6 +268,7 @@ const getAllCategoryMenu = async (req, res) => {
 
 module.exports = {
     addBrand,
+    updateBrand,
     getBrands,
 
     addCategory,

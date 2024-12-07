@@ -30,6 +30,9 @@ const initialFormData = {
   salePrice: "",
   totalStock: "",
   averageReview: 0,
+  features: "false",
+  bestSellers:"false",
+  type:"1"
 };
 
 function AdminProducts() {
@@ -50,7 +53,6 @@ function AdminProducts() {
 
   function onSubmit(event) {
     event.preventDefault();
-    console.log("event",event)
     console.log("formData",formData)
     currentEditedId !== null
       ? dispatch(

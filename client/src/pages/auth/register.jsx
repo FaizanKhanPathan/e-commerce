@@ -35,7 +35,7 @@ function AuthRegister() {
     });
   }
 
-  console.log(formData);
+  console.log("formData",formData);
 
   return (
     <div className="mx-auto w-full max-w-md space-y-6">

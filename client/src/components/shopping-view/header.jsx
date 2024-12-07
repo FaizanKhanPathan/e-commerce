@@ -67,6 +67,17 @@ function MenuItems() {
 
   // console.log("categoryList>>>>>>>>>>>>", categoryList)
 
+  const handleFilterByCategory = (commodity) => {
+    const currentFilter = {
+      ["category"]: [commodity?.sub_category_name?.toLowerCase()],
+    };
+
+    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+    navigate(`/shop/listing`);
+
+
+  }
+
   return (
     <nav className="flex flex-col overflow-auto lg:overflow-visible max-h-screen lg:max-h-full">
       {/* {shoppingViewHeaderMenuItems.map((menuItem) => (
@@ -106,7 +117,8 @@ function MenuItems() {
                 {
                   selectedBrandId == ele?.brand_id && <>
                     {
-                      ele?.category?.map((res) => {
+
+                      [...ele?.category]?.reverse()?.map((res) => {
                         return <>
                           <div className="ml-3">
                             <p onClick={() => selectedCategoryId == "" ? setSelectedCategoryId(res?.category_id) : setSelectedCategoryId("")} className="flex justify-between items-center py-2 border-b">
@@ -128,7 +140,7 @@ function MenuItems() {
                                 {
                                   res?.sub_category?.map((element) => {
                                     return (
-                                      <div className="ml-3">
+                                      <div className="ml-3" onClick={() => handleFilterByCategory(element)}>
                                         <p className="py-2 border-b">
                                           <span>
                                             {element?.sub_category_name}
@@ -177,57 +189,57 @@ function HeaderRightContent() {
     <div className="flex justify-between py-5 lg:items-center lg:flex-row flex-row gap-4">
       {
         isAuthenticated ? <>
-      <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
-        <Button
-          onClick={() => setOpenCartSheet(true)}
-          variant="outline"
-          size="icon"
-          className="relative"
-        >
-          <ShoppingCart className="w-6 h-6" />
-          <span className="absolute top-[-5px] right-[2px] font-bold text-sm">
-            {cartItems?.items?.length || 0}
-          </span>
-          <span className="sr-only">User cart</span>
-        </Button>
-        <UserCartWrapper
-          setOpenCartSheet={setOpenCartSheet}
-          cartItems={
-            cartItems && cartItems.items && cartItems.items.length > 0
-              ? cartItems.items
-              : []
-          }
-        />
-      </Sheet>
+          <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
+            <Button
+              onClick={() => setOpenCartSheet(true)}
+              variant="outline"
+              size="icon"
+              className="relative"
+            >
+              <ShoppingCart className="w-6 h-6" />
+              <span className="absolute top-[-5px] right-[2px] font-bold text-sm">
+                {cartItems?.items?.length || 0}
+              </span>
+              <span className="sr-only">User cart</span>
+            </Button>
+            <UserCartWrapper
+              setOpenCartSheet={setOpenCartSheet}
+              cartItems={
+                cartItems && cartItems.items && cartItems.items.length > 0
+                  ? cartItems.items
+                  : []
+              }
+            />
+          </Sheet>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Avatar className="bg-black cursor-pointer">
-            <AvatarFallback className="bg-black text-white font-extrabold">
-              {user?.userName[0].toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent side="right" className="w-56">
-          <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate("/shop/account")}>
-            <UserCog className="mr-2 h-4 w-4" />
-            Account
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Avatar className="bg-black cursor-pointer">
+                <AvatarFallback className="bg-black text-white font-extrabold">
+                  {user?.userName[0].toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="right" className="w-56">
+              <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate("/shop/account")}>
+                <UserCog className="mr-2 h-4 w-4" />
+                Account
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </> : <>
           {/* <button className="bg-primary text-white rounded-lg px-5 py-2">
             Sign in
           </button> */}
           <Link to={"/auth/login"}>
-          <Button>Sign in</Button>
+            <Button>Sign in</Button>
           </Link>
         </>
       }
@@ -241,7 +253,7 @@ function ShoppingHeader() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
-      <div className="flex h-16 items-center justify-between px-4 md:px-6">
+      <div className="flex h-16 items-center justify-between px-4 md:px-2">
         <Link to="/shop/home" className="flex items-center gap-2">
           {/* <HousePlug className="h-6 w-6" />
           <span className="font-bold">E commerce</span> */}
@@ -254,7 +266,7 @@ function ShoppingHeader() {
               <span className="sr-only">Toggle header menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-full max-w-xs">
+          <SheetContent side="left" className="w-full max-w-xs py-0">
             <MenuItems />
             <HeaderRightContent />
           </SheetContent>

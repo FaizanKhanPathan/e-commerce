@@ -8,6 +8,10 @@ import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import { TbBrandShopee } from "react-icons/tb";
+import { MdAttachMoney } from "react-icons/md";
+import { FaUsers } from "react-icons/fa6";
+
+
 
 
 const adminSidebarMenuItems = [
@@ -18,22 +22,34 @@ const adminSidebarMenuItems = [
     icon: <LayoutDashboard />,
   },
   {
-    id: "products",
-    label: "Products",
-    path: "/admin/products",
-    icon: <ShoppingBasket />,
-  },
-  {
     id: "orders",
     label: "Orders",
     path: "/admin/orders",
     icon: <BadgeCheck />,
   },
   {
+    id: "users",
+    label: "Users",
+    path: "/admin/users",
+    icon: <FaUsers />,
+  },
+  {
+    id: "payments",
+    label: "Payments",
+    path: "/admin/payments",
+    icon: <MdAttachMoney />,
+  },
+  {
     id: "brands",
     label: "Brands",
     path: "/admin/brands",
     icon: <TbBrandShopee />,
+  },
+  {
+    id: "products",
+    label: "Products",
+    path: "/admin/products",
+    icon: <ShoppingBasket />,
   },
 ];
 

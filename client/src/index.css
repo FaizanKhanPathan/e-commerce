@@ -108,3 +108,17 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #999999; /* Color when hovering */
 }
+
+
+.outer-container {
+  background-color: transparent; /* Makes the outer background transparent */
+}
+
+.inner-container {
+  background-color: rgba(1, 0, 32, 0.4);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 100px;
+  color: white; /* Text color to contrast with navy background */
+  text-align: center; /* Centers text inside the inner container */
+}

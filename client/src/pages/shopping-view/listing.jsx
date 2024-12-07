@@ -45,6 +45,7 @@ function ShoppingListing() {
   );
   const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
+  const isTypeChange = useSelector((state) => state?.shopProducts?.isTypeChange)
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -136,9 +137,9 @@ function ShoppingListing() {
   useEffect(() => {
     if (filters !== null && sort !== null)
       dispatch(
-        fetchAllFilteredProducts({ filterParams: filters, sortParams: sort })
+        fetchAllFilteredProducts({ filterParams: filters, sortParams: sort, type:isTypeChange, })
       );
-  }, [dispatch, sort, filters]);
+  }, [dispatch, sort, filters, isTypeChange]);
 
   useEffect(() => {
     if (productDetails !== null) setOpenDetailsDialog(true);
@@ -150,8 +151,6 @@ function ShoppingListing() {
   useEffect(() => {
     dispatch(getAllBrands());
 }, []);
-
-  console.log(productList, "productListproductListproductList");
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
@@ -201,11 +200,11 @@ function ShoppingListing() {
             : null}
         </div>
       </div>
-      <ProductDetailsDialog
+      {/* <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
-      />
+      /> */}
     </div>
   );
 }

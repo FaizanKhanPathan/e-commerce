@@ -3,9 +3,9 @@ import axios from "axios";
 
 const initialState = {
     brandList: [],
-    allSubMenuList:[],
-    categoryList:[],
-    subCategoryList:[],
+    allSubMenuList: [],
+    categoryList: [],
+    subCategoryList: [],
     brands: null,
 };
 
@@ -66,6 +66,25 @@ export const addBrand = createAsyncThunk(
     async (formData) => {
         const result = await axios.post(
             `${import.meta.env.VITE_API_URL}/api/admin/brands/add`,
+            formData,
+            {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        return result.data;
+    }
+);
+
+// update brand
+export const updateBrand = createAsyncThunk(
+    "/brand/updateBrand",
+    async (formData) => {
+        const result = await axios.post(
+            `${import.meta.env.VITE_API_URL}/api/admin/brands/update`,
             formData,
             {
                 withCredentials: true,
@@ -167,7 +186,7 @@ const adminBrandSlice = createSlice({
                 state.orderList = [];
             })
 
-            
+
             .addCase(getCategoryData.pending, (state) => {
                 state.isLoading = true;
             })

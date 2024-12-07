@@ -11,6 +11,21 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  taxId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  phone: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
+  companyName: {
+    type: String,
+    required: true,
+    unique: false,
+  },
   password: {
     type: String,
     required: true,
@@ -19,7 +34,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
-});
+},
+{ timestamps: true }
+
+);
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
