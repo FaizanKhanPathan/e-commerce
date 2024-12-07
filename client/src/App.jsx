@@ -91,16 +91,21 @@ function App() {
         <Route
           path="/shop"
           element={
-            // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-            // </CheckAuth>
+
             <ShoppingLayout />
           }
         >
+          <Route path="account" element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <ShoppingAccount />
+            </CheckAuth>
+          } />
+
+
           <Route path="home" element={<ShoppingHome />} />
           <Route path="product-details/:id" element={<ProductDetails />} />
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
-          <Route path="account" element={<ShoppingAccount />} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="paypal-cancel" element={<PaymentCancelPage />} />

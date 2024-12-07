@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
-const  emailFunctions  = require('../../helpers/email');
+const emailFunctions = require('../../helpers/email');
 const crypto = require("crypto");
 
 
@@ -233,10 +233,10 @@ const userDetails = async (req, res) => {
   const { id: _id } = req.params;
 
   try {
-    const userDetails = await User.findOne({ _id });
+    const userDetails = await User.findOne({ _id }).select("-password");
 
     return res.json({
-      success: false,
+      success: true,
       message: "User Details Fetch Successful!",
       data: userDetails
     });
@@ -249,6 +249,35 @@ const userDetails = async (req, res) => {
   }
 
 }
+
+const updateUserDetails = async (req, res) => {
+  const { id: _id } = req.params; // Extract user ID from route parameters
+  const { userName, taxId, phone, companyName } = req.body; // Destructure specific fields from the request body
+  // Extract the updated data from the request body
+
+  try {
+    // Create an object with only the allowed fields
+    const updateData = { userName, taxId, phone, companyName };
+
+    // Find the user by ID and update with the new data
+    const updatedUser = await User.findByIdAndUpdate(
+      _id, // The user ID
+      updateData, // The updated data
+      { new: true, runValidators: true } // Return the updated document and run validation
+    );
+
+    // If user not found
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Respond with the updated user data
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ message: "Internal server error", error });
+  }
+};
 
 //register
 const registerUser = async (req, res) => {
@@ -379,4 +408,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { userDetails, registerUser, loginUser, logoutUser, authMiddleware,forgotPassword, verifyOtp,resetPassword };
+module.exports = { updateUserDetails, userDetails, registerUser, loginUser, logoutUser, authMiddleware, forgotPassword, verifyOtp, resetPassword };

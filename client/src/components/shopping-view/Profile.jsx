@@ -1,28 +1,43 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CommonForm from '../common/form'
 import { editProfileFormControls, registerFormControls, resetPasswordFormControls, resetPasswordProfileFormControls } from '@/config'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../ui/use-toast';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { updateUserDetails, userDetails } from '@/store/auth-slice';
 
 
 const initialState = {
     userName: "",
     email: "",
-    password: "",
+    phone: "",
+    companyName: "",
+    taxId: ""
 };
 
 
 const Profile = () => {
+    const dispatch = useDispatch();
 
     const [formData, setFormData] = useState(initialState);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { toast } = useToast();
+    const user = useSelector((state) => state?.auth?.user)
 
-    const onSubmit = () => {
+    useEffect(() => {
+        if (!user?.id) return
+        dispatch(userDetails(user?.id)).then((response) => {
+            const data = response?.payload?.data
+            setFormData(data)
+        })
+    }, [user])
 
+    const onSubmit = (e) => {
+        e.preventDefault()
+        try {
+            dispatch(updateUserDetails(formData))
+        } catch(error){
+
+        }
     }
 
     return (

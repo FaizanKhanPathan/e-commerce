@@ -7,12 +7,14 @@ const {
   userDetails,
   forgotPassword,
   resetPassword,
-  verifyOtp
+  verifyOtp,
+  updateUserDetails
 } = require("../../controllers/auth/auth-controller");
 
 const router = express.Router();
 
 router.get("/user-details/:id", userDetails);
+router.put("/update-user/:id", updateUserDetails);
 
 router.post("/forgot-password", forgotPassword);
 router.post("/verify-otp", verifyOtp);
