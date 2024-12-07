@@ -14,7 +14,10 @@ export const createNewOrder = createAsyncThunk(
   async (orderData) => {
     const response = await axios.post(
       `${import.meta.env.VITE_API_URL}/api/shop/order/create`,
-      orderData
+      orderData,
+      {
+        withCredentials: true,
+      }
     );
 
     return response.data;
@@ -30,6 +33,9 @@ export const capturePayment = createAsyncThunk(
         paymentId,
         payerId,
         orderId,
+      },
+      {
+        withCredentials: true,
       }
     );
 

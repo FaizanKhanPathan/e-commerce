@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { CiDeliveryTruck } from "react-icons/ci";
+
+
 
 // Helper function to format time in hh:mm:ss with labels
 const formatTime = (seconds) => {
@@ -55,14 +58,74 @@ const DeliveryTimer = () => {
         //         {/* <p>{formatTime(timeRemaining)}</p> */}
         //     </div>
         // </div>
-        <div className='group'>
-            <div className='inner-container w-24 group-hover:w-96 transition-all duration-1000 ease-in-out'>
-                <div className="">
-                    <h1 className="text-end">FedEx</h1>
-                    <h1 className="text-end">Cutoff</h1>
+
+        <>
+            {/* <div className='group'>
+                <div className='inner-container w-[26rem] transition-all duration-1000 ease-in-out flex'>
+                    <div className="w-[70%] mt-2">
+                        <div className="text-black text-sm">
+                            All further order will be ship on Monday.
+                        </div>
+                        <div className="text-black font-semibold text-md text-sm border-b-2 border-black">
+                            FedEx Ground Shipping Cutoff
+                        </div>
+                        <div className="text-black text-sm mt-1">
+                            07hh 28mm 34ss
+                        </div>
+                        <div className="text-black font-semibold text-md text-sm">
+                            FedEx Express Shipping Cutoff
+                        </div>
+                    </div>
+                    <div className="w-[30%] border border-black bg-primary text-white">
+                        <div>
+                            <div className="flex justify-center">
+                                <CiDeliveryTruck className="w-12 h-12" />
+                            </div>
+                            <div>
+                                <h1 className="leading-5">FedEx</h1>
+                                <h1 className="leading-5">Cutoff</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> */}
+
+            <div className="group">
+                {/* Entire container with hover effect */}
+                <div className="inner-container w-[28rem] transition-transform duration-1000 ease-in-out flex translate-x-[-80%] group-hover:translate-x-0">
+                    {/* Left-side content */}
+                    <div className="w-[80%] pt-2 bg-white">
+                        <div className="text-black text-sm">
+                            All further orders will be shipped on Monday.
+                        </div>
+                        <div className="text-black font-semibold text-md text-sm border-b-2 border-black">
+                            FedEx Ground Shipping Cutoff
+                        </div>
+                        <div className="text-black text-sm mt-1">07hh 28mm 34ss</div>
+                        <div className="text-black font-semibold text-md text-sm">
+                            FedEx Express Shipping Cutoff
+                        </div>
+                    </div>
+
+                    {/* Right-side always-visible section */}
+                    <div className="w-[20%] text-white group-hover:bg-primary">
+                        <div>
+                            <div className="flex justify-center">
+                                <CiDeliveryTruck className="w-12 h-12" />
+                            </div>
+                            <div>
+                                <h1 className="leading-5">FedEx</h1>
+                                <h1 className="leading-5">Cutoff</h1>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+
+
+        </>
+
+
     );
 };
 

@@ -122,7 +122,7 @@ const MegaMenuSearch = () => {
                                     <span>
                                         <LuArrowLeftRight className='font-bold text-2xl' />
                                     </span>
-                                    <span>
+                                    <span className=''>
                                         Go to Accessories
                                     </span>
                                 </>

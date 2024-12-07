@@ -20,11 +20,11 @@ function ShoppingProductTile({
     <Card className="w-full max-w-sm mx-auto flex flex-col justify-between cursor-pointer" onClick={() => navigate(`/shop/product-details/${product?._id}`)}>
       <div onClick={() => handleGetProductDetails(product?._id)}>
         <div className="relative">
-          <img
-            src={product?.image}
-            alt={product?.title}
-            className="w-full h-[230px] rounded-t-lg object-contain mt-4"
-          />
+            <img
+              src={product?.image}
+              alt={product?.title}
+              className="w-full h-[230px] rounded-t-lg object-contain mt-4"
+            />
           {product?.totalStock === 0 ? (
             <Badge className="text-[10px] absolute top-2 left-2 bg-red-500 hover:bg-red-600">
               Out Of Stock

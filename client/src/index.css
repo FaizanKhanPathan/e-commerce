@@ -115,10 +115,10 @@ body {
 }
 
 .inner-container {
-  background-color: rgba(1, 0, 32, 0.4); /* Navy blue color */
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  background-color: rgba(1, 0, 32, 0.4);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 100px;
   color: white; /* Text color to contrast with navy background */
-  padding: 20px;
   text-align: center; /* Centers text inside the inner container */
 }

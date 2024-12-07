@@ -2,6 +2,29 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 
+
+// user details
+const userDetails = async (req, res) => {
+  const { id: _id } = req.params;
+
+  try {
+    const userDetails = await User.findOne({ _id });
+
+    return res.json({
+      success: false,
+      message: "User Details Fetch Successful!",
+      data: userDetails
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Some error occured",
+    });
+  }
+
+}
+
 //register
 const registerUser = async (req, res) => {
   const { userName, phone, taxId, email, companyName, password, confirmPassword } = req.body;
@@ -74,11 +97,11 @@ const loginUser = async (req, res) => {
         email: checkUser.email,
         userName: checkUser.userName,
       },
-      "CLIENT_SECRET_KEY",
+      process.env.JWT_CLIENT_SECRET_KEY,
       { expiresIn: "1200m" }
     );
 
-    res.cookie("token", token, { httpOnly: true, secure: false }).json({
+    res.cookie("token", token, { httpOnly: true, secure: true }).json({
       success: true,
       message: "Logged in successfully",
       user: {
@@ -98,7 +121,6 @@ const loginUser = async (req, res) => {
 };
 
 //logout
-
 const logoutUser = (req, res) => {
   res.clearCookie("token").json({
     success: true,
@@ -116,7 +138,7 @@ const authMiddleware = async (req, res, next) => {
     });
 
   try {
-    const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
+    const decoded = jwt.verify(token, process.env.JWT_CLIENT_SECRET_KEY);
     req.user = decoded;
     next();
   } catch (error) {
@@ -127,4 +149,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, loginUser, logoutUser, authMiddleware };
+module.exports = { userDetails, registerUser, loginUser, logoutUser, authMiddleware };

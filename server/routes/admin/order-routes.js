@@ -5,6 +5,7 @@ const {
   getOrderDetailsForAdmin,
   updateOrderStatus,
 } = require("../../controllers/admin/order-controller");
+const { authMiddleware } = require("../../controllers/auth/auth-controller");
 
 const router = express.Router();
 
