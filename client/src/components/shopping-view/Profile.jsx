@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import CommonForm from '../common/form'
-import { editProfileFormControls, registerFormControls, resetPasswordFormControls } from '@/config'
+import { editProfileFormControls, registerFormControls, resetPasswordFormControls, resetPasswordProfileFormControls } from '@/config'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../ui/use-toast';
@@ -49,7 +49,7 @@ const Profile = () => {
                 </CardHeader>
                 <CardContent>
                     <CommonForm
-                        formControls={resetPasswordFormControls}
+                        formControls={resetPasswordProfileFormControls}
                         buttonText={"Submit"}
                         formData={formData}
                         setFormData={setFormData}

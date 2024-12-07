@@ -90,7 +90,7 @@ export const editProfileFormControls = [
   }
 ];
 
-export const resetPasswordFormControls = [
+export const resetPasswordProfileFormControls = [
   {
     name: "currentPassword",
     label: "Current Password",
@@ -131,6 +131,33 @@ export const loginFormControls = [
     placeholder: "Enter your password",
     componentType: "input",
     type: "password",
+  },
+];
+
+export const resetPasswordFormControls = [
+  {
+    name: "newPassword",
+    label: "New Password",
+    placeholder: "Enter your new password",
+    componentType: "input",
+    type: "password",
+  },
+  {
+    name: "password",
+    label: "Confirm Password",
+    placeholder: "Confirm your password",
+    componentType: "input",
+    type: "password",
+  },
+];
+
+export const forgetPasswordFormControls = [
+  {
+    name: "email",
+    label: "Email",
+    placeholder: "Enter your email",
+    componentType: "input",
+    type: "email",
   },
 ];
 

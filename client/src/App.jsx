@@ -23,6 +23,9 @@ import PaypalReturnPage from "./pages/shopping-view/paypal-return";
 import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/search";
 import AdminBrands from "./pages/admin-view/brands";
+import ForgetPassword from "./pages/auth/forget-password";
+import EnterOtp from "./pages/auth/enter-otp";
+import ResetPassword from "./pages/auth/reset-password";
 import PaymentCancelPage from "./pages/shopping-view/paypal-cancel";
 import Users from "./pages/admin-view/Users";
 import Payments from "./pages/admin-view/Payments";
@@ -65,6 +68,9 @@ function App() {
         >
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
+          <Route path="forgot-password" element={<ForgetPassword />} />
+          <Route path="otp" element={<EnterOtp />} />
+          <Route path="reset-password" element={<ResetPassword />} />
         </Route>
         <Route
           path="/admin"

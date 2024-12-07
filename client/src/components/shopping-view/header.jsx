@@ -42,7 +42,7 @@ function MenuItems() {
   const [selectedCategoryId, setSelectedCategoryId] = useState("")
 
   const categoryList = useSelector((state) => state?.adminBrands?.allSubMenuList)
-  const reversedCategoryList = [...categoryList].reverse();
+  // const reversedCategoryList = categoryList?.reverse() || [];
 
 
   function handleNavigate(getCurrentMenuItem) {
@@ -97,7 +97,7 @@ function MenuItems() {
 
       <div className="flex flex-col mt-5">
         {
-          reversedCategoryList?.map((ele, index) => {
+          categoryList?.map((ele, index) => {
             return (
               <div className="" key={index}>
                 <p onClick={() => selectedBrandId == "" ? setSelectedBrandId(ele?.brand_id) : setSelectedBrandId("")} className={`flex items-center justify-between py-2 border-b ${index == 0 && "border-t"}`}>

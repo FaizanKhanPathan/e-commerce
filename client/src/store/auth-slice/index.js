@@ -5,6 +5,7 @@ const initialState = {
   isAuthenticated: false,
   isLoading: true,
   user: null,
+  recoveryEmail:null,
 };
 
 export const registerUser = createAsyncThunk(
@@ -21,6 +22,55 @@ export const registerUser = createAsyncThunk(
     return response.data;
   }
 );
+
+export const forgetPasswordUser = createAsyncThunk(
+  "/auth/forgot-password",
+
+  async (formData) => {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/auth/forgot-password`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
+export const verifyUserOtp = createAsyncThunk(
+  "/auth/verify-otp",
+
+  async (formData) => {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/auth/verify-otp`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
+export const resetPasswordUser = createAsyncThunk(
+  "/auth/reset-password",
+
+  async (formData) => {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/auth/reset-password`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
 
 export const loginUser = createAsyncThunk(
   "/auth/login",
@@ -77,6 +127,10 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {},
+    setRecoveryMail:(state,action)=> {
+      state.recoveryEmail=action.payload.email
+
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -125,9 +179,21 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+      }).addCase(forgetPasswordUser.fulfilled, (state, action) => {
+        // state.isLoading = false;
+        // state.user = null;
+        // state.isAuthenticated = false;
+      }).addCase(verifyUserOtp.fulfilled, (state, action) => {
+        // state.isLoading = false;
+        // state.user = null;
+        // state.isAuthenticated = false;
+      }).addCase(resetPasswordUser.fulfilled, (state, action) => {
+        // state.isLoading = false;
+        // state.user = null;
+        // state.isAuthenticated = false;
       });
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser,setRecoveryMail } = authSlice.actions;
 export default authSlice.reducer;
