@@ -194,4 +194,223 @@ module.exports = {
         </footer>
       </div>
     `,
+
+  paymentSuccess: (user, order) => `
+  <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <header style="text-align: center; padding: 20px;">
+      <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+    </header>
+    <h1 style="color: #4CAF50;">Payment Successful!</h1>
+    <p>Dear ${user.userName},</p>
+    <p>Thank you for your payment. We have successfully processed your transaction.</p>
+    <table style="margin: 20px auto; border-collapse: collapse; width: 100%; max-width: 600px; border: 1px solid #ddd;">
+      <tr style="background-color: #f9f9f9;">
+        <td style="padding: 10px; font-weight: bold;">Order ID:</td>
+        <td style="padding: 10px;">${order._id}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; font-weight: bold;">Amount Paid:</td>
+        <td style="padding: 10px;">$${order.totalAmount}</td>
+      </tr>
+      <tr style="background-color: #f9f9f9;">
+        <td style="padding: 10px; font-weight: bold;">Date:</td>
+        <td style="padding: 10px;">${order.orderDate}</td>
+      </tr>
+    </table>
+    <p>If you have any questions or concerns regarding your payment, feel free to contact our support team.</p>
+    <footer style="margin-top: 30px; text-align: center;">
+      <p>Best regards,<br />GMT</p>
+      <p>Follow us:</p>
+      <p>
+        <a href="https://facebook.com/yourcompany" target="_blank" style="margin-right: 10px;">
+          <img src="https://example.com/facebook-icon.png" alt="Facebook" style="width: 24px; height: 24px;" />
+        </a>
+        <a href="https://twitter.com/yourcompany" target="_blank" style="margin-right: 10px;">
+          <img src="https://example.com/twitter-icon.png" alt="Twitter" style="width: 24px; height: 24px;" />
+        </a>
+        <a href="https://linkedin.com/company/yourcompany" target="_blank" style="margin-right: 10px;">
+          <img src="https://example.com/linkedin-icon.png" alt="LinkedIn" style="width: 24px; height: 24px;" />
+        </a>
+      </p>
+      <p>For support, email us at: <a href="mailto: sales@neocellularparts.com">sales@neocellularparts.com</a></p>
+      <p>5659 Buford Hwy Ste# 108-111,<br />Doraville, GA 30340, United States</p>
+    </footer>
+  </div>
+`,
+  paymentFailed: (user, order) => `
+  <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <header style="text-align: center; padding: 20px;">
+      <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+    </header>
+    <h1 style="color: #FF0000;">Payment Failed</h1>
+    <p>Dear ${user.userName},</p>
+    <p>We regret to inform you that your recent payment attempt was unsuccessful. Please find the details below:</p>
+    <table style="margin: 20px auto; border-collapse: collapse; width: 100%; max-width: 600px; border: 1px solid #ddd;">
+      <tr style="background-color: #f9f9f9;">
+        <td style="padding: 10px; font-weight: bold;">Order ID:</td>
+        <td style="padding: 10px;">${order._id}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; font-weight: bold;">Amount:</td>
+        <td style="padding: 10px;">$${order.totalAmount}</td>
+      </tr>
+      <tr style="background-color: #f9f9f9;">
+        <td style="padding: 10px; font-weight: bold;">Date:</td>
+        <td style="padding: 10px;">${order.orderDate}</td>
+      </tr>
+    </table>
+    <p>This could be due to insufficient funds, incorrect payment details, or a technical issue. We recommend the following actions:</p>
+    <ul style="margin-left: 20px;">
+      <li>Verify your payment details and try again.</li>
+      <li>Contact your bank to ensure there are no issues with your account.</li>
+      <li>Try using a different payment method.</li>
+    </ul>
+    <p>If you continue to experience issues, please contact our support team for assistance.</p>
+    <footer style="margin-top: 30px; text-align: center;">
+      <p>Best regards,<br />GMT</p>
+      <p>Follow us:</p>
+      <p>
+        <a href="https://facebook.com/yourcompany" target="_blank" style="margin-right: 10px;">
+          <img src="https://example.com/facebook-icon.png" alt="Facebook" style="width: 24px; height: 24px;" />
+        </a>
+        <a href="https://twitter.com/yourcompany" target="_blank" style="margin-right: 10px;">
+          <img src="https://example.com/twitter-icon.png" alt="Twitter" style="width: 24px; height: 24px;" />
+        </a>
+        <a href="https://linkedin.com/company/yourcompany" target="_blank" style="margin-right: 10px;">
+          <img src="https://example.com/linkedin-icon.png" alt="LinkedIn" style="width: 24px; height: 24px;" />
+        </a>
+      </p>
+      <p>For support, email us at: <a href="mailto: sales@neocellularparts.com">sales@neocellularparts.com</a></p>
+      <p>5659 Buford Hwy Ste# 108-111,<br />Doraville, GA 30340, United States</p>
+    </footer>
+  </div>
+`,
+  createOrder: (user, order) => `
+  <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <header style="text-align: center; padding: 20px;">
+      <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+    </header>
+    <h1 style="color: #4CAF50;">Order Confirmation</h1>
+    <p>Dear ${user.userName},</p> 
+    <p>Thank you for your purchase! Your order has been successfully placed. Below are your order details:</p>
+    <table style="margin: 20px auto; border-collapse: collapse; width: 100%; max-width: 600px; border: 1px solid #ddd;">
+      <tr style="background-color: #f9f9f9;">
+        <td style="padding: 10px; font-weight: bold;">Order ID:</td>
+        <td style="padding: 10px;">${order._id}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; font-weight: bold;">Order Date:</td>
+        <td style="padding: 10px;">${order.orderDate}</td>
+      </tr>
+      <tr style="background-color: #f9f9f9;">
+        <td style="padding: 10px; font-weight: bold;">Total Amount:</td>
+        <td style="padding: 10px;">$${order.totalAmount}</td>
+      </tr>
+    </table>
+    <h2 style="margin-top: 20px;">Products Ordered:</h2>
+    <table style="margin: 20px auto; border-collapse: collapse; width: 100%; max-width: 600px; border: 1px solid #ddd;">
+      <thead>
+        <tr style="background-color: #f1f1f1;">
+          <th style="padding: 10px; text-align: left;">Product</th>
+          <th style="padding: 10px; text-align: left;">Quantity</th>
+          <th style="padding: 10px; text-align: left;">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${order.cartItems
+          .map(
+            (product) => `
+          <tr>
+            <td style="padding: 10px;">${product.title}</td>
+            <td style="padding: 10px;">${product.quantity}</td>
+            <td style="padding: 10px;">$${product.price}</td>
+          </tr>
+        `
+          )
+          .join("")}
+      </tbody>
+    </table>
+    <p>Your order is being processed and will be delivered within <strong>7 working days</strong>.</p>
+    <p>If you have any questions, please contact our support team.</p>
+    <footer style="margin-top: 30px; text-align: center;">
+      <p>Best regards,<br />GMT</p>
+      <p>Follow us:</p>
+      <p>
+        <a href="https://facebook.com/yourcompany" target="_blank" style="margin-right: 10px;">
+          <img src="https://example.com/facebook-icon.png" alt="Facebook" style="width: 24px; height: 24px;" />
+        </a>
+        <a href="https://twitter.com/yourcompany" target="_blank" style="margin-right: 10px;">
+          <img src="https://example.com/twitter-icon.png" alt="Twitter" style="width: 24px; height: 24px;" />
+        </a>
+        <a href="https://linkedin.com/company/yourcompany" target="_blank" style="margin-right: 10px;">
+          <img src="https://example.com/linkedin-icon.png" alt="LinkedIn" style="width: 24px; height: 24px;" />
+        </a>
+      </p>
+      <p>For support, email us at: <a href="mailto:support@yourcompany.com">support@yourcompany.com</a></p>
+      <p>1234 Your Street, Your City, Your Country</p>
+    </footer>
+  </div>
+`,
+  deliveredOrder: (name, orderId, products, deliveryDate) => `
+  <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <header style="text-align: center; padding: 20px;">
+      <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+    </header>
+    <h1 style="color: #4CAF50;">Order Delivered</h1>
+    <p>Dear ${name},</p>
+    <p>We are delighted to inform you that your order has been successfully delivered on <strong>${deliveryDate}</strong>. Below are the details of your order:</p>
+    <table style="margin: 20px auto; border-collapse: collapse; width: 100%; max-width: 600px; border: 1px solid #ddd;">
+      <tr style="background-color: #f9f9f9;">
+        <td style="padding: 10px; font-weight: bold;">Order ID:</td>
+        <td style="padding: 10px;">${orderId}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; font-weight: bold;">Delivery Date:</td>
+        <td style="padding: 10px;">${deliveryDate}</td>
+      </tr>
+    </table>
+    <h2 style="margin-top: 20px;">Products Delivered:</h2>
+    <table style="margin: 20px auto; border-collapse: collapse; width: 100%; max-width: 600px; border: 1px solid #ddd;">
+      <thead>
+        <tr style="background-color: #f1f1f1;">
+          <th style="padding: 10px; text-align: left;">Product</th>
+          <th style="padding: 10px; text-align: left;">Quantity</th>
+          <th style="padding: 10px; text-align: left;">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${products
+          .map(
+            (product) => `
+          <tr>
+            <td style="padding: 10px;">${product.name}</td>
+            <td style="padding: 10px;">${product.quantity}</td>
+            <td style="padding: 10px;">$${product.price}</td>
+          </tr>
+        `
+          )
+          .join("")}
+      </tbody>
+    </table>
+    <p>We hope you are satisfied with your purchase! If you have any questions or need further assistance, please do not hesitate to contact us.</p>
+    <p>Thank you for shopping with us!</p>
+    <footer style="margin-top: 30px; text-align: center;">
+      <p>Best regards,<br />Your Company</p>
+      <p>Follow us:</p>
+      <p>
+        <a href="https://facebook.com/yourcompany" target="_blank" style="margin-right: 10px;">
+          <img src="https://example.com/facebook-icon.png" alt="Facebook" style="width: 24px; height: 24px;" />
+        </a>
+        <a href="https://twitter.com/yourcompany" target="_blank" style="margin-right: 10px;">
+          <img src="https://example.com/twitter-icon.png" alt="Twitter" style="width: 24px; height: 24px;" />
+        </a>
+        <a href="https://linkedin.com/company/yourcompany" target="_blank" style="margin-right: 10px;">
+          <img src="https://example.com/linkedin-icon.png" alt="LinkedIn" style="width: 24px; height: 24px;" />
+        </a>
+      </p>
+      <p>For support, email us at: <a href="mailto:support@yourcompany.com">support@yourcompany.com</a></p>
+      <p>1234 Your Street, Your City, Your Country</p>
+    </footer>
+  </div>
+`,
 };
