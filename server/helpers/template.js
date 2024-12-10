@@ -351,22 +351,22 @@ module.exports = {
     </footer>
   </div>
 `,
-  deliveredOrder: (name, orderId, products, deliveryDate) => `
+  deliveredOrder: (user,order) => `
   <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
     <header style="text-align: center; padding: 20px;">
       <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
     </header>
     <h1 style="color: #4CAF50;">Order Delivered</h1>
-    <p>Dear ${name},</p>
-    <p>We are delighted to inform you that your order has been successfully delivered on <strong>${deliveryDate}</strong>. Below are the details of your order:</p>
+    <p>Dear ${user.userName},</p>
+    <p>We are delighted to inform you that your order has been successfully delivered on <strong>${`your location`}</strong>. Below are the details of your order:</p>
     <table style="margin: 20px auto; border-collapse: collapse; width: 100%; max-width: 600px; border: 1px solid #ddd;">
       <tr style="background-color: #f9f9f9;">
         <td style="padding: 10px; font-weight: bold;">Order ID:</td>
-        <td style="padding: 10px;">${orderId}</td>
+        <td style="padding: 10px;">${order._id}</td>
       </tr>
       <tr>
-        <td style="padding: 10px; font-weight: bold;">Delivery Date:</td>
-        <td style="padding: 10px;">${deliveryDate}</td>
+        <td style="padding: 10px; font-weight: bold;">Ordered Date:</td>
+        <td style="padding: 10px;">${order.orderDate}</td>
       </tr>
     </table>
     <h2 style="margin-top: 20px;">Products Delivered:</h2>
@@ -379,11 +379,10 @@ module.exports = {
         </tr>
       </thead>
       <tbody>
-        ${products
-          .map(
+        ${order.cartItems.map(
             (product) => `
           <tr>
-            <td style="padding: 10px;">${product.name}</td>
+            <td style="padding: 10px;">${product.title}</td>
             <td style="padding: 10px;">${product.quantity}</td>
             <td style="padding: 10px;">$${product.price}</td>
           </tr>
@@ -395,7 +394,7 @@ module.exports = {
     <p>We hope you are satisfied with your purchase! If you have any questions or need further assistance, please do not hesitate to contact us.</p>
     <p>Thank you for shopping with us!</p>
     <footer style="margin-top: 30px; text-align: center;">
-      <p>Best regards,<br />Your Company</p>
+      <p>Best regards,<br />GMT</p>
       <p>Follow us:</p>
       <p>
         <a href="https://facebook.com/yourcompany" target="_blank" style="margin-right: 10px;">
@@ -408,8 +407,8 @@ module.exports = {
           <img src="https://example.com/linkedin-icon.png" alt="LinkedIn" style="width: 24px; height: 24px;" />
         </a>
       </p>
-      <p>For support, email us at: <a href="mailto:support@yourcompany.com">support@yourcompany.com</a></p>
-      <p>1234 Your Street, Your City, Your Country</p>
+     <p>For support, email us at: <a href="mailto: sales@neocellularparts.com">sales@neocellularparts.com</a></p>
+      <p>5659 Buford Hwy Ste# 108-111,<br />Doraville, GA 30340, United States</p>
     </footer>
   </div>
 `,

@@ -82,9 +82,9 @@ const emailFunctions = {
     const html = emailTemplates.paymentFailed(user, order);
     return sendEmail(user.email, 'Payment Failed', html);
   },
-  sendDeliveredOrder: (email, orderId, deliveryDate) => {
-    const html = emailTemplates.deliveredOrder(orderId, deliveryDate);
-    return sendEmail(email, 'Order Delivered', html);
+  sendDeliveredOrder: (user, order) => {
+    const html = emailTemplates.deliveredOrder(user, order);
+    return sendEmail(user.email, 'Order Delivered', html);
   },
 };
 
