@@ -91,7 +91,6 @@ function App() {
         <Route
           path="/shop"
           element={
-
             <ShoppingLayout />
           }
         >

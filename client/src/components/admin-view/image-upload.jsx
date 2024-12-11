@@ -20,6 +20,7 @@ function ProductImageUpload({
 
   const [imageUrl, setImageUrl] = useState("")
 
+  console.log("import",import.meta.env)
   // console.log("uploadedImageUrl", uploadedImageUrl)
 
 
@@ -34,9 +35,9 @@ function ProductImageUpload({
     const selectedFile = event.target.files?.[0];
     data.append("file", selectedFile)
     data.append("upload_preset", "xguzvxc0")
-    data.append("cloud_name", import.meta.env.CLOUDINARY_CLOUD_NAME)
+    data.append("cloud_name", import.meta.env.VITE_CLOUDINARY_CLOUD_NAME)
 
-    await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.CLOUDINARY_CLOUD_NAME}/image/upload`, data).then((response) => {
+    await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`, data).then((response) => {
       setUploadedImageUrl(response?.data?.url)
       setImageUrl(response?.data?.url)
       // setImageUrl(response?.ima)

@@ -25,6 +25,7 @@ export const addToCart = createAsyncThunk(
 export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async (userId) => {
+    if(!userId) return
     const response = await axios.get(
       `${import.meta.env.VITE_API_URL}/api/shop/cart/get/${userId}`
     );

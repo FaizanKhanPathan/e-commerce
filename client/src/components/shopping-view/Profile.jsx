@@ -16,11 +16,18 @@ const initialState = {
     taxId: ""
 };
 
+const initialResetFormState = {
+    currentPassword: "",
+    password: "",
+    ReTypePassword: ""
+};
+
 
 const Profile = () => {
     const dispatch = useDispatch();
 
     const [formData, setFormData] = useState(initialState);
+    const [resetPasswordFormData, setResetPasswordFormData] = useState(initialResetFormState)
     const user = useSelector((state) => state?.auth?.user)
 
     useEffect(() => {
@@ -35,9 +42,13 @@ const Profile = () => {
         e.preventDefault()
         try {
             dispatch(updateUserDetails(formData))
-        } catch(error){
+        } catch (error) {
 
         }
+    }
+
+    const onResetPasswordSubmit = (e) => {
+            console.log("resetPasswordFormData",resetPasswordFormData)
     }
 
     return (
@@ -66,9 +77,9 @@ const Profile = () => {
                     <CommonForm
                         formControls={resetPasswordProfileFormControls}
                         buttonText={"Submit"}
-                        formData={formData}
-                        setFormData={setFormData}
-                        onSubmit={onSubmit}
+                        formData={resetPasswordFormData}
+                        setFormData={setResetPasswordFormData}
+                        onSubmit={onResetPasswordSubmit}
                     />
                 </CardContent>
             </Card>

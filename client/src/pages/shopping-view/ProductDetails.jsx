@@ -139,11 +139,11 @@ const ProductDetails = ({ }) => {
     }
     return (
         <>
-            <div className='flex justify-start gap-12 items-start px-6 py-12 h-[470px] border-b'>
-                <div className='w-[30%]'>
+            <div className='flex justify-start flex-col sm:flex-row gap-12 items-start px-6 py-12 h-[470px] border-b'>
+                <div className='w-[100%] sm:w-[30%]'>
                     <img src={productDetails?.image} className='w-[400px] h-96 object-contain ' alt="" />
                 </div>
-                <div className='flex justify-between flex-col h-full w-[70%]'>
+                <div className='flex justify-between flex-col h-full w-[100%] sm:w-[70%]'>
                     <div>
                         <h1 className="text-3xl font-extrabold">{productDetails?.title}</h1>
                         <p className="text-muted-foreground text-md mb-5 mt-2 tracking-tight leading-6">

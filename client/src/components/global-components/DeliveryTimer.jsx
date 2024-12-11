@@ -90,7 +90,7 @@ const DeliveryTimer = () => {
                 </div>
             </div> */}
 
-            <div className="group">
+            <div className="group hidden md:flex">
                 {/* Entire container with hover effect */}
                 <div className="inner-container w-[28rem] transition-transform duration-1000 ease-in-out flex translate-x-[-80%] group-hover:translate-x-0">
                     {/* Left-side content */}
