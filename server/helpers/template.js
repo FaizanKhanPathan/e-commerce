@@ -1,14 +1,14 @@
 module.exports = {
-  verifyOtp: (otp) => `
+  verifyOtp: (userName,otp) => `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <header style="text-align: center; padding: 20px;">
           <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
         </header>
         <h1 style="color: #4CAF50;">Email Verification</h1>
-        <p>Hello,</p>
+        <p>Hello ${userName},</p>
         <p>Thank you for registering with us! To verify your email address, please use the following One-Time Password (OTP):</p>
         <p style="font-size: 18px; font-weight: bold;">${otp}</p>
-        <p>The OTP will expire in 10 minutes. If you did not request this, please ignore this message.</p>
+        <p>The OTP will expire in 2 minutes. If you did not request this, please ignore this message.</p>
   
         <footer style="margin-top: 30px; text-align: center;">
           <p>Best regards,<br />GMT</p>

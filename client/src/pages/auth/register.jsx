@@ -25,7 +25,8 @@ function AuthRegister() {
         toast({
           title: data?.payload?.message,
         });
-        navigate("/auth/login");
+      navigate("/auth/verify-email");
+
       } else {
         toast({
           title: data?.payload?.message,
@@ -35,7 +36,6 @@ function AuthRegister() {
     });
   }
 
-  console.log("formData",formData);
 
   return (
     <div className="mx-auto w-full max-w-md space-y-6">

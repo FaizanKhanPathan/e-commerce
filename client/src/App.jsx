@@ -31,6 +31,7 @@ import Users from "./pages/admin-view/Users";
 import Payments from "./pages/admin-view/Payments";
 import ProductDetails from "./pages/shopping-view/ProductDetails";
 import ComingSoon from "./pages/not-found/ComingSoon";
+import VerifyEmail from "./pages/auth/verify-email";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -68,6 +69,7 @@ function App() {
         >
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
+          <Route path="verify-email" element={<VerifyEmail />} />
           <Route path="forgot-password" element={<ForgetPassword />} />
           <Route path="otp" element={<EnterOtp />} />
           <Route path="reset-password" element={<ResetPassword />} />

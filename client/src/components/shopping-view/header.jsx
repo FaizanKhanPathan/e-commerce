@@ -42,7 +42,7 @@ function MenuItems() {
   const [selectedCategoryId, setSelectedCategoryId] = useState("")
 
   const categoryList = useSelector((state) => state?.adminBrands?.allSubMenuList)
-  const reversedCategoryList = categoryList?.reverse() || [];
+  const reversedCategoryList = categoryList?.length >0 ? categoryList : [];
 
 
   function handleNavigate(getCurrentMenuItem) {

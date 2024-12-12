@@ -55,6 +55,22 @@ export const verifyUserOtp = createAsyncThunk(
   }
 );
 
+export const verifyEmail = createAsyncThunk(
+  "/auth/verify-email",
+
+  async (formData) => {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/auth/verify-email`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
 export const resetPasswordUser = createAsyncThunk(
   "/auth/reset-password",
 
@@ -103,6 +119,21 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
+export const resendEmailOtp = createAsyncThunk(
+  "/auth/resend-otp",
+  async (formData) => {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/auth/resend-otp`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
 export const checkAuth = createAsyncThunk(
   "/auth/checkauth",
 
@@ -140,6 +171,7 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = null;
+        state.recoveryEmail=action.payload.email
         state.isAuthenticated = false;
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -191,7 +223,20 @@ const authSlice = createSlice({
         // state.isLoading = false;
         // state.user = null;
         // state.isAuthenticated = false;
-      });
+      }).addCase(verifyEmail.pending, (state, action) => {
+        state.isLoading = true;
+        state.user = null;
+        state.isAuthenticated = false;
+      }).addCase(verifyEmail.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.recoveryEmail=null
+      }).addCase(verifyEmail.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      }).addCase(resendEmailOtp.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
   },
 });
 

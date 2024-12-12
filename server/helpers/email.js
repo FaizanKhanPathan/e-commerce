@@ -50,8 +50,8 @@ const sendEmail = (email, subject, htmlContent) => {
 
 
 const emailFunctions = {
-  sendVerifyOtp: (email, otp) => {
-    const html = emailTemplates.verifyOtp(otp);
+  sendVerifyOtp: (email,userName, otp) => {
+    const html = emailTemplates.verifyOtp(userName,otp);
     return sendEmail(email, 'Email Verification OTP', html);
   },
   sendRegisterSuccess: (email, name) => {
