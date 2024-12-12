@@ -69,11 +69,11 @@ const Payments = () => {
                         <TableCell className="text-nowrap">{payment?.userDetails?.phone}</TableCell>
                         <TableCell className="text-nowrap">{payment?.amount}</TableCell>
                         <TableCell className="text-nowrap">{payment?.paymentStatus}</TableCell>
-                        <TableCell className="text-nowrap">
+                        {/* <TableCell className="text-nowrap">
                           <Button>
                             Order Details
                           </Button>
-                        </TableCell>
+                        </TableCell> */}
                       </TableRow>
                     })
                   }

@@ -31,6 +31,7 @@ import Users from "./pages/admin-view/Users";
 import Payments from "./pages/admin-view/Payments";
 import ProductDetails from "./pages/shopping-view/ProductDetails";
 import ComingSoon from "./pages/not-found/ComingSoon";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -44,11 +45,11 @@ function App() {
 
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
-  // console.log(">>>>>>>>>>>>>>",isLoading, user);
-
   return (
     <div className="flex flex-col overflow-hidden bg-white">
+      <ScrollToTop />
       <Routes>
+        
         <Route
           path="/"
           element={

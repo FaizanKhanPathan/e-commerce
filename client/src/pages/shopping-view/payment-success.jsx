@@ -25,7 +25,7 @@ function PaymentSuccessPage() {
             <div>
               Amount
             </div>
-            <div>$ {orderDetails?.totalAmount}</div>
+            <div>$ {orderDetails?.totalAmount.toFixed(2)}</div>
           </div>
           <div className="flex justify-between mt-2 border-dotted border-b-2 pb-2">
             <div>

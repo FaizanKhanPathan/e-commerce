@@ -99,7 +99,7 @@ const MegaMenuSearch = () => {
                     </div>
                 </div>
                 <div className='flex justify-center items-center gap-8'>
-                    <div className='hidden lg:flex justify-start items-center gap-3 text-primary hover:text-destructive cursor-pointer'>
+                    <div className='hidden lg:flex justify-start items-center gap-3 text-primary hover:text-destructive cursor-pointer' >
                         <span>
                             <FaPhoneVolume className='text-[35px] ' />
                         </span>
@@ -107,8 +107,8 @@ const MegaMenuSearch = () => {
                             <span className='font-semibold text-[14px] '>
                                 Have questions
                             </span>
-                            <span className='font-semibold text-[12px] '>
-                                {"(000)-000-0000"}
+                            <span className='font-semibold text-[13px] '>
+                                {"(478)-305-9071"}
                             </span>
                         </span>
                     </div>
@@ -128,7 +128,7 @@ const MegaMenuSearch = () => {
                                     <span>
                                         <LuArrowLeftRight className='font-bold text-2xl' />
                                     </span>
-                                    <span>
+                                    <span className='hidden sm:flex'>
                                         Go to Parts
                                     </span>
                                 </>
