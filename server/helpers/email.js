@@ -50,8 +50,8 @@ const sendEmail = (email, subject, htmlContent) => {
 
 
 const emailFunctions = {
-  sendVerifyOtp: (email, otp) => {
-    const html = emailTemplates.verifyOtp(otp);
+  sendVerifyOtp: (email,userName, otp) => {
+    const html = emailTemplates.verifyOtp(userName,otp);
     return sendEmail(email, 'Email Verification OTP', html);
   },
   sendRegisterSuccess: (email, name) => {
@@ -70,21 +70,21 @@ const emailFunctions = {
     const html = emailTemplates.resetPasswordSuccess(name);
     return sendEmail(email, 'Password Reset Successful', html);
   },
-  sendCreateOrder: (email, orderId, orderDetails) => {
-    const html = emailTemplates.createOrder(orderId, orderDetails);
-    return sendEmail(email, 'Order Confirmation', html);
+  sendCreateOrder: (user, order) => {
+    const html = emailTemplates.createOrder(user, order);
+    return sendEmail(user.email, 'Order Confirmation', html);
   },
-  sendPaymentSuccess: (email, orderId, paymentDetails) => {
-    const html = emailTemplates.paymentSuccess(orderId, paymentDetails);
-    return sendEmail(email, 'Payment Successful', html);
+  sendPaymentSuccess: (user, order) => {
+    const html = emailTemplates.paymentSuccess(user, order);
+    return sendEmail(user.email, 'Payment Successful', html);
   },
-  sendPaymentFailed: (email, orderId, reason) => {
-    const html = emailTemplates.paymentFailed(orderId, reason);
-    return sendEmail(email, 'Payment Failed', html);
+  sendPaymentFailed: (user, order) => {
+    const html = emailTemplates.paymentFailed(user, order);
+    return sendEmail(user.email, 'Payment Failed', html);
   },
-  sendDeliveredOrder: (email, orderId, deliveryDate) => {
-    const html = emailTemplates.deliveredOrder(orderId, deliveryDate);
-    return sendEmail(email, 'Order Delivered', html);
+  sendDeliveredOrder: (user, order) => {
+    const html = emailTemplates.deliveredOrder(user, order);
+    return sendEmail(user.email, 'Order Delivered', html);
   },
 };
 

@@ -23,6 +23,7 @@ function CheckAuth({ isAuthenticated, user, children }) {
       location.pathname.includes("/register") ||
       location.pathname.includes("/forgot-password") ||
       location.pathname.includes("/reset-password") ||
+      location.pathname.includes("/verify-email") ||
       location.pathname.includes("/otp") 
 
 

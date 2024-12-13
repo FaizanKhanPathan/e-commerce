@@ -2,6 +2,9 @@ const paypal = require("../../helpers/paypal");
 const Order = require("../../models/Order");
 const Cart = require("../../models/Cart");
 const Product = require("../../models/Product");
+const  emailFunctions  = require('../../helpers/email');
+const User = require("../../models/User");
+
 
 const createOrder = async (req, res) => {
   try {
@@ -19,6 +22,8 @@ const createOrder = async (req, res) => {
       payerId,
       cartId,
     } = req.body;
+
+
 
     const create_payment_json = {
       intent: "sale",
@@ -79,6 +84,8 @@ const createOrder = async (req, res) => {
           (link) => link.rel === "approval_url"
         ).href;
 
+   
+
         res.status(201).json({
           success: true,
           approvalURL,
@@ -109,6 +116,14 @@ const capturePayment = async (req, res) => {
       });
     }
 
+    const user = await User.findById(order.userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found!",
+      });
+    }
+
     order.paymentStatus = "paid";
     order.orderStatus = "confirmed";
     order.paymentId = paymentId;
@@ -134,6 +149,11 @@ const capturePayment = async (req, res) => {
 
     await order.save();
 
+    await emailFunctions.sendPaymentSuccess(user, order);
+
+    await emailFunctions.sendCreateOrder(user, order);
+
+
     res.status(200).json({
       success: true,
       message: "Order confirmed",
@@ -150,9 +170,21 @@ const capturePayment = async (req, res) => {
 
 const cancelPayment = async (req, res) => {
   const { token, orderId } = req.body;
+
   try {
     // Update order status in the database
     const orderDetails = await Order.findByIdAndUpdate(orderId, { orderStatus: "canceled" });
+
+    const user = await User.findById(orderDetails.userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found!",
+      });
+    }
+
+    await emailFunctions.sendPaymentFailed(user, orderDetails);
+
     res.json({ success: true, message: "Order has been canceled.", data: orderDetails });
   } catch (error) {
     res.status(500).json({ success: false, message: "Failed to cancel the order." });
