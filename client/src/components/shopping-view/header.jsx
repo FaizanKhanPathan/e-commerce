@@ -25,6 +25,7 @@ import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Label } from "../ui/label";
 
 import gmtLogo from "../../assets/gmt-logo-image.png"
+// import gmtLogo from "../../assets/gmt-main-logo.png"
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 

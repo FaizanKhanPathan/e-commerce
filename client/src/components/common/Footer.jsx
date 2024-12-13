@@ -1,7 +1,7 @@
 import React from "react";
 import { FaFacebook, FaInstagramSquare, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import gmtLogo from "../../assets/gmt-white-logo.png"
+import gmtLogo from "../../assets/gmt-white-logo-1.png"
 import { Link } from "react-router-dom";
 
 
@@ -14,7 +14,7 @@ const Footer = () => {
                     <img
                         src={gmtLogo}
                         alt="logo"
-                        className="h-auto"
+                        className="h-auto w-[200px]"
                     />
                     {/* E Commerce */}
                 </div>

@@ -9,6 +9,7 @@ import { setIsTypeChange } from '@/store/shop/products-slice';
 import { getSearchResults } from '@/store/shop/search-slice';
 import SearchResults from './SearchResults';
 
+import gmtLogo from "../../assets/gmt-main-logo.png"
 
 const MegaMenuSearch = () => {
     const dispatch = useDispatch()
