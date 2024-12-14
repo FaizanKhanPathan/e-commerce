@@ -53,14 +53,14 @@ const SearchResults = ({ searchResults, keyword, setKeyword }) => {
                                         className="hover:bg-slate-200 flex bg-white py-5 px-3 gap-2 border-b justify-between"
                                     >
                                         <div className="flex justify-start gap-2 cursor-pointer">
-                                            <div onClick={()=>navigate(`/shop/product-details/${response?._id}`)}>
+                                            <div onClick={() => navigate(`/shop/product-details/${response?._id}`)}>
                                                 <img
                                                     src={response?.image}
                                                     className="border object-contain w-14 h-14"
                                                     alt=""
                                                 />
                                             </div>
-                                            <div onClick={()=>navigate(`/shop/product-details/${response?._id}`)}>
+                                            <div onClick={() => navigate(`/shop/product-details/${response?._id}`)}>
                                                 <h1 className="font-semibold">{response?.title}</h1>
                                                 <p className='mt-1 font-semibold'>Brand: {response?.brand}</p>
                                                 <p className='mt-1 font-semibold'>Category: {response?.category}</p>
@@ -85,7 +85,12 @@ const SearchResults = ({ searchResults, keyword, setKeyword }) => {
                             </div>
                             {
                                 searchResults?.length > 0 && <>
-                                    <div className="font-semibold absolute bottom-0 left-0 w-full bg-white border p-2 cursor-pointer text-center" onClick={() => { setKeyword(""); navigate(`search?keyword=${keyword}`) }}>
+                                    <div className="font-semibold absolute bottom-0 left-0 w-full bg-white border p-2 cursor-pointer text-center" onClick={() => {
+                                        navigate(`search?keyword=`, {
+                                            state: keyword
+                                        });
+                                        setKeyword("");
+                                    }}>
                                         View all {searchResults?.length} results
                                     </div>
                                 </>

@@ -1,5 +1,5 @@
 const Order = require("../../models/Order");
-const  emailFunctions  = require('../../helpers/email');
+const emailFunctions = require('../../helpers/email');
 const User = require("../../models/User");
 
 
@@ -33,7 +33,7 @@ const getOrderDetailsForAdmin = async (req, res) => {
     const { id } = req.params;
 
     const order = await Order.findById(id);
-
+    
     if (!order) {
       return res.status(404).json({
         success: false,
@@ -41,9 +41,24 @@ const getOrderDetailsForAdmin = async (req, res) => {
       });
     }
 
+    // Fetch the user details using the `userId` from the order
+    const user = await User.findById(order.userId);
+
+    // Add user details to the order object
+    const orderWithUserData = {
+      ...order.toObject(), // Convert Mongoose document to plain object
+      user: {
+        id: user._id,
+        name: user.userName,
+        email: user.email,
+        phone: user.phone,
+        // Add other fields from the user model as needed
+      },
+    };
+
     res.status(200).json({
       success: true,
-      data: order,
+      data: orderWithUserData,
     });
   } catch (e) {
     console.log(e);
@@ -78,7 +93,7 @@ const updateOrderStatus = async (req, res) => {
 
     await Order.findByIdAndUpdate(id, { orderStatus });
 
-    if(orderStatus==="delivered") {
+    if (orderStatus === "delivered") {
       await emailFunctions.sendDeliveredOrder(user, order);
     }
 

@@ -11,6 +11,7 @@ import {
   updateOrderStatus,
 } from "@/store/admin/order-slice";
 import { useToast } from "../ui/use-toast";
+import { dateformat } from "@/lib/utils";
 
 const initialFormData = {
   status: "",
@@ -21,8 +22,6 @@ function AdminOrderDetailsView({ orderDetails }) {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { toast } = useToast();
-
-  console.log(orderDetails, "orderDetailsorderDetails");
 
   function handleUpdateStatus(event) {
     event.preventDefault();
@@ -43,23 +42,27 @@ function AdminOrderDetailsView({ orderDetails }) {
   }
 
   return (
-    <DialogContent className="sm:max-w-[600px]">
+    <DialogContent className="sm:max-w-[600px] max-h-screen overflow-y-auto">
       <div className="grid gap-6">
         <div className="grid gap-2">
           <div className="flex mt-6 items-center justify-between">
+            <p className="font-medium">User Name</p>
+            <Label>{orderDetails?.user?.name}</Label>
+          </div>
+          <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order ID</p>
             <Label>{orderDetails?._id}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Date</p>
-            <Label>{orderDetails?.orderDate.split("T")[0]}</Label>
+            <Label>{dateformat(orderDetails?.orderDate)}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Price</p>
             <Label>${orderDetails?.totalAmount.toFixed(2)}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
-            <p className="font-medium">Payment method</p>
+            <p className="font-medium">Payment Method</p>
             <Label>{orderDetails?.paymentMethod}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
@@ -70,13 +73,12 @@ function AdminOrderDetailsView({ orderDetails }) {
             <p className="font-medium">Order Status</p>
             <Label>
               <Badge
-                className={`py-1 px-3 ${
-                  orderDetails?.orderStatus === "confirmed"
-                    ? "bg-green-500"
-                    : orderDetails?.orderStatus === "rejected"
+                className={`py-1 px-3 ${orderDetails?.orderStatus === "confirmed"
+                  ? "bg-green-500"
+                  : orderDetails?.orderStatus === "rejected"
                     ? "bg-red-600"
                     : "bg-black"
-                }`}
+                  }`}
               >
                 {orderDetails?.orderStatus}
               </Badge>
@@ -90,12 +92,24 @@ function AdminOrderDetailsView({ orderDetails }) {
             <ul className="grid gap-3">
               {orderDetails?.cartItems && orderDetails?.cartItems.length > 0
                 ? orderDetails?.cartItems.map((item) => (
-                    <li className="flex items-center justify-between">
-                      <span>Title: {item.title}</span>
+                  <li className="flex items-center justify-between">
+                    <p className="flex flex-col w-[50%]">
+                      <span className="font-semibold">Title :</span>
+                      <span className="">{item.title}</span>
+                    </p>
+                    <p className="flex flex-col">
+                      <span className="font-semibold">Quantity :</span>
+                      <span className="">{item.quantity}</span>
+                    </p>
+                    <p className="flex flex-col">
+                      <span className="font-semibold">Price :</span>
+                      <span className="">$ {item.price}</span>
+                    </p>
+                    {/* <span className="w-[50%]">Title: {item.title}</span>
                       <span>Quantity: {item.quantity}</span>
-                      <span>Price: ${item.price}</span>
-                    </li>
-                  ))
+                      <span>Price: ${item.price}</span> */}
+                  </li>
+                ))
                 : null}
             </ul>
           </div>

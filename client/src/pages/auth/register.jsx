@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
+import gmtLogo from "../../assets/gmt-main-logo.png"
+
 const initialState = {
   userName: "",
   email: "",
@@ -25,7 +27,7 @@ function AuthRegister() {
         toast({
           title: data?.payload?.message,
         });
-      navigate("/auth/verify-email");
+        navigate("/auth/verify-email");
 
       } else {
         toast({
@@ -39,8 +41,9 @@ function AuthRegister() {
 
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
+      <div className="text-center flex flex-col justify-center items-center gap-2">
+        <img src={gmtLogo} className="w-32" alt="" />
+        <h1 className="text-3xl font-bold tracking-tight text-primary">
           Create new account
         </h1>
         <p className="mt-2">

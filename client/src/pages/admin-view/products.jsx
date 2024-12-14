@@ -40,7 +40,7 @@ function AdminProducts() {
     useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [imageFile, setImageFile] = useState(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState("sadvfsvfs");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [imageLoadingState, setImageLoadingState] = useState(false);
   const [currentEditedId, setCurrentEditedId] = useState(null);
 
@@ -48,17 +48,23 @@ function AdminProducts() {
   const getBrands = useSelector((state) => state?.adminBrands?.brandList)
   const categoryList = useSelector((state) => state?.adminBrands?.subCategoryList)
 
+  console.log("formData",formData)
+  console.log("uploadedImageUrl",uploadedImageUrl)
+
   const dispatch = useDispatch();
   const { toast } = useToast();
 
   function onSubmit(event) {
+    const editFormValue = {
+      ...formData,
+      image:uploadedImageUrl
+    }
     event.preventDefault();
-    console.log("formData",formData)
     currentEditedId !== null
       ? dispatch(
           editProduct({
             id: currentEditedId,
-            formData,
+            formData:editFormValue,
           })
         ).then((data) => {
           console.log(data, "edit");
@@ -103,6 +109,11 @@ function AdminProducts() {
       .every((item) => item);
   }
 
+
+  useEffect(()=>{
+
+  },[])
+
   useEffect(() => {
     dispatch(getCategoryData());
     dispatch(getSubCategoryData());
@@ -111,6 +122,7 @@ function AdminProducts() {
 useEffect(() => {
     dispatch(getAllBrands());
 }, []);
+
   useEffect(() => {
     dispatch(fetchAllProducts());
   }, [dispatch]);
@@ -165,6 +177,7 @@ useEffect(() => {
           setOpenCreateProductsDialog(false);
           setCurrentEditedId(null);
           setFormData(initialFormData);
+          setUploadedImageUrl(formData?.image)
         }}
       >
         <SheetContent side="right" className="overflow-auto">
@@ -182,7 +195,7 @@ useEffect(() => {
             setUploadedImageUrl={setUploadedImageUrl}
             setImageLoadingState={setImageLoadingState}
             imageLoadingState={imageLoadingState}
-            isEditMode={currentEditedId !== null}
+            // isEditMode={currentEditedId !== null}
           />
           <div className="py-6">
             <CommonForm
