@@ -122,6 +122,14 @@ const resetPassword = async (req, res) => {
   }
 };
 
+// user details
+const userDetails = async (req, res) => {
+}
+
+const updateUserDetails = async (req, res) => {
+};
+
+
 //register
 const registerUser = async (req, res) => {
   const {
@@ -381,4 +389,6 @@ module.exports = {
   resetPassword,
   resendVerifyEmailOtp,
   verifyUserEmail,
+  userDetails,
+  updateUserDetails
 };
