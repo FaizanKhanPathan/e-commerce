@@ -16,7 +16,7 @@ import ShoppingAccount from "./pages/shopping-view/account";
 import CheckAuth from "./components/common/check-auth";
 import UnauthPage from "./pages/unauth-page";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "@/components/ui/skeleton";
 import PaypalReturnPage from "./pages/shopping-view/paypal-return";
@@ -32,10 +32,13 @@ import Payments from "./pages/admin-view/Payments";
 import ProductDetails from "./pages/shopping-view/ProductDetails";
 import ComingSoon from "./pages/not-found/ComingSoon";
 import VerifyEmail from "./pages/auth/verify-email";
+import DialogVerifyEmail from "./pages/auth/dialog-verify-email";
 
 function App() {
+ const [open, setOpen] = useState(false);
+  
   const { user, isAuthenticated, isLoading } = useSelector(
-    (state) => state.auth
+    (state) => state?.auth
   );
   const dispatch = useDispatch();
 
@@ -43,9 +46,16 @@ function App() {
     dispatch(checkAuth());
   }, []);
 
+  useEffect(() => {
+if(!user?.isEmailVerified && isAuthenticated ) {
+  setOpen(true)
+} 
+ }, [isAuthenticated]);
+
+
+ 
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
-  // console.log(">>>>>>>>>>>>>>",isLoading, user);
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
@@ -112,6 +122,7 @@ function App() {
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <DialogVerifyEmail open={open} setOpen={setOpen} />
     </div>
   );
 }

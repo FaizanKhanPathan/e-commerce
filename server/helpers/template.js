@@ -2,7 +2,7 @@ module.exports = {
   verifyOtp: (userName,otp) => `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <header style="text-align: center; padding: 20px;">
-          <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+          <img src="https://techfixershop.com/assets/gmt-logo-image-BVguvJm6.png" alt="GMT Shop" style="max-width: 80px;" />
         </header>
         <h1 style="color: #4CAF50;">Email Verification</h1>
         <p>Hello ${userName},</p>
@@ -35,7 +35,7 @@ module.exports = {
   registerSuccess: (name) => `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <header style="text-align: center; padding: 20px;">
-          <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+          <img src="https://techfixershop.com/assets/gmt-logo-image-BVguvJm6.png" alt="GMT Shop" style="max-width: 80px;" />
         </header>
         <h1 style="color: #4CAF50;">Welcome to Our Platform, ${name}!</h1>
         <p>We are excited to have you on board. Your account has been successfully created.</p>
@@ -67,7 +67,7 @@ module.exports = {
   resetPassword: (link) => `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <header style="text-align: center; padding: 20px;">
-          <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+          <img src="https://techfixershop.com/assets/gmt-logo-image-BVguvJm6.png" alt="GMT Shop" style="max-width: 80px;" />
         </header>
         <h1 style="color: #4CAF50;">Reset Your Password</h1>
         <p>Hello,</p>
@@ -101,7 +101,7 @@ module.exports = {
   resetPasswordSuccess: (name) => `
   <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
     <header style="text-align: center; padding: 20px;">
-      <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+      <img src="https://techfixershop.com/assets/gmt-logo-image-BVguvJm6.png" alt="GMT Shop" style="max-width: 80px;" />
     </header>
     <h1 style="color: #4CAF50;">Password Reset Successful</h1>
     <p>Hello ${name},</p>
@@ -133,7 +133,7 @@ module.exports = {
   forgotPassword: (otp) => `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <header style="text-align: center; padding: 20px;">
-          <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+          <img src="https://techfixershop.com/assets/gmt-logo-image-BVguvJm6.png" alt="GMT Shop" style="max-width: 80px;" />
         </header>
         <h1 style="color: #4CAF50;">Forgot Password</h1>
         <p>Hello,</p>
@@ -166,7 +166,7 @@ module.exports = {
   createOrder: (orderId, orderDetails) => `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <header style="text-align: center; padding: 20px;">
-          <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+          <img src="https://techfixershop.com/assets/gmt-logo-image-BVguvJm6.png" alt="GMT Shop" style="max-width: 80px;" />
         </header>
         <h1 style="color: #4CAF50;">Order Confirmation</h1>
         <p>Hello,</p>
@@ -198,7 +198,7 @@ module.exports = {
   paymentSuccess: (user, order) => `
   <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
     <header style="text-align: center; padding: 20px;">
-      <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+      <img src="https://techfixershop.com/assets/gmt-logo-image-BVguvJm6.png" alt="GMT Shop" style="max-width: 80px;" />
     </header>
     <h1 style="color: #4CAF50;">Payment Successful!</h1>
     <p>Dear ${user.userName},</p>
@@ -240,7 +240,7 @@ module.exports = {
   paymentFailed: (user, order) => `
   <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
     <header style="text-align: center; padding: 20px;">
-      <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+      <img src="https://techfixershop.com/assets/gmt-logo-image-BVguvJm6.png" alt="GMT Shop" style="max-width: 80px;" />
     </header>
     <h1 style="color: #FF0000;">Payment Failed</h1>
     <p>Dear ${user.userName},</p>
@@ -288,7 +288,7 @@ module.exports = {
   createOrder: (user, order) => `
   <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
     <header style="text-align: center; padding: 20px;">
-      <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+      <img src="https://techfixershop.com/assets/gmt-logo-image-BVguvJm6.png" alt="GMT Shop" style="max-width: 80px;" />
     </header>
     <h1 style="color: #4CAF50;">Order Confirmation</h1>
     <p>Dear ${user.userName},</p> 
@@ -354,7 +354,7 @@ module.exports = {
   deliveredOrder: (user,order) => `
   <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
     <header style="text-align: center; padding: 20px;">
-      <img src="https://your-logo-url.com/logo.png" alt="Your Company Logo" style="max-width: 200px;" />
+      <img src="https://techfixershop.com/assets/gmt-logo-image-BVguvJm6.png" alt="GMT Shop" style="max-width: 80px;" />
     </header>
     <h1 style="color: #4CAF50;">Order Delivered</h1>
     <p>Dear ${user.userName},</p>
