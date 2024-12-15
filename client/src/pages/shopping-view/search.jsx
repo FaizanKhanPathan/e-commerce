@@ -21,21 +21,22 @@ function SearchProducts() {
   const { productDetails } = useSelector((state) => state.shopProducts);
 
   const { user } = useSelector((state) => state.auth);
-
   const location = useLocation();
 
+  
   // Parse the query string
   const params = new URLSearchParams(location.search);
   const paramKeyword = params.get("keyword");
 
   useEffect(()=>{
-    setKeyword(paramKeyword)
-  },[paramKeyword])
+    if(!location?.state) return
+    setKeyword(location?.state)
+  },[location?.state])
 
   const { cartItems } = useSelector((state) => state.shopCart);
   const { toast } = useToast();
   useEffect(() => {
-    if (keyword && keyword.trim() !== "" && keyword.trim().length > 3) {
+    if (keyword && keyword.trim() !== "" && keyword.trim().length > 0) {
       setTimeout(() => {
         setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
         dispatch(getSearchResults(keyword));

@@ -11,7 +11,7 @@ import { fetchAllFilteredProducts, fetchProductDetails, setProductDetails } from
 import { getReviews } from '@/store/shop/review-slice';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ProductDetails = ({ }) => {
 
@@ -27,7 +27,8 @@ const ProductDetails = ({ }) => {
     const isTypeChange = useSelector((state) => state?.shopProducts?.isTypeChange)
 
     const dispatch = useDispatch();
-    const { user } = useSelector((state) => state.auth);
+    const navigate = useNavigate()
+    const { user, isAuthenticated } = useSelector((state) => state.auth);
     const { cartItems } = useSelector((state) => state.shopCart);
     const { reviews } = useSelector((state) => state.shopReview);
     const productDetails = useSelector((state) => state?.shopProducts?.productDetails)
@@ -98,13 +99,13 @@ const ProductDetails = ({ }) => {
 
     useEffect(() => {
         dispatch(
-          fetchAllFilteredProducts({
-            filterParams: {},
-            sortParams: "price-lowtohigh",
-            type: isTypeChange,
-          })
+            fetchAllFilteredProducts({
+                filterParams: {},
+                sortParams: "price-lowtohigh",
+                type: isTypeChange,
+            })
         );
-      }, [dispatch, isTypeChange]);
+    }, [dispatch, isTypeChange]);
 
     // useEffect(() => {
     //     if (productDetails !== null) dispatch(getReviews(productDetails?._id));
@@ -122,64 +123,78 @@ const ProductDetails = ({ }) => {
     }
 
     function handleAddtoCart(getCurrentProductId) {
-        dispatch(
-            addToCart({
-                userId: user?.id,
-                productId: getCurrentProductId,
-                quantity: 1,
-            })
-        ).then((data) => {
-            if (data?.payload?.success) {
-                dispatch(fetchCartItems(user?.id));
-                toast({
-                    title: "Product is added to cart",
-                });
-            }
-        });
+        if (user) {
+            dispatch(
+                addToCart({
+                    userId: user?.id,
+                    productId: getCurrentProductId,
+                    quantity: 1,
+                })
+            ).then((data) => {
+                if (data?.payload?.success) {
+                    dispatch(fetchCartItems(user?.id));
+                    toast({
+                        title: "Product is added to cart",
+                    });
+                }
+            });
+        } else {
+            navigate("/auth/login")
+        }
     }
     return (
         <>
-            <div className='flex justify-start gap-12 items-start px-6 py-12 h-[470px] border-b'>
-                <div className='w-[30%]'>
-                    <img src={productDetails?.image} className='w-[400px] h-96 object-contain ' alt="" />
+            <div className="flex flex-col justify-center lg:flex-row gap-12 sm:gap-12 items-start px-4 sm:px-6 py-6 sm:py-12 h-auto lg:h-[470px] border-b">
+                <div className="w-full xl:w-[30%] flex justify-center">
+                    <img
+                        src={productDetails?.image}
+                        className="w-full sm:w-[400px] max-w-xs sm:max-w-none h-64 sm:h-96 object-contain"
+                        alt=""
+                    />
                 </div>
-                <div className='flex justify-between flex-col h-full w-[70%]'>
+                <div className="flex flex-col justify-between h-auto sm:h-full w-full xl:w-[70%]">
                     <div>
-                        <h1 className="text-3xl font-extrabold">{productDetails?.title}</h1>
-                        <p className="text-muted-foreground text-md mb-5 mt-2 tracking-tight leading-6">
+                        <h1 className="text-2xl sm:text-3xl font-extrabold">{productDetails?.title}</h1>
+                        <p className="text-sm sm:text-md text-muted-foreground mb-4 sm:mb-5 mt-2 tracking-tight leading-6">
                             {productDetails?.description}
                         </p>
                     </div>
                     <div>
-                        <div className='flex justify-between items-center'>
-                            <p className='text-2xl font-semibold'>$ {productDetails?.salePrice}</p>
-                            {
-                                productDetails?.totalStock > 0 ? <>
-                                    <p className='text-md font-semibold'>Available: {productDetails?.totalStock}Left</p>
-                                </> : <>
-                                    <p className='text-md font-semibold'>Out of stock</p>
-                                </>
-                            }
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0">
+                            <p className="text-xl sm:text-2xl font-semibold">$ {productDetails?.salePrice}</p>
+                            {productDetails?.totalStock > 0 ? (
+                                <p className="text-sm sm:text-md font-semibold">Available: {productDetails?.totalStock} Left</p>
+                            ) : (
+                                <p className="text-sm sm:text-md font-semibold">Out of stock</p>
+                            )}
                         </div>
-                        <div className='mt-5'>
-                            <Button className="w-96 h-12" onClick={() => handleAddtoCart(productDetails?._id)}>Add to cart</Button>
+                        <div className="mt-4 sm:mt-5">
+                            <Button
+                                className="w-full sm:w-96 h-12"
+                                onClick={() => handleAddtoCart(productDetails?._id)}
+                            >
+                                {isAuthenticated ? "Add to cart" : "Sign in"}
+                            </Button>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div>
-                <section className="py-8">
+                <section className="py-6 sm:py-8">
                     <div className="container mx-auto px-4">
-                        <h2 className="text-2xl font-bold text-center mb-8 uppercase">
+                        <h2 className="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8 uppercase">
                             Recommended Products
                         </h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                             {productList && productList.length > 0
                                 ? productList.slice(0, 4)?.map((productItem) => (
                                     <ShoppingProductTile
+                                        key={productItem.id}
                                         handleGetProductDetails={handleGetProductDetails}
                                         product={productItem}
-                                        handleAddtoCart={handleAddtoCart} />
+                                        handleAddtoCart={handleAddtoCart}
+                                    />
                                 ))
                                 : null}
                         </div>
@@ -187,6 +202,7 @@ const ProductDetails = ({ }) => {
                 </section>
             </div>
         </>
+
     )
 }
 

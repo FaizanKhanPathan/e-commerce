@@ -31,6 +31,7 @@ import Users from "./pages/admin-view/Users";
 import Payments from "./pages/admin-view/Payments";
 import ProductDetails from "./pages/shopping-view/ProductDetails";
 import ComingSoon from "./pages/not-found/ComingSoon";
+import ScrollToTop from "./components/common/ScrollToTop";
 import VerifyEmail from "./pages/auth/verify-email";
 import DialogVerifyEmail from "./pages/auth/dialog-verify-email";
 
@@ -56,10 +57,11 @@ if(!user?.isEmailVerified && isAuthenticated ) {
  
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
-
   return (
     <div className="flex flex-col overflow-hidden bg-white">
+      <ScrollToTop />
       <Routes>
+        
         <Route
           path="/"
           element={
@@ -103,16 +105,20 @@ if(!user?.isEmailVerified && isAuthenticated ) {
         <Route
           path="/shop"
           element={
-            // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-            // </CheckAuth>
             <ShoppingLayout />
           }
         >
+          <Route path="account" element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <ShoppingAccount />
+            </CheckAuth>
+          } />
+
+
           <Route path="home" element={<ShoppingHome />} />
           <Route path="product-details/:id" element={<ProductDetails />} />
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
-          <Route path="account" element={<ShoppingAccount />} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="paypal-cancel" element={<PaymentCancelPage />} />

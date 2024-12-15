@@ -5,7 +5,8 @@ const initialState = {
   isAuthenticated: false,
   isLoading: true,
   user: null,
-  recoveryEmail:null,
+  userAllDetails: null,
+  recoveryEmail: null,
 };
 
 export const registerUser = createAsyncThunk(
@@ -87,6 +88,35 @@ export const resetPasswordUser = createAsyncThunk(
   }
 );
 
+export const userDetails = createAsyncThunk(
+  "/auth/user-all-details",
+  async (id) => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/auth/user-details/${id}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
+export const updateUserDetails = createAsyncThunk(
+  "/auth/user-all-details",
+  async (formData) => {
+    const response = await axios.put(
+      `${import.meta.env.VITE_API_URL}/api/auth/update-user/${formData?._id}`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
 
 export const loginUser = createAsyncThunk(
   "/auth/login",
@@ -157,9 +187,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action) => {},
-    setRecoveryMail:(state,action)=> {
-      state.recoveryEmail=action.payload.email
+    setUser: (state, action) => { },
+    setRecoveryMail: (state, action) => {
+      state.recoveryEmail = action.payload.email
 
     }
   },
@@ -179,11 +209,16 @@ const authSlice = createSlice({
         state.user = null;
         state.isAuthenticated = false;
       })
+      .addCase(userDetails.fulfilled, (state, action) => {
+        console.log("action", action)
+        state.isLoading = false;
+        state.userAllDetails = action.payload.success ? action.payload.data : null;
+      })
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action);
+        // console.log(action);
 
         state.isLoading = false;
         state.user = action.payload.success ? action.payload.user : null;
@@ -240,5 +275,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser,setRecoveryMail } = authSlice.actions;
+export const { setUser, setRecoveryMail } = authSlice.actions;
 export default authSlice.reducer;

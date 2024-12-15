@@ -309,7 +309,7 @@ const loginUser = async (req, res) => {
         userName: checkUser.userName,
         isEmailVerified: checkUser.isEmailVerified,
       },
-      "CLIENT_SECRET_KEY",
+      process.env.JWT_CLIENT_SECRET_KEY,
       { expiresIn: "1200m" }
     );
 
@@ -343,7 +343,6 @@ const loginUser = async (req, res) => {
 };
 
 //logout
-
 const logoutUser = (req, res) => {
   res.clearCookie("token").json({
     success: true,
@@ -361,7 +360,7 @@ const authMiddleware = async (req, res, next) => {
     });
 
   try {
-    const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
+    const decoded = jwt.verify(token, process.env.JWT_CLIENT_SECRET_KEY);
     req.user = decoded;
     next();
   } catch (error) {

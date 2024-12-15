@@ -9,6 +9,7 @@ import { setIsTypeChange } from '@/store/shop/products-slice';
 import { getSearchResults } from '@/store/shop/search-slice';
 import SearchResults from './SearchResults';
 
+import gmtLogo from "../../assets/gmt-main-logo.png"
 
 const MegaMenuSearch = () => {
     const dispatch = useDispatch()
@@ -89,20 +90,17 @@ const MegaMenuSearch = () => {
     return (
         <div className='text-[12px] border-b'>
 
-            <div className='flex justify-start lg:justify-center gap-5'>
-                <div>
-
-                </div>
-                <div className='flex justify-center lg:justify-center items-center h-20'>
-                    <div className='flex justify-center items-center gap-4'>
-                        <div className='w-max h-max relative'>
-                            <input type="text" onChange={(e) => setKeyword(e.target.value)} value={keyword} placeholder='Search entire store...' className='w-[250px] sm:w-[450px] py-3 rounded-md outline-none px-4 text-[14px] border shadow-lg' />
+            <div className='flex justify-between lg:justify-center gap-5 px-6'>
+                <div className='flex justify-center lg:justify-center items-center h-20 w-full sm:w-max'>
+                    <div className='flex justify-center items-center gap-4 w-full'>
+                        <div className='w-full h-max relative'>
+                            <input type="text" onChange={(e) => setKeyword(e.target.value)} value={keyword} placeholder='Search entire store...' className='w-full sm:w-[450px] py-3 rounded-md outline-none px-4 text-[14px] border shadow-lg' />
                             <SearchResults searchResults={searchResults} keyword={keyword} setKeyword={setKeyword} />
                         </div>
                     </div>
                 </div>
                 <div className='flex justify-center items-center gap-8'>
-                    <div className='hidden lg:flex justify-start items-center gap-3 text-primary hover:text-destructive cursor-pointer'>
+                    <div className='hidden lg:flex justify-start items-center gap-3 text-primary hover:text-destructive cursor-pointer' >
                         <span>
                             <FaPhoneVolume className='text-[35px] ' />
                         </span>
@@ -110,8 +108,8 @@ const MegaMenuSearch = () => {
                             <span className='font-semibold text-[14px] '>
                                 Have questions
                             </span>
-                            <span className='font-semibold text-[12px] '>
-                                {"(000)-000-0000"}
+                            <span className='font-semibold text-[13px] '>
+                                {"(478)-305-9071"}
                             </span>
                         </span>
                     </div>
@@ -122,7 +120,7 @@ const MegaMenuSearch = () => {
                                     <span>
                                         <LuArrowLeftRight className='font-bold text-2xl' />
                                     </span>
-                                    <span>
+                                    <span className='hidden sm:flex'>
                                         Go to Accessories
                                     </span>
                                 </>
@@ -131,7 +129,7 @@ const MegaMenuSearch = () => {
                                     <span>
                                         <LuArrowLeftRight className='font-bold text-2xl' />
                                     </span>
-                                    <span>
+                                    <span className='hidden sm:flex'>
                                         Go to Parts
                                     </span>
                                 </>

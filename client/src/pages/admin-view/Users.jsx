@@ -34,7 +34,7 @@ const Users = () => {
             <TableHead className="text-nowrap">Phone</TableHead>
             <TableHead className="text-nowrap">Tax ID</TableHead>
             <TableHead className="text-nowrap">Company name</TableHead>
-            <TableHead className="text-nowrap">Register date</TableHead>
+            {/* <TableHead className="text-nowrap">Register date</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody>

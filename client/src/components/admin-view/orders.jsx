@@ -18,6 +18,7 @@ import {
   resetOrderDetails,
 } from "@/store/admin/order-slice";
 import { Badge } from "../ui/badge";
+import { capitalizeFirstCharacter, dateformat } from "@/lib/utils";
 
 function AdminOrdersView() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
@@ -32,11 +33,10 @@ function AdminOrdersView() {
     dispatch(getAllOrdersForAdmin());
   }, [dispatch]);
 
-  console.log(orderDetails, "orderList");
-
   useEffect(() => {
     if (orderDetails !== null) setOpenDetailsDialog(true);
   }, [orderDetails]);
+
 
   return (
     <Card>
@@ -59,43 +59,42 @@ function AdminOrdersView() {
           <TableBody>
             {orderList && orderList.length > 0
               ? orderList.map((orderItem) => (
-                  <TableRow>
-                    <TableCell>{orderItem?._id}</TableCell>
-                    <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
-                    <TableCell>
-                      <Badge
-                        className={`py-1 px-3 ${
-                          orderItem?.orderStatus === "confirmed"
-                            ? "bg-green-500"
-                            : orderItem?.orderStatus === "rejected"
-                            ? "bg-red-600"
-                            : "bg-black"
+                <TableRow>
+                  <TableCell>{orderItem?._id}</TableCell>
+                  <TableCell>{dateformat(orderItem?.orderDate)}</TableCell>
+                  <TableCell>
+                    <Badge
+                      className={`py-1 px-3 ${orderItem?.orderStatus === "confirmed"
+                        ? "bg-green-500"
+                        : orderItem?.orderStatus === "canceled"
+                          ? "bg-red-500"
+                          : orderItem?.orderStatus === "pending" || orderItem?.orderStatus === "" ? "bg-yellow-500" : orderItem?.orderStatus == "delivered" ? "bg-primary" : "bg-black"
                         }`}
+                    >
+                      {capitalizeFirstCharacter(orderItem?.orderStatus) || "Pending"}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>${orderItem?.totalAmount.toFixed(2)}</TableCell>
+                  <TableCell>
+                    <Dialog
+                      open={openDetailsDialog}
+                      onOpenChange={() => {
+                        setOpenDetailsDialog(false);
+                        dispatch(resetOrderDetails());
+                      }}
+                    >
+                      <Button
+                        onClick={() =>
+                          handleFetchOrderDetails(orderItem?._id)
+                        }
                       >
-                        {orderItem?.orderStatus}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>${orderItem?.totalAmount}</TableCell>
-                    <TableCell>
-                      <Dialog
-                        open={openDetailsDialog}
-                        onOpenChange={() => {
-                          setOpenDetailsDialog(false);
-                          dispatch(resetOrderDetails());
-                        }}
-                      >
-                        <Button
-                          onClick={() =>
-                            handleFetchOrderDetails(orderItem?._id)
-                          }
-                        >
-                          View Details
-                        </Button>
-                        <AdminOrderDetailsView orderDetails={orderDetails} />
-                      </Dialog>
-                    </TableCell>
-                  </TableRow>
-                ))
+                        View Details
+                      </Button>
+                      <AdminOrderDetailsView orderDetails={orderDetails} />
+                    </Dialog>
+                  </TableCell>
+                </TableRow>
+              ))
               : null}
           </TableBody>
         </Table>

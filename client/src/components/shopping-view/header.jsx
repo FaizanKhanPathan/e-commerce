@@ -25,6 +25,7 @@ import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Label } from "../ui/label";
 
 import gmtLogo from "../../assets/gmt-logo-image.png"
+// import gmtLogo from "../../assets/gmt-main-logo.png"
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 
@@ -42,7 +43,7 @@ function MenuItems() {
   const [selectedCategoryId, setSelectedCategoryId] = useState("")
 
   const categoryList = useSelector((state) => state?.adminBrands?.allSubMenuList)
-  const reversedCategoryList = categoryList?.length >0 ? categoryList : [];
+  // const reversedCategoryList = categoryList?.reverse() || [];
 
 
   function handleNavigate(getCurrentMenuItem) {
@@ -67,6 +68,17 @@ function MenuItems() {
 
   // console.log("categoryList>>>>>>>>>>>>", categoryList)
 
+  const handleFilterByCategory = (commodity) => {
+    const currentFilter = {
+      ["category"]: [commodity?.sub_category_name?.toLowerCase()],
+    };
+
+    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+    navigate(`/shop/listing`);
+
+
+  }
+
   return (
     <nav className="flex flex-col overflow-auto lg:overflow-visible max-h-screen lg:max-h-full">
       {/* {shoppingViewHeaderMenuItems.map((menuItem) => (
@@ -86,7 +98,7 @@ function MenuItems() {
 
       <div className="flex flex-col mt-5">
         {
-          reversedCategoryList?.map((ele, index) => {
+          categoryList?.map((ele, index) => {
             return (
               <div className="" key={index}>
                 <p onClick={() => selectedBrandId == "" ? setSelectedBrandId(ele?.brand_id) : setSelectedBrandId("")} className={`flex items-center justify-between py-2 border-b ${index == 0 && "border-t"}`}>
@@ -106,7 +118,8 @@ function MenuItems() {
                 {
                   selectedBrandId == ele?.brand_id && <>
                     {
-                      ele?.category?.map((res) => {
+
+                      [...ele?.category]?.reverse()?.map((res) => {
                         return <>
                           <div className="ml-3">
                             <p onClick={() => selectedCategoryId == "" ? setSelectedCategoryId(res?.category_id) : setSelectedCategoryId("")} className="flex justify-between items-center py-2 border-b">
@@ -128,7 +141,7 @@ function MenuItems() {
                                 {
                                   res?.sub_category?.map((element) => {
                                     return (
-                                      <div className="ml-3">
+                                      <div className="ml-3" onClick={() => handleFilterByCategory(element)}>
                                         <p className="py-2 border-b">
                                           <span>
                                             {element?.sub_category_name}
@@ -177,57 +190,57 @@ function HeaderRightContent() {
     <div className="flex justify-between py-5 lg:items-center lg:flex-row flex-row gap-4">
       {
         isAuthenticated ? <>
-      <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
-        <Button
-          onClick={() => setOpenCartSheet(true)}
-          variant="outline"
-          size="icon"
-          className="relative"
-        >
-          <ShoppingCart className="w-6 h-6" />
-          <span className="absolute top-[-5px] right-[2px] font-bold text-sm">
-            {cartItems?.items?.length || 0}
-          </span>
-          <span className="sr-only">User cart</span>
-        </Button>
-        <UserCartWrapper
-          setOpenCartSheet={setOpenCartSheet}
-          cartItems={
-            cartItems && cartItems.items && cartItems.items.length > 0
-              ? cartItems.items
-              : []
-          }
-        />
-      </Sheet>
+          <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
+            <Button
+              onClick={() => setOpenCartSheet(true)}
+              variant="outline"
+              size="icon"
+              className="relative"
+            >
+              <ShoppingCart className="w-6 h-6" />
+              <span className="absolute top-[-5px] right-[2px] font-bold text-sm">
+                {cartItems?.items?.length || 0}
+              </span>
+              <span className="sr-only">User cart</span>
+            </Button>
+            <UserCartWrapper
+              setOpenCartSheet={setOpenCartSheet}
+              cartItems={
+                cartItems && cartItems.items && cartItems.items.length > 0
+                  ? cartItems.items
+                  : []
+              }
+            />
+          </Sheet>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Avatar className="bg-black cursor-pointer">
-            <AvatarFallback className="bg-black text-white font-extrabold">
-              {user?.userName[0].toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent side="right" className="w-56">
-          <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate("/shop/account")}>
-            <UserCog className="mr-2 h-4 w-4" />
-            Account
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Avatar className="bg-black cursor-pointer">
+                <AvatarFallback className="bg-black text-white font-extrabold">
+                  {user?.userName[0].toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="right" className="w-56">
+              <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate("/shop/account")}>
+                <UserCog className="mr-2 h-4 w-4" />
+                Account
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </> : <>
           {/* <button className="bg-primary text-white rounded-lg px-5 py-2">
             Sign in
           </button> */}
           <Link to={"/auth/login"}>
-          <Button>Sign in</Button>
+            <Button>Sign in</Button>
           </Link>
         </>
       }

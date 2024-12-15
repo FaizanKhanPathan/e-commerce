@@ -19,6 +19,7 @@ function PaypalReturnPage() {
       const orderId = JSON.parse(sessionStorage.getItem("currentOrderId"));
 
       dispatch(capturePayment({ paymentId, payerId, orderId })).then((data) => {
+        console.log("capture data",data)
         if (data?.payload?.success) {
           sessionStorage.removeItem("currentOrderId");
           navigate(`/shop/payment-success`, {

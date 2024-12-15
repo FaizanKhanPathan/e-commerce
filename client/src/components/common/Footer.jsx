@@ -1,20 +1,20 @@
 import React from "react";
 import { FaFacebook, FaInstagramSquare, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import gmtLogo from "../../assets/gmt-white-logo.png"
+import gmtLogo from "../../assets/gmt-white-logo-1.png"
 import { Link } from "react-router-dom";
 
 
 const Footer = () => {
     return (
-        <footer className="bg-gray-900 text-white p-6">
+        <footer className="bg-primary text-white p-6">
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {/* Logo Section */}
                 <div className="flex justify-center lg:justify-start mb-6 lg:mb-0">
                     <img
                         src={gmtLogo}
                         alt="logo"
-                        className="h-auto"
+                        className="h-auto w-[200px]"
                     />
                     {/* E Commerce */}
                 </div>
@@ -61,17 +61,17 @@ const Footer = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to={"/shop/account"} className="hover:underline text-sm text-gray-400">
+                            <Link to={"/shop/account"} state={"profile"} className="hover:underline text-sm text-gray-400">
                                 Account Details
                             </Link>
                         </li>
                         <li>
-                            <Link to={"/shop/account"} className="hover:underline text-sm text-gray-400">
+                            <Link to={"/shop/account"} state={"address"} className="hover:underline text-sm text-gray-400">
                                 Addresses
                             </Link>
                         </li>
                         <li>
-                            <Link to={"/shop/account"} className="hover:underline text-sm text-gray-400">
+                            <Link to={"/shop/account"} state={"orders"} className="hover:underline text-sm text-gray-400">
                                 Order History
                             </Link>
                         </li>
@@ -88,9 +88,9 @@ const Footer = () => {
                     <h5 className="font-semibold mb-4">Information</h5>
                     <ul>
                         <li>
-                            <a href="/coming-soon" className="hover:underline text-sm text-gray-400">
+                            <Link to={"/shop/coming-soon"} className="hover:underline text-sm text-gray-400">
                                 About Us
-                            </a>
+                            </Link>
                         </li>
                         <li>
                             <a href="/contact-us" className="hover:underline text-sm text-gray-400">
@@ -119,18 +119,18 @@ const Footer = () => {
                 <div className="mt-8 lg:mt-0">
                     <h5 className="font-semibold mb-4">Contact Us</h5>
                     <p className="mb-2 border-b text-gray-400 pb-2">
-                        5659 Buford Hwy Ste# 108-111,
+                        7130 Buford Hwy NE suite c140,
                         <br />
-                        Doraville, GA 30340, United States
+                        Atlanta, GA 30340, United States
                     </p>
                     <p className="mb-2 border-b text-sm text-gray-400 py-2">
-                        <a href="tel:(770)-355-4781" className="hover:underline">
-                            (770)-355-4781 | (678)-404-5669 | (470)-375-3949
+                        <a href="tel:(478)-305-9071" className="hover:underline">
+                            (470)-442-0299 | (478)-305-9071
                         </a>
                     </p>
                     <p className="mb-2 border-b text-gray-400 py-2">
-                        <a href="mailto:sales@neocellularparts.com" className="hover:underline">
-                            sales@neocellularparts.com
+                        <a href="mailto:sales@globalmobitech.com" className="hover:underline">
+                            sales@globalmobitech.com
                         </a>
                     </p>
                     <div className="border-b text-gray-400 py-2">

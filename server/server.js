@@ -67,7 +67,7 @@ app.use("/api/admin/sub-category", adminSubCategoryRouter)
 app.use("/api/admin/products", adminProductsRouter);
 app.use("/api/admin/orders", adminOrderRouter);
 
-app.use("/api/shop/products", shopProductsRouter);
+app.use("/api/shop/products", shopProductsRouter); 
 app.use("/api/shop/cart", shopCartRouter);
 app.use("/api/shop/address", shopAddressRouter);
 app.use("/api/shop/order", shopOrderRouter);

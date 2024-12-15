@@ -51,6 +51,72 @@ export const registerFormControls = [
   },
 ];
 
+export const editProfileFormControls = [
+  {
+    name: "userName",
+    label: "User Name",
+    placeholder: "Enter your user name",
+    componentType: "input",
+    type: "text",
+  },
+  {
+    name: "email",
+    label: "Email",
+    placeholder: "Enter your email",
+    componentType: "input",
+    type: "email",
+    disabled: true
+  },
+  {
+    name: "phone",
+    label: "Phone",
+    placeholder: "Enter your phone",
+    componentType: "input",
+    type: "number",
+  },
+  {
+    name: "companyName",
+    label: "Company Name",
+    placeholder: "Enter your company Name",
+    componentType: "input",
+    type: "text",
+  },
+  {
+    name: "taxId",
+    label: "Tax ID",
+    placeholder: "Enter your tax ID",
+    componentType: "input",
+    type: "text"
+  }
+];
+
+export const resetPasswordProfileFormControls = [
+  {
+    name: "currentPassword",
+    label: "Current Password",
+    placeholder: "Enter your current Password",
+    componentType: "password",
+    type: "password",
+  },
+  {
+    name: "password",
+    label: "Password",
+    placeholder: "Enter your password",
+    componentType: "password",
+    type: "password",
+  },
+  {
+    name: "reTypePassword",
+    label: "Re-type Password",
+    placeholder: "Enter your re-type password",
+    componentType: "password",
+    type: "password",
+  }
+];
+
+
+
+
 export const loginFormControls = [
   {
     name: "email",

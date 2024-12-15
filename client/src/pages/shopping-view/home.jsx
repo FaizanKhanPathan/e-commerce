@@ -90,6 +90,7 @@ function ShoppingHome() {
 
   function handleGetProductDetails(getCurrentProductId) {
     dispatch(fetchProductDetails(getCurrentProductId));
+    navigate(`/shop/product-details/${getCurrentProductId}`)
   }
 
   function handleAddtoCart(getCurrentProductId) {
@@ -175,7 +176,7 @@ function ShoppingHome() {
 
       <section className="py-12 ">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8 uppercase">Shop by Brand</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 uppercase">Shop by Brand</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {
               getBrands?.filter((res)=>res?.image_url)?.map((ele, index) => {
@@ -199,7 +200,7 @@ function ShoppingHome() {
 
       <section className="py-8">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-8 uppercase">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 uppercase">
             New Products
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -217,7 +218,7 @@ function ShoppingHome() {
 
       <section className="py-8">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-8 uppercase">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 uppercase">
             Best Sellers
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -235,7 +236,7 @@ function ShoppingHome() {
 
       <section className="py-8">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-8 uppercase">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 uppercase">
             Featured Products
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

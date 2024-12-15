@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
+import gmtLogo from "../../assets/gmt-main-logo.png"
+
 const initialState = {
   email: "",
   password: "",
@@ -35,8 +37,9 @@ function AuthLogin() {
 
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
+      <div className="text-center flex flex-col justify-center items-center gap-2">
+        <img src={gmtLogo} className="w-32" alt="" />
+        <h1 className="text-3xl font-bold tracking-tight text-primary">
           Sign in to your account
         </h1>
       </div>
@@ -47,21 +50,21 @@ function AuthLogin() {
         setFormData={setFormData}
         onSubmit={onSubmit}
       />
-          <Link
-            className="font-medium mt-2 text-red-600 hover:underline"
-            to="/auth/forgot-password"
-          >
-           Forgot Password?
-          </Link>
-       <p className="mt-1">
-          Don't have an account
-          <Link
-            className="font-medium ml-2 text-primary hover:underline"
-            to="/auth/register"
-          >
-            Register
-          </Link>
-        </p>
+      <Link
+        className="font-medium mt-2 text-red-600 hover:underline"
+        to="/auth/forgot-password"
+      >
+        Forgot Password?
+      </Link>
+      <p className="mt-1">
+        Don't have an account
+        <Link
+          className="font-medium ml-2 text-primary hover:underline"
+          to="/auth/register"
+        >
+          Register
+        </Link>
+      </p>
     </div>
   );
 }
