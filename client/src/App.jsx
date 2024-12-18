@@ -16,7 +16,7 @@ import ShoppingAccount from "./pages/shopping-view/account";
 import CheckAuth from "./components/common/check-auth";
 import UnauthPage from "./pages/unauth-page";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "@/components/ui/skeleton";
 import PaypalReturnPage from "./pages/shopping-view/paypal-return";
@@ -33,10 +33,16 @@ import ProductDetails from "./pages/shopping-view/ProductDetails";
 import ComingSoon from "./pages/not-found/ComingSoon";
 import ScrollToTop from "./components/common/ScrollToTop";
 import VerifyEmail from "./pages/auth/verify-email";
+import DialogVerifyEmail from "./pages/auth/dialog-verify-email";
+import PivacyPolicy from "./pages/not-found/privacy-policy";
+import TermsAndConditions from "./pages/not-found/terms-conditions";
+import ReturnPolicy from "./pages/not-found/return-policy";
 
 function App() {
+ const [open, setOpen] = useState(false);
+  
   const { user, isAuthenticated, isLoading } = useSelector(
-    (state) => state.auth
+    (state) => state?.auth
   );
   const dispatch = useDispatch();
 
@@ -44,6 +50,14 @@ function App() {
     dispatch(checkAuth());
   }, []);
 
+  useEffect(() => {
+if(!user?.isEmailVerified && isAuthenticated ) {
+  setOpen(true)
+} 
+ }, [isAuthenticated]);
+
+
+ 
   if (isLoading) return <Skeleton className="w-[800] bg-primary h-[600px]" />;
 
   return (
@@ -113,10 +127,15 @@ function App() {
           <Route path="paypal-cancel" element={<PaymentCancelPage />} />
           <Route path="search" element={<SearchProducts />} />
           <Route path="coming-soon" element={<ComingSoon />} />
+          <Route path="shipping-methods" element={<ComingSoon />} />
+          <Route path="privacy-policy" element={<PivacyPolicy/>}/>
+          <Route path="terms-conditions" element={<TermsAndConditions />} />
+          <Route path="return-policy" element={<ReturnPolicy />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <DialogVerifyEmail open={open} setOpen={setOpen} />
     </div>
   );
 }

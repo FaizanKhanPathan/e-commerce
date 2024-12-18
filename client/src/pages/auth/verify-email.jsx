@@ -1,5 +1,5 @@
 import { useToast } from "@/components/ui/use-toast";
-import {  resendEmailOtp, verifyEmail } from "@/store/auth-slice";
+import { resendEmailOtp, verifyEmail } from "@/store/auth-slice";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -34,7 +34,7 @@ function VerifyEmail() {
             title: data?.payload?.message,
           });
           setOtp("");
-          navigate("/auth/login");
+          window.location.reload();
         } else {
           toast({
             title: data?.error?.message,
@@ -48,7 +48,7 @@ function VerifyEmail() {
   function handleResendOtp() {
     setTimer(60);
     setIsResendDisabled(true);
-    dispatch(resendEmailOtp({email: state?.recoveryEmail,})).then((data) => {
+    dispatch(resendEmailOtp({ email: state?.recoveryEmail })).then((data) => {
       if (data?.payload?.success) {
         toast({
           title: data?.payload?.message,
@@ -59,7 +59,7 @@ function VerifyEmail() {
           variant: "destructive",
         });
       }
-    })
+    });
   }
 
   useEffect(() => {
@@ -118,8 +118,8 @@ function VerifyEmail() {
         {isResendDisabled ? `Resend OTP in ${timer}s` : "Resend OTP"}
       </Button>
       <p className="mt-1">
-      Already have an account
-<Link
+        Already have an account
+        <Link
           className="font-medium ml-2 text-primary hover:underline"
           to="/auth/login"
         >

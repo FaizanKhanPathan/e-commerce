@@ -9,6 +9,7 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import { Password } from "../ui/password";
 
 function CommonForm({
   formControls,
@@ -24,7 +25,7 @@ function CommonForm({
 
     switch (getControlItem.componentType) {
       case "input":
-        element = (
+        element = getControlItem.type !=="password"? (
           <Input
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
@@ -39,8 +40,22 @@ function CommonForm({
               })
             }
           />
+        ) : (
+          <Password
+            name={getControlItem.name}
+            placeholder={getControlItem.placeholder}
+            id={getControlItem.name}
+            type={getControlItem.type}
+            disabled={getControlItem.disabled}
+            value={value}
+            onChange={(event) =>
+              setFormData({
+                ...formData,
+                [getControlItem.name]: event.target.value,
+              })
+            }
+          />
         );
-
         break;
       case "select":
         element = (
@@ -59,10 +74,10 @@ function CommonForm({
             <SelectContent>
               {getControlItem.options && getControlItem.options.length > 0
                 ? getControlItem.options.map((optionItem) => (
-                  <SelectItem key={optionItem.id} value={optionItem.id}>
-                    {optionItem.label}
-                  </SelectItem>
-                ))
+                    <SelectItem key={optionItem.id} value={optionItem.id}>
+                      {optionItem.label}
+                    </SelectItem>
+                  ))
                 : null}
             </SelectContent>
           </Select>

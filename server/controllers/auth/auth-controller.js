@@ -1,10 +1,8 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
-const emailFunctions = require('../../helpers/email');
+const emailFunctions = require("../../helpers/email");
 const crypto = require("crypto");
-
-
 
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
@@ -14,7 +12,7 @@ const forgotPassword = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'User not found with this email address',
+        message: "User not found with this email address",
       });
     }
 
@@ -29,17 +27,16 @@ const forgotPassword = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'OTP sent to your email address',
+      message: "OTP sent to your email address",
     });
   } catch (e) {
-    console.error('Error during password reset:', e);
+    console.error("Error during password reset:", e);
     res.status(500).json({
       success: false,
-      message: 'Some error occurred. Please try again.',
+      message: "Some error occurred. Please try again.",
     });
   }
 };
-
 
 // Verify OTP and update user's verified status
 const verifyOtp = async (req, res) => {
@@ -85,7 +82,6 @@ const verifyOtp = async (req, res) => {
   }
 };
 
-
 const resetPassword = async (req, res) => {
   const { email, newPassword } = req.body;
 
@@ -126,62 +122,25 @@ const resetPassword = async (req, res) => {
   }
 };
 
-
-
 // user details
 const userDetails = async (req, res) => {
-  const { id: _id } = req.params;
-
-  try {
-    const userDetails = await User.findOne({ _id }).select("-password");
-
-    return res.json({
-      success: true,
-      message: "User Details Fetch Successful!",
-      data: userDetails
-    });
-
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Some error occured",
-    });
-  }
-
 }
 
 const updateUserDetails = async (req, res) => {
-  const { id: _id } = req.params; // Extract user ID from route parameters
-  const { userName, taxId, phone, companyName } = req.body; // Destructure specific fields from the request body
-  // Extract the updated data from the request body
-
-  try {
-    // Create an object with only the allowed fields
-    const updateData = { userName, taxId, phone, companyName };
-
-    // Find the user by ID and update with the new data
-    const updatedUser = await User.findByIdAndUpdate(
-      _id, // The user ID
-      updateData, // The updated data
-      { new: true, runValidators: true } // Return the updated document and run validation
-    );
-
-    // If user not found
-    if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    // Respond with the updated user data
-    res.status(200).json(updatedUser);
-  } catch (error) {
-    console.error("Error updating user:", error);
-    res.status(500).json({ message: "Internal server error", error });
-  }
 };
+
 
 //register
 const registerUser = async (req, res) => {
-  const { userName, phone, taxId, email, companyName, password, confirmPassword } = req.body;
+  const {
+    userName,
+    phone,
+    taxId,
+    email,
+    companyName,
+    password,
+    confirmPassword,
+  } = req.body;
 
   try {
     const checkUser = await User.findOne({ email });
@@ -200,7 +159,9 @@ const registerUser = async (req, res) => {
 
     const hashPassword = await bcrypt.hash(password, 12);
 
-    const passwordResetOtp = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit OTP
+    const passwordResetOtp = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString(); // 6-digit OTP
 
     const passwordResetOtpExpiry = Date.now() + 2 * 60 * 1000;
 
@@ -223,7 +184,7 @@ const registerUser = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Registration successful",
-      email: newUser.email
+      email: newUser.email,
     });
   } catch (e) {
     console.log(e);
@@ -244,7 +205,10 @@ const verifyUserEmail = async (req, res) => {
       return res.json({ success: false, message: "User not found" });
     }
 
-    if (user.passwordResetOtp !== otp || Date.now() > user.passwordResetOtpExpiry) {
+    if (
+      user.passwordResetOtp !== otp ||
+      Date.now() > user.passwordResetOtpExpiry
+    ) {
       return res.json({
         success: false,
         message: "Invalid or expired OTP",
@@ -256,8 +220,21 @@ const verifyUserEmail = async (req, res) => {
     user.passwordResetOtpExpiry = null;
     await user.save();
 
-    await emailFunctions.sendRegisterSuccess(email, user.userName);
+     const token = jwt.sign(
+      {
+        id: user._id,
+        role: user.role,
+        email: user.email,
+        userName: user.userName,
+        isEmailVerified: true, 
+      },
+      "CLIENT_SECRET_KEY",
+      { expiresIn: "1200m" }
+    );
 
+    res.cookie("token", token, { httpOnly: true, secure: false });
+
+    await emailFunctions.sendRegisterSuccess(email, user.userName);
 
     res.status(200).json({
       success: true,
@@ -290,7 +267,7 @@ const resendVerifyEmailOtp = async (req, res) => {
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit OTP;
-    const otpExpiry = Date.now() + 2 * 60 * 1000;;
+    const otpExpiry = Date.now() + 2 * 60 * 1000;
     user.passwordResetOtp = otp;
     user.passwordResetOtpExpiry = otpExpiry;
     await user.save();
@@ -309,8 +286,6 @@ const resendVerifyEmailOtp = async (req, res) => {
     });
   }
 };
-
-
 
 //login
 const loginUser = async (req, res) => {
@@ -340,12 +315,22 @@ const loginUser = async (req, res) => {
         role: checkUser.role,
         email: checkUser.email,
         userName: checkUser.userName,
+        isEmailVerified: checkUser.isEmailVerified,
       },
       process.env.JWT_CLIENT_SECRET_KEY,
       { expiresIn: "1200m" }
     );
 
-    res.cookie("token", token, { httpOnly: true, secure: true }).json({
+    if (!checkUser.isEmailVerified) {
+      const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit OTP;
+      const otpExpiry = Date.now() + 2 * 60 * 1000;
+      checkUser.passwordResetOtp = otp;
+      checkUser.passwordResetOtpExpiry = otpExpiry;
+      await checkUser.save();
+      await emailFunctions.sendVerifyOtp(email, checkUser.userName, otp);
+    }
+
+    res.cookie("token", token, { httpOnly: true, secure: false }).json({
       success: true,
       message: "Logged in successfully",
       user: {
@@ -353,7 +338,7 @@ const loginUser = async (req, res) => {
         role: checkUser.role,
         id: checkUser._id,
         userName: checkUser.userName,
-        isEmailVerified: checkUser.isEmailVerified
+        isEmailVerified: checkUser.isEmailVerified,
       },
     });
   } catch (e) {
@@ -394,4 +379,16 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { resendVerifyEmailOtp, verifyUserEmail, updateUserDetails, userDetails, registerUser, loginUser, logoutUser, authMiddleware, forgotPassword, verifyOtp, resetPassword };
+module.exports = {
+  registerUser,
+  loginUser,
+  logoutUser,
+  authMiddleware,
+  forgotPassword,
+  verifyOtp,
+  resetPassword,
+  resendVerifyEmailOtp,
+  verifyUserEmail,
+  userDetails,
+  updateUserDetails
+};
