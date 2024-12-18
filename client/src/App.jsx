@@ -127,10 +127,12 @@ if(!user?.isEmailVerified && isAuthenticated ) {
           <Route path="paypal-cancel" element={<PaymentCancelPage />} />
           <Route path="search" element={<SearchProducts />} />
           <Route path="coming-soon" element={<ComingSoon />} />
+
           <Route path="shipping-methods" element={<ComingSoon />} />
           <Route path="privacy-policy" element={<PivacyPolicy/>}/>
           <Route path="terms-conditions" element={<TermsAndConditions />} />
           <Route path="return-policy" element={<ReturnPolicy />} />
+          
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />

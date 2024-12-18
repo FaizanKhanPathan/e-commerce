@@ -24,19 +24,22 @@ const Footer = () => {
                     <h5 className="font-semibold mb-4">Shopping Guide</h5>
                     <ul>
                         <li>
-                            <a href="/shipping-methods" className="hover:underline text-sm text-gray-400">
+                            {/* <a href="/shipping-methods" className="hover:underline text-sm text-gray-400">
                                 Shipping Methods
-                            </a>
+                            </a> */}
+                            <Link to={"/shop/shipping-methods"} className="hover:underline text-sm text-gray-400">
+                                Shipping Methods
+                            </Link>
                         </li>
                         <li>
-                            <a href="/privacy-policy" className="hover:underline text-sm text-gray-400">
+                            <Link to={"/shop/privacy-policy"} className="hover:underline text-sm text-gray-400">
                                 Privacy Policy
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/terms-conditions" className="hover:underline text-sm text-gray-400">
+                            <Link to={"/shop/terms-conditions"} className="hover:underline text-sm text-gray-400">
                                 Terms & Conditions
-                            </a>
+                            </Link>
                         </li>
                         <li>
                             <a href="/account/dashboard" className="hover:underline text-sm text-gray-400">
@@ -44,9 +47,9 @@ const Footer = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="/our-return-policy" className="hover:underline text-sm text-gray-400">
+                            <Link to={"/shop/return-policy"} className="hover:underline text-sm text-gray-400">
                                 Return Policy
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

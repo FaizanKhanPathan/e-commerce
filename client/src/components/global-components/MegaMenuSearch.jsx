@@ -30,9 +30,13 @@ const MegaMenuSearch = () => {
     const [selectedCategoryValue, setSelectedCategoryValue] = useState(null)
     const [selectedCategoryValueData, setSelectedCategoryValueData] = useState([])
     const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
+    const [parentCategoryName, setParentCategoryName] = useState("")
 
     const handleMouseOverBrand = (categoryId) => {
+        
         setSelectedCategoryValueData(categoryList?.find((ele) => ele?.brand_id == categoryId))
+
+        setParentCategoryName(categoryList?.find((ele) => ele?.brand_id == categoryId)?.brand_name)
 
         setSelectedCategoryValue(categoryId);
         setIsSubMenuVisible(true);
@@ -162,7 +166,9 @@ const MegaMenuSearch = () => {
                 >
                     <SubcategoriesMenu
                         categoryList={selectedCategoryValueData}
+                        parentCategoryName={parentCategoryName}
                         setVisibleCard={false}
+                        setIsSubMenuVisible={setIsSubMenuVisible}
                     />
                 </div>
             )}

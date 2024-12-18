@@ -1,10 +1,11 @@
+import { setIsTypeChange } from "@/store/shop/products-slice";
 import React, { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import { handleCategoryId } from "../../redux/megaMenuSlice/megaMenuSlice";
 
-const SubcategoriesMenu = ({ setVisibleCard, setBreadcrumbPath, categoryList }) => {
+const SubcategoriesMenu = ({ setVisibleCard, setBreadcrumbPath, parentCategoryName,setIsSubMenuVisible, categoryList }) => {
     const [activeCommodity, setActiveCommodity] = useState(null);
     const [activeSubcategory, setActiveSubcategory] = useState(null);
     const [activeNestedSubcategory, setActiveNestedSubcategory] = useState(null);
@@ -29,19 +30,22 @@ const SubcategoriesMenu = ({ setVisibleCard, setBreadcrumbPath, categoryList }) 
     };
 
     const handleCommodityClick = (commodity) => {
+
+        if (parentCategoryName?.toLowerCase() == "accessories") {
+            dispatch(setIsTypeChange("1"))
+        }
+
         const currentFilter = {
             ["category"]: [commodity?.sub_category_name?.toLowerCase()],
-          };
-      
-          sessionStorage.setItem("filters", JSON.stringify(currentFilter));
-          navigate(`/shop/listing`);
-        // dispatch(handleCategoryId(commodity.id));
-        // setVisibleCard(null);
-        // updateBreadcrumb(commodity.title);
+        };
+
+        sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+        navigate(`/shop/listing`);
+        setIsSubMenuVisible(false)
     };
 
 
-    const reversedData = categoryList?.category?.length > 0 ? categoryList?.category?.map((_, index, array) => array[array.length - 1 - index]) : []; 
+    const reversedData = categoryList?.category?.length > 0 ? categoryList?.category?.map((_, index, array) => array[array.length - 1 - index]) : [];
     return (
         <>
             <div className="hidden lg:flex border-t bg-white h-96 w-[95vw] overflow-x-scroll absolute z-50 right-6 scrollable-element">
@@ -56,16 +60,16 @@ const SubcategoriesMenu = ({ setVisibleCard, setBreadcrumbPath, categoryList }) 
                                     <ul className="list-none p-0">
                                         <li
                                             // onMouseEnter={() => handleCommodityHover(commodity.id)}
-                                            
+
                                             className={`cursor-pointer flex flex-col justify-between p-2 ${false ? "bg-gray-200" : ""}`}
                                         >
                                             {
                                                 element?.sub_category?.map((res) => {
-                                                   return(
-                                                   <div className="py-1 hover:text-destructive w-fit" onClick={() => handleCommodityClick(res)}>
-                                                        {res?.sub_category_name}
-                                                    </div>
-                                                   ) 
+                                                    return (
+                                                        <div className="py-1 hover:text-destructive w-fit" onClick={() => handleCommodityClick(res)}>
+                                                            {res?.sub_category_name}
+                                                        </div>
+                                                    )
                                                 })
                                             }
 

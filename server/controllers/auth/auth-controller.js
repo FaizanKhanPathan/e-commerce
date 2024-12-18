@@ -330,6 +330,8 @@ const loginUser = async (req, res) => {
       await emailFunctions.sendVerifyOtp(email, checkUser.userName, otp);
     }
 
+    console.log("checkUser",checkUser)
+
     res.cookie("token", token, { httpOnly: true, secure: false }).json({
       success: true,
       message: "Logged in successfully",

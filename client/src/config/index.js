@@ -97,6 +97,7 @@ export const resetPasswordProfileFormControls = [
     placeholder: "Enter your current Password",
     componentType: "password",
     type: "password",
+    
   },
   {
     name: "password",
