@@ -34,6 +34,9 @@ import ComingSoon from "./pages/not-found/ComingSoon";
 import ScrollToTop from "./components/common/ScrollToTop";
 import VerifyEmail from "./pages/auth/verify-email";
 import DialogVerifyEmail from "./pages/auth/dialog-verify-email";
+import PivacyPolicy from "./pages/not-found/privacy-policy";
+import TermsAndConditions from "./pages/not-found/terms-conditions";
+import ReturnPolicy from "./pages/not-found/return-policy";
 
 function App() {
  const [open, setOpen] = useState(false);
@@ -124,6 +127,10 @@ if(!user?.isEmailVerified && isAuthenticated ) {
           <Route path="paypal-cancel" element={<PaymentCancelPage />} />
           <Route path="search" element={<SearchProducts />} />
           <Route path="coming-soon" element={<ComingSoon />} />
+          <Route path="shipping-methods" element={<ComingSoon />} />
+          <Route path="privacy-policy" element={<PivacyPolicy/>}/>
+          <Route path="terms-conditions" element={<TermsAndConditions />} />
+          <Route path="return-policy" element={<ReturnPolicy />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
