@@ -24,7 +24,7 @@ import { useEffect, useState } from "react";
 import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Label } from "../ui/label";
 
-import gmtLogo from "../../assets/gmt-logo-image.png"
+import gmtLogo from "../../assets/gmt-new-logo.png"
 // import gmtLogo from "../../assets/gmt-main-logo.png"
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
@@ -215,8 +215,8 @@ function HeaderRightContent() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Avatar className="bg-black cursor-pointer">
-                <AvatarFallback className="bg-black text-white font-extrabold">
+              <Avatar className="bg-primary-gradient cursor-pointer">
+                <AvatarFallback className="bg-primary-gradient text-white font-extrabold">
                   {user?.userName[0].toUpperCase()}
                 </AvatarFallback>
               </Avatar>

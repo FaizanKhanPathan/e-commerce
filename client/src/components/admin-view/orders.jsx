@@ -68,7 +68,7 @@ function AdminOrdersView() {
                         ? "bg-green-500"
                         : orderItem?.orderStatus === "canceled"
                           ? "bg-red-500"
-                          : orderItem?.orderStatus === "pending" || orderItem?.orderStatus === "" ? "bg-yellow-500" : orderItem?.orderStatus == "delivered" ? "bg-primary" : "bg-black"
+                          : orderItem?.orderStatus === "pending" || orderItem?.orderStatus === "" ? "bg-yellow-500" : orderItem?.orderStatus == "delivered" ? "bg-primary-gradient" : "bg-primary"
                         }`}
                     >
                       {capitalizeFirstCharacter(orderItem?.orderStatus) || "Pending"}

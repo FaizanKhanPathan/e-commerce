@@ -20,9 +20,10 @@ import {
 import { ArrowUpDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function createSearchParamsHelper(filterParams) {
+
   const queryParams = [];
 
   for (const [key, value] of Object.entries(filterParams)) {
@@ -40,6 +41,7 @@ function createSearchParamsHelper(filterParams) {
 
 function ShoppingListing() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
@@ -81,8 +83,8 @@ function ShoppingListing() {
   }
 
   function handleGetProductDetails(getCurrentProductId) {
-    console.log(getCurrentProductId);
     dispatch(fetchProductDetails(getCurrentProductId));
+    navigate(`/shop/product-details/${getCurrentProductId}`)
   }
 
   function handleAddtoCart(getCurrentProductId, getTotalStock) {

@@ -126,12 +126,12 @@ const AdminBrands = () => {
         <>
             <>
                 <h1 className="text-2xl font-semibold underline">Brands</h1>
-                <div className="flex justify-start items-start gap-5 border-b border-black pb-5">
+                <div className="flex justify-start items-start gap-5 border-b border-primary pb-5">
                     <div className="flex flex-col gap-3">
                         <ProductImageUpload setUploadedImageUrl={setUploadedImageUrl} uploadedImageUrl={uploadedImageUrl} />
                         <label>Brand name</label>
                         <input type="text" value={value} onChange={(e) => setValue(e.target.value)} className="border py-1 w-full outline-none pl-4" />
-                        <button className="border border-black" onClick={handleSubmit}>Submit</button>
+                        <button className="border border-primary" onClick={handleSubmit}>Submit</button>
                     </div>
                     <div className="mt-4">
                         <h2 className="font-bold text-lg mb-2">
