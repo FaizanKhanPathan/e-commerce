@@ -37,6 +37,7 @@ import DialogVerifyEmail from "./pages/auth/dialog-verify-email";
 import PivacyPolicy from "./pages/not-found/privacy-policy";
 import TermsAndConditions from "./pages/not-found/terms-conditions";
 import ReturnPolicy from "./pages/not-found/return-policy";
+import ReturnWarranty from "./pages/not-found/return-warranty";
 
 function App() {
  const [open, setOpen] = useState(false);
@@ -131,6 +132,7 @@ if(!user?.isEmailVerified && isAuthenticated ) {
           <Route path="privacy-policy" element={<PivacyPolicy/>}/>
           <Route path="terms-conditions" element={<TermsAndConditions />} />
           <Route path="return-policy" element={<ReturnPolicy />} />
+          <Route path="returns-warranty" element={<ReturnWarranty />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />

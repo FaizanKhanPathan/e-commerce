@@ -34,7 +34,7 @@ function VerifyEmail() {
             title: data?.payload?.message,
           });
           setOtp("");
-          window.location.reload();
+          window.location.replace('/shop/home');
         } else {
           toast({
             title: data?.error?.message,

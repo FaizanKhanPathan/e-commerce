@@ -228,18 +228,24 @@ const verifyUserEmail = async (req, res) => {
         userName: user.userName,
         isEmailVerified: true, 
       },
-      "CLIENT_SECRET_KEY",
+      process.env.JWT_CLIENT_SECRET_KEY,
       { expiresIn: "1200m" }
     );
 
-    res.cookie("token", token, { httpOnly: true, secure: false });
+    res.cookie("token", token, { httpOnly: true, secure: false }).status(200).json({
+      success: true,
+      message: "Email verification successful",
+      user: {
+        email: user.email,
+        role: user.role,
+        id: user._id,
+        userName: user.userName,
+        isEmailVerified: user.isEmailVerified,
+      },
+    });
 
     await emailFunctions.sendRegisterSuccess(email, user.userName);
 
-    res.status(200).json({
-      success: true,
-      message: "Email verification successful",
-    });
   } catch (e) {
     console.error(e);
     res.status(500).json({
