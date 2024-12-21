@@ -48,8 +48,8 @@ function AdminProducts() {
   const getBrands = useSelector((state) => state?.adminBrands?.brandList)
   const categoryList = useSelector((state) => state?.adminBrands?.subCategoryList)
 
-  console.log("formData",formData)
-  console.log("uploadedImageUrl",uploadedImageUrl)
+  // console.log("formData",formData)
+  // console.log("uploadedImageUrl",uploadedImageUrl)
 
   const dispatch = useDispatch();
   const { toast } = useToast();
@@ -87,6 +87,7 @@ function AdminProducts() {
             setOpenCreateProductsDialog(false);
             setImageFile(null);
             setFormData(initialFormData);
+            setUploadedImageUrl("")
             toast({
               title: "Product add successfully",
             });
@@ -111,8 +112,13 @@ function AdminProducts() {
 
 
   useEffect(()=>{
-
-  },[])
+    if(uploadedImageUrl) return
+    if(formData?.image){
+      setUploadedImageUrl(formData?.image)
+    } else {
+      setUploadedImageUrl("")
+    }
+  },[formData])
 
   useEffect(() => {
     dispatch(getCategoryData());

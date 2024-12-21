@@ -52,7 +52,7 @@ const AdminBrands = () => {
 
             }
 
-            console.log("body>>>>>", body)
+            // console.log("body>>>>>", body)
         } else {
             const body = {
                 image_url: uploadedImageUrl,
@@ -120,7 +120,7 @@ const AdminBrands = () => {
     }
 
 
-    console.log("uploadedImageUrl", uploadedImageUrl)
+    // console.log("uploadedImageUrl", uploadedImageUrl)
 
     return (
         <>
@@ -172,6 +172,7 @@ const AdminBrands = () => {
                         {/* <ProductImageUpload setUploadedImageUrl={setUploadedImageUrl} /> */}
                         <label>Select Brand</label>
                         <select value={selectedCategoryId} className="p-2 border border-black outline-none" onChange={(e) => setSelectedCategoryId(e.target.value)}>
+                            <option value=""></option>
                             {
                                 getBrands?.map((ele) => (
                                     <option value={ele?._id}>{ele?.brand_name}</option>
@@ -225,6 +226,7 @@ const AdminBrands = () => {
 
                         <label htmlFor="">Select Brand</label>
                         <select className="p-2 border border-black outline-none" onChange={(e) => setSelectedSubCategoryBrand(e.target.value)}>
+                            <option value=""></option>
                             {
                                 getBrands?.map((ele) => (
                                     <option value={ele?._id}>{ele?.brand_name}</option>
@@ -234,6 +236,7 @@ const AdminBrands = () => {
 
                         <label htmlFor="">Select Category</label>
                         <select className="p-2 border border-black outline-none" onChange={(e) => setSelectedSubCategoryCategoryId(e.target.value)}>
+                            <option value=""></option>
                             {
                                 categoryList?.map((ele) => (
                                     <option value={ele?.category_id}>{ele?.category_name}</option>

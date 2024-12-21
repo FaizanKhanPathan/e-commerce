@@ -35,7 +35,7 @@ function handleChange(otpValue) {
             });
             setOtp("");
             setOpen(false);
-            window.location.reload();
+            window.location.replace('/shop/home');
           } else {
             toast({
               title: data?.error?.message,
